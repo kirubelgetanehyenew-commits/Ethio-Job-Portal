@@ -10,6 +10,18 @@ const createCompany = async (req, res) => {
       location,
       industry,
     } = req.body;
+    // Check if the employer already has a company with the same name
+const existingCompany = await Company.findOne({
+  companyName,
+  owner: req.user.id,
+});
+
+if (existingCompany) {
+  return res.status(400).json({
+    success: false,
+    message: "You already created a company with this name.",
+  });
+}
 
     const company = await Company.create({
       companyName,
