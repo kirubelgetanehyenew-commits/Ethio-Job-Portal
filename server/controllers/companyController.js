@@ -1,0 +1,40 @@
+const Company = require("../models/Company");
+
+const createCompany = async (req, res) => {
+  try {
+    const {
+      companyName,
+      description,
+      website,
+      logo,
+      location,
+      industry,
+    } = req.body;
+
+    const company = await Company.create({
+      companyName,
+      description,
+      website,
+      logo,
+      location,
+      industry,
+      owner: req.user.id,
+    });
+
+    res.status(201).json({
+      success: true,
+      message: "Company created successfully",
+      company,
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+module.exports = {
+  createCompany,
+};
