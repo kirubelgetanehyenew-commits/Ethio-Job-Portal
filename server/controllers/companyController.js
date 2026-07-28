@@ -10,6 +10,15 @@ const createCompany = async (req, res) => {
       location,
       industry,
     } = req.body;
+    // Validate required fields
+if (!companyName || !description || !location || !industry) {
+  return res.status(400).json({
+    success: false,
+    message:
+      "Company name, description, location, and industry are required.",
+  });
+}
+
     // Check if the employer already has a company with the same name
 const existingCompany = await Company.findOne({
   companyName,
