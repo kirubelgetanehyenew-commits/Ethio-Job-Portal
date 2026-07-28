@@ -34,7 +34,26 @@ const createCompany = async (req, res) => {
     });
   }
 };
+const getMyCompanies = async (req, res) => {
+  try {
+    const companies = await Company.find({
+      owner: req.user.id,
+    });
 
+    res.status(200).json({
+      success: true,
+      count: companies.length,
+      companies,
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
 module.exports = {
   createCompany,
+  getMyCompanies,
 };
