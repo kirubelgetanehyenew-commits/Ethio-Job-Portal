@@ -74,7 +74,73 @@ const getMyCompanies = async (req, res) => {
     });
   }
 };
+const getCompanyById = async (req, res) => {
+  try {
+    const company = await Company.findById(req.params.id);
+
+    if (!company) {
+      return res.status(404).json({
+        success: false,
+        message: "Company not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      company,
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+const updateCompany = async (req, res) => {
+  try {
+    const company = await Company.findById(req.params.id);
+
+    if (!company) {
+      return res.status(404).json({
+        success: false,
+        message: "Company not found",
+      });
+    }
+
+    // Check ownership
+    if (company.owner.toString() !== req.user.id) {
+      return res.status(403).json({
+        success: false,
+        message: "You can only update your own company.",
+      });
+    }
+
+    const updatedCompany = await Company.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+
+    res.status(200).json({
+      success: true,
+      message: "Company updated successfully",
+      company: updatedCompany,
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
 module.exports = {
   createCompany,
   getMyCompanies,
+  getCompanyById,
+  updateCompany,
 };
