@@ -2,6 +2,12 @@ const express = require("express");
 const router = express.Router();
 
 const {
+  registerValidation,
+  loginValidation,
+} = require("../validation/authValidation");
+
+const validateRequest = require("../middleware/validateRequest");
+const {
   register,
   login,
   getProfile,
@@ -9,8 +15,18 @@ const {
 const protect = require("../middleware/authMiddleware");
 const authorize = require("../middleware/roleMiddleware");
 
-router.post("/register", register);
-router.post("/login", login);
+router.post(
+  "/register",
+  registerValidation,
+  validateRequest,
+  register
+);
+router.post(
+  "/login",
+  loginValidation,
+  validateRequest,
+  login
+);
 router.get("/profile", protect, getProfile);
 router.get(
   "/admin",

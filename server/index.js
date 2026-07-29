@@ -6,6 +6,7 @@ const companyRoutes = require("./routes/companyRoutes");
 const jobRoutes = require("./routes/jobRoutes");
 const applicationRoutes = require("./routes/applicationRoutes");
 const adminRoutes = require("./routes/adminRoutes");
+const errorHandler = require("./middleware/errorHandler");
 
 const connectDB = require("./config/db");
 
@@ -22,6 +23,7 @@ app.use("/api/companies", companyRoutes);
 app.use("/api/jobs", jobRoutes);
 app.use("/api/applications", applicationRoutes);
 app.use("/api/admin", adminRoutes);
+app.use(errorHandler);
 
 app.get("/", (req, res) => {
   res.json({
