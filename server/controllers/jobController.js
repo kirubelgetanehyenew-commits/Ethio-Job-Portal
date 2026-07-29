@@ -61,16 +61,90 @@ const createJob = async (req, res) => {
 // Get All Jobs
 const getAllJobs = async (req, res) => {
   try {
-    const jobs = await Job.find({ isActive: true })
-      .populate("company", "companyName location industry")
-      .populate("employer", "fullName email")
-      .sort({ createdAt: -1 });
+   const {
+  keyword,
+  location,
+  jobType,
+  experience,
+  minSalary,
+  page = 1,
+  limit = 5,
+  sort = "newest",
+} = req.query;
+
+    // Base query
+    let query = {
+      isActive: true,
+    };
+
+    // Search by title or description
+    if (keyword) {
+      query.$or = [
+        { title: { $regex: keyword, $options: "i" } },
+        { description: { $regex: keyword, $options: "i" } },
+      ];
+    }
+
+if (location) {
+  query.location = {
+    $regex: location,
+    $options: "i",
+  };
+}
+if (jobType) {
+  query.jobType = {
+    $regex: jobType,
+    $options: "i",
+  };
+}
+if (experience) {
+  query.experience = {
+    $regex: experience,
+    $options: "i",
+  };
+}
+if (minSalary) {
+  query.salary = {
+    $gte: Number(minSalary),
+  };
+}
+const pageNumber = Number(page);
+const limitNumber = Number(limit);
+
+const skip = (pageNumber - 1) * limitNumber;
+let sortOption = { createdAt: -1 }; // Default: newest
+
+if (sort === "oldest") {
+  sortOption = { createdAt: 1 };
+}
+
+if (sort === "salary-high") {
+  sortOption = { salary: -1 };
+}
+
+if (sort === "salary-low") {
+  sortOption = { salary: 1 };
+}
+
+    const jobs = await Job.find(query)
+  .populate("company", "companyName location industry")
+  .populate("employer", "fullName email")
+  .sort(sortOption)
+  .skip(skip)
+  .limit(limitNumber);
+  const totalJobs = await Job.countDocuments(query);
+
+const totalPages = Math.ceil(totalJobs / limitNumber);
 
     res.status(200).json({
-      success: true,
-      count: jobs.length,
-      jobs,
-    });
+  success: true,
+  count: jobs.length,
+  currentPage: pageNumber,
+  totalPages,
+  totalJobs,
+  jobs,
+});
+
   } catch (error) {
     res.status(500).json({
       success: false,
