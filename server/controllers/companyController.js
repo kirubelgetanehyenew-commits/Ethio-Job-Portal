@@ -10,6 +10,7 @@ const createCompany = async (req, res) => {
       location,
       industry,
     } = req.body;
+    
     // Validate required fields
 if (!companyName || !description || !location || !industry) {
   return res.status(400).json({
