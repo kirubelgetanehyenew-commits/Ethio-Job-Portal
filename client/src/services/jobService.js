@@ -9,3 +9,13 @@ export const getJobById = async (id) => {
   const response = await api.get(`/jobs/${id}`);
   return response.data;
 };
+
+export const getMyJobs = async () => {
+  const response = await api.get("/jobs/my");
+  return response.data;
+};
+
+export const createJob = async (jobData) => {
+  const response = await api.post("/jobs", jobData);
+  return response.data;
+};

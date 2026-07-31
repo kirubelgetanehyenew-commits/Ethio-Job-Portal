@@ -4,7 +4,7 @@ const Job = require("../models/Job");
 // Apply for a Job
 const applyForJob = async (req, res) => {
   try {
-    const { coverLetter } = req.body;
+    const { coverLetter = "" } = req.body || {};
     const { jobId } = req.params;
 
     // Check if job exists
@@ -138,9 +138,37 @@ const updateApplicationStatus = async (req, res) => {
     });
   }
 };
+// Get My Applications (Job Seeker)
+const getMyApplications = async (req, res) => {
+  try {
+    const applications = await Application.find({
+      applicant: req.user.id,
+    })
+      .populate({
+        path: "job",
+        populate: {
+          path: "company",
+          select: "companyName location",
+        },
+      })
+      .sort({ createdAt: -1 });
+
+    res.status(200).json({
+      success: true,
+      count: applications.length,
+      applications,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
 
 module.exports = {
   applyForJob,
   getApplicationsForJob,
   updateApplicationStatus,
+  getMyApplications,
 };

@@ -8,19 +8,19 @@ function JobDetails() {
 
   const [job, setJob] = useState(null);
   const [loading, setLoading] = useState(true);
+
   const handleApply = async () => {
-  try {
-    const data = await applyForJob(job._id);
-
-    alert(data.message);
-
-  } catch (error) {
-    alert(
-      error.response?.data?.message ||
-      "Failed to apply for the job."
-    );
-  }
-};
+    try {
+      const data = await applyForJob(job._id);
+      alert(data.message);
+    } catch (error) {
+      if (error.response) {
+        alert(error.response.data.message);
+      } else {
+        alert("Something went wrong. Please try again.");
+      }
+    }
+  };
 
   useEffect(() => {
     const fetchJob = async () => {
@@ -62,9 +62,10 @@ function JobDetails() {
         <h1 className="text-3xl font-bold">
           {job.title}
         </h1>
+
         <p className="text-gray-500 mt-2">
           {job.company?.companyName}
-           </p>
+        </p>
 
         <p className="mt-4">
           📍 {job.location}
@@ -77,10 +78,11 @@ function JobDetails() {
         <p className="mt-2">
           💼 {job.jobType}
         </p>
+
         <p className="mt-2">
-  📅 Deadline:{" "}
-  {new Date(job.deadline).toLocaleDateString()}
-</p>
+          📅 Deadline:{" "}
+          {new Date(job.deadline).toLocaleDateString()}
+        </p>
 
         <p className="mt-2">
           ⭐ {job.experience}
@@ -119,26 +121,27 @@ function JobDetails() {
             {job.company?.website}
           </a>
         </p>
+
         <hr className="my-6" />
 
-<h2 className="text-xl font-bold">
-  Employer Information
-</h2>
+        <h2 className="text-xl font-bold">
+          Employer Information
+        </h2>
 
-<p className="mt-2">
-  <strong>Name:</strong> {job.employer?.fullName}
-</p>
+        <p className="mt-2">
+          <strong>Name:</strong> {job.employer?.fullName}
+        </p>
 
-<p>
-  <strong>Email:</strong> {job.employer?.email}
-</p>
+        <p>
+          <strong>Email:</strong> {job.employer?.email}
+        </p>
 
         <button
-  onClick={handleApply}
-  className="mt-8 w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700"
->
-  Apply Now
-</button>
+          onClick={handleApply}
+          className="mt-8 w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700"
+        >
+          Apply Now
+        </button>
 
         <p className="mt-6 text-sm text-gray-500">
           Job ID: {job._id}

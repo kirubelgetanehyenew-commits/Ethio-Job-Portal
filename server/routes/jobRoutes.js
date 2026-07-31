@@ -15,12 +15,10 @@ const authorize = require("../middleware/roleMiddleware");
 
 // Public Routes
 router.get("/", getAllJobs);
-router.get("/:id", getJobById);
-
-// Employer Routes
-router.get("/my", protect, authorize("employer"), getMyJobs);
 router.post("/", protect, authorize("employer"), createJob);
+router.get("/my", protect, authorize("employer"), getMyJobs);
 router.put("/:id", protect, authorize("employer"), updateJob);
 router.delete("/:id", protect, authorize("employer"), deleteJob);
+router.get("/:id", getJobById);
 
 module.exports = router;
