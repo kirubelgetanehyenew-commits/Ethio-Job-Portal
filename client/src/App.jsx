@@ -1,6 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
 import Home from "./pages/Home/Home";
+import JobDetails from "./pages/jobs/JobDetails";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 function App() {
   return (
@@ -8,6 +11,11 @@ function App() {
       <Routes>
         <Route element={<MainLayout />}>
           <Route path="/" element={<Home />} />
+          <Route path="/jobs/:id" element={<JobDetails />} />
+          <Route path="/login" element={<Login />} />
+
+<Route path="/register" element={<Register />} />
+          
         </Route>
       </Routes>
     </BrowserRouter>

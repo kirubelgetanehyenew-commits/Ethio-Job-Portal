@@ -58,26 +58,25 @@ const createJob = async (req, res) => {
     });
   }
 };
+
 // Get All Jobs
 const getAllJobs = async (req, res) => {
   try {
-   const {
-  keyword,
-  location,
-  jobType,
-  experience,
-  minSalary,
-  page = 1,
-  limit = 5,
-  sort = "newest",
-} = req.query;
+    const {
+      keyword,
+      location,
+      jobType,
+      experience,
+      minSalary,
+      page = 1,
+      limit = 5,
+      sort = "newest",
+    } = req.query;
 
-    // Base query
     let query = {
       isActive: true,
     };
 
-    // Search by title or description
     if (keyword) {
       query.$or = [
         { title: { $regex: keyword, $options: "i" } },
@@ -85,65 +84,71 @@ const getAllJobs = async (req, res) => {
       ];
     }
 
-if (location) {
-  query.location = {
-    $regex: location,
-    $options: "i",
-  };
-}
-if (jobType) {
-  query.jobType = {
-    $regex: jobType,
-    $options: "i",
-  };
-}
-if (experience) {
-  query.experience = {
-    $regex: experience,
-    $options: "i",
-  };
-}
-if (minSalary) {
-  query.salary = {
-    $gte: Number(minSalary),
-  };
-}
-const pageNumber = Number(page);
-const limitNumber = Number(limit);
+    if (location) {
+      query.location = {
+        $regex: location,
+        $options: "i",
+      };
+    }
 
-const skip = (pageNumber - 1) * limitNumber;
-let sortOption = { createdAt: -1 }; // Default: newest
+    if (jobType) {
+      query.jobType = {
+        $regex: jobType,
+        $options: "i",
+      };
+    }
 
-if (sort === "oldest") {
-  sortOption = { createdAt: 1 };
-}
+    if (experience) {
+      query.experience = {
+        $regex: experience,
+        $options: "i",
+      };
+    }
 
-if (sort === "salary-high") {
-  sortOption = { salary: -1 };
-}
+    if (minSalary) {
+      query.salary = {
+        $gte: Number(minSalary),
+      };
+    }
 
-if (sort === "salary-low") {
-  sortOption = { salary: 1 };
-}
+    const pageNumber = Number(page);
+    const limitNumber = Number(limit);
+
+    const skip = (pageNumber - 1) * limitNumber;
+
+    let sortOption = { createdAt: -1 };
+
+    if (sort === "oldest") {
+      sortOption = { createdAt: 1 };
+    }
+
+    if (sort === "salary-high") {
+      sortOption = { salary: -1 };
+    }
+
+    if (sort === "salary-low") {
+      sortOption = { salary: 1 };
+    }
 
     const jobs = await Job.find(query)
-  .populate("company", "companyName location industry")
-  .populate("employer", "fullName email")
-  .sort(sortOption)
-  .skip(skip)
-  .limit(limitNumber);
-  const totalJobs = await Job.countDocuments(query);
+      .populate("company", "companyName location industry")
+      .populate("employer", "fullName email")
+      .sort(sortOption)
+      .skip(skip)
+      .limit(limitNumber);
 
-const totalPages = Math.ceil(totalJobs / limitNumber);
+    const totalJobs = await Job.countDocuments(query);
+
+    const totalPages = Math.ceil(totalJobs / limitNumber);
 
     res.status(200).json({
-  success: true,
-  count: jobs.length,
-  currentPage: pageNumber,
-  totalPages,
-  totalJobs,
-  jobs,
-});
+      success: true,
+      count: jobs.length,
+      currentPage: pageNumber,
+      totalPages,
+      totalJobs,
+      jobs,
+    });
 
   } catch (error) {
     res.status(500).json({
@@ -152,6 +157,7 @@ const totalPages = Math.ceil(totalJobs / limitNumber);
     });
   }
 };
+
 // Get Job By ID
 const getJobById = async (req, res) => {
   try {
@@ -178,6 +184,7 @@ const getJobById = async (req, res) => {
     });
   }
 };
+
 // Update Job
 const updateJob = async (req, res) => {
   try {
@@ -190,7 +197,6 @@ const updateJob = async (req, res) => {
       });
     }
 
-    // Check ownership
     if (job.employer.toString() !== req.user.id) {
       return res.status(403).json({
         success: false,
@@ -220,6 +226,7 @@ const updateJob = async (req, res) => {
     });
   }
 };
+
 // Delete Job
 const deleteJob = async (req, res) => {
   try {
@@ -232,7 +239,6 @@ const deleteJob = async (req, res) => {
       });
     }
 
-    // Check ownership
     if (job.employer.toString() !== req.user.id) {
       return res.status(403).json({
         success: false,
@@ -254,6 +260,7 @@ const deleteJob = async (req, res) => {
     });
   }
 };
+
 // Get My Jobs
 const getMyJobs = async (req, res) => {
   try {
