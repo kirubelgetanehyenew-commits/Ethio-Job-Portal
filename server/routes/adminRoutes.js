@@ -6,6 +6,7 @@ const adminOnly = require("../middleware/adminMiddleware");
 
 const {
   getDashboardStats,
+  getPublicStatistics,
   getAllUsers,
   deleteUser,
   updateUserRole,
@@ -16,6 +17,8 @@ const {
   getAllApplications,
 } = require("../controllers/adminController");
 
+// Public Statistics
+router.get("/public-statistics", getPublicStatistics);
 // Dashboard Statistics
 router.get("/dashboard", protect, adminOnly, getDashboardStats);
 // User Management

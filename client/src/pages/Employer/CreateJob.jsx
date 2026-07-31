@@ -1,9 +1,14 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { createJob } from "../../services/jobService";
 
 function CreateJob() {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     title: "",
     description: "",
+    company: "",
     location: "",
     salary: "",
     jobType: "",
@@ -18,9 +23,21 @@ function CreateJob() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+
+    try {
+      const data = await createJob(formData);
+
+      alert(data.message);
+
+      navigate("/employer/dashboard");
+    } catch (error) {
+      alert(
+        error.response?.data?.message ||
+          "Failed to create job."
+      );
+    }
   };
 
   return (
@@ -40,6 +57,7 @@ function CreateJob() {
           value={formData.title}
           onChange={handleChange}
           className="w-full border rounded-lg p-3"
+          required
         />
 
         <textarea
@@ -48,6 +66,17 @@ function CreateJob() {
           value={formData.description}
           onChange={handleChange}
           className="w-full border rounded-lg p-3"
+          required
+        />
+
+        <input
+          type="text"
+          name="company"
+          placeholder="Company ID"
+          value={formData.company}
+          onChange={handleChange}
+          className="w-full border rounded-lg p-3"
+          required
         />
 
         <input
@@ -57,6 +86,7 @@ function CreateJob() {
           value={formData.location}
           onChange={handleChange}
           className="w-full border rounded-lg p-3"
+          required
         />
 
         <input
@@ -66,6 +96,7 @@ function CreateJob() {
           value={formData.salary}
           onChange={handleChange}
           className="w-full border rounded-lg p-3"
+          required
         />
 
         <input
@@ -75,6 +106,7 @@ function CreateJob() {
           value={formData.jobType}
           onChange={handleChange}
           className="w-full border rounded-lg p-3"
+          required
         />
 
         <input
@@ -84,6 +116,7 @@ function CreateJob() {
           value={formData.experience}
           onChange={handleChange}
           className="w-full border rounded-lg p-3"
+          required
         />
 
         <input
@@ -92,6 +125,7 @@ function CreateJob() {
           value={formData.deadline}
           onChange={handleChange}
           className="w-full border rounded-lg p-3"
+          required
         />
 
         <button

@@ -1,14 +1,12 @@
-import HeroSection from "./HeroSection";
-import SearchSection from "./SearchSection";
-import StatisticsSection from "./StatisticsSection";
-import FeaturedJobs from "./FeaturedJobs";
+import Hero from "../../components/home/Hero";
+import Statistics from "../../components/home/Statistics";
+import FeaturedJobs from "../../components/home/FeaturedJobs";
 
 function Home() {
   return (
     <>
-      <HeroSection />
-      <SearchSection />
-      <StatisticsSection />
+      <Hero />
+      <Statistics />
       <FeaturedJobs />
     </>
   );

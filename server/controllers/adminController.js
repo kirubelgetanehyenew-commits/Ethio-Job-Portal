@@ -2,6 +2,7 @@ const User = require("../models/User");
 const Company = require("../models/Company");
 const Job = require("../models/Job");
 const Application = require("../models/Application");
+const asyncHandler = require("express-async-handler");
 
 // Get Dashboard Statistics
 const getDashboardStats = async (req, res) => {
@@ -244,9 +245,31 @@ const getAllApplications = async (req, res) => {
     });
   }
 };
+// Public Statistics
+const getPublicStatistics = asyncHandler(async (req, res) => {
+  const totalJobs = await Job.countDocuments();
+  const totalCompanies = await Company.countDocuments();
+  const totalEmployers = await User.countDocuments({
+    role: "employer",
+  });
+  const totalJobSeekers = await User.countDocuments({
+    role: "jobseeker",
+  });
+
+  res.status(200).json({
+    success: true,
+    statistics: {
+      totalJobs,
+      totalCompanies,
+      totalEmployers,
+      totalJobSeekers,
+    },
+  });
+});
 
 module.exports = {
   getDashboardStats,
+  getPublicStatistics,
   getAllUsers,
   deleteUser,
   updateUserRole,

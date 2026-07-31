@@ -1,100 +1,124 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Navbar() {
-  const navigate = useNavigate();
-
   const user = JSON.parse(localStorage.getItem("user"));
 
-  const handleLogout = () => {
+  const logout = () => {
     localStorage.removeItem("user");
-    navigate("/login");
+    localStorage.removeItem("token");
+    window.location.href = "/";
   };
 
   return (
-    <nav className="bg-white shadow-md">
-      <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-        {/* Logo */}
-        <Link
-          to="/"
-          className="text-2xl font-bold text-blue-600"
-        >
-          Ethio Job Portal
-        </Link>
+    <header className="bg-white shadow-md sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="flex items-center justify-between h-20">
 
-        {/* Navigation Links */}
-        <div className="flex items-center gap-6">
+          {/* Logo */}
           <Link
             to="/"
-            className="text-gray-700 hover:text-blue-600"
+            className="text-3xl font-bold text-blue-600"
           >
-            Home
+            Ethio Job Portal
           </Link>
 
-          <Link
-            to="/jobs"
-            className="text-gray-700 hover:text-blue-600"
-          >
-            Jobs
-          </Link>
+          {/* Navigation */}
+          <nav className="hidden md:flex items-center gap-8 text-gray-700 font-medium">
 
-          <Link
-            to="/companies"
-            className="text-gray-700 hover:text-blue-600"
-          >
-            Companies
-          </Link>
+            <Link
+              to="/"
+              className="hover:text-blue-600 transition"
+            >
+              Home
+            </Link>
 
-          {user ? (
-            <>
-              {user.role === "jobseeker" && (
+            <Link
+              to="/jobs"
+              className="hover:text-blue-600 transition"
+            >
+              Jobs
+            </Link>
+
+            <Link
+              to="/companies"
+              className="hover:text-blue-600 transition"
+            >
+              Companies
+            </Link>
+
+            {!user && (
+              <>
                 <Link
-                  to="/my-applications"
-                  className="text-gray-700 hover:text-blue-600"
+                  to="/login"
+                  className="hover:text-blue-600"
                 >
-                  My Applications
+                  Login
                 </Link>
-              )}
 
-              {user.role === "employer" && (
                 <Link
-                  to="/my-jobs"
-                  className="text-gray-700 hover:text-blue-600"
+                  to="/register"
+                  className="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700"
                 >
-                  My Jobs
+                  Register
                 </Link>
-              )}
+              </>
+            )}
 
-              <span className="text-gray-700 font-medium">
-                {user.fullName}
-              </span>
+            {user?.role === "employer" && (
+              <Link
+                to="/employer/dashboard"
+                className="hover:text-blue-600"
+              >
+                Dashboard
+              </Link>
+            )}
+
+            {user?.role === "jobseeker" && (
+              <Link
+                to="/jobseeker/dashboard"
+                className="hover:text-blue-600"
+              >
+                Dashboard
+              </Link>
+            )}
+
+            {user?.role === "admin" && (
+              <Link
+                to="/admin/dashboard"
+                className="hover:text-blue-600"
+              >
+                Admin
+              </Link>
+            )}
+          </nav>
+
+          {/* User */}
+          {user && (
+            <div className="flex items-center gap-4">
+
+              <div className="text-right">
+                <p className="font-semibold">
+                  {user.fullName}
+                </p>
+
+                <p className="text-sm text-gray-500 capitalize">
+                  {user.role}
+                </p>
+              </div>
 
               <button
-                onClick={handleLogout}
-                className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700"
+                onClick={logout}
+                className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
               >
                 Logout
               </button>
-            </>
-          ) : (
-            <>
-              <Link
-                to="/login"
-                className="text-gray-700 hover:text-blue-600"
-              >
-                Login
-              </Link>
 
-              <Link
-                to="/register"
-                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
-              >
-                Register
-              </Link>
-            </>
+            </div>
           )}
+
         </div>
       </div>
-    </nav>
+    </header>
   );
 }
 

@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
-import { getMyJobs } from "../../services/jobService";
+import {
+  getMyJobs,
+  deleteJob,
+} from "../../services/jobService";
 import { Link } from "react-router-dom";
 
 function EmployerDashboard() {
@@ -20,6 +23,28 @@ function EmployerDashboard() {
 
     fetchMyJobs();
   }, []);
+  const handleDelete = async (jobId) => {
+  const confirmDelete = window.confirm(
+    "Are you sure you want to delete this job?"
+  );
+
+  if (!confirmDelete) return;
+
+  try {
+    const data = await deleteJob(jobId);
+
+    alert(data.message);
+
+    setJobs((prevJobs) =>
+      prevJobs.filter((job) => job._id !== jobId)
+    );
+  } catch (error) {
+    alert(
+      error.response?.data?.message ||
+        "Failed to delete job."
+    );
+  }
+};
 
   if (loading) {
     return (
@@ -99,17 +124,26 @@ function EmployerDashboard() {
 
               <div className="flex gap-3 mt-6">
 
-                <button className="bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600">
-                  Edit
-                </button>
+               <Link
+  to={`/employer/edit-job/${job._id}`}
+  className="bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600"
+>
+  Edit
+</Link>
 
-                <button className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">
-                  Delete
-                </button>
+               <button
+  onClick={() => handleDelete(job._id)}
+  className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700"
+>
+  Delete
+</button>
 
-                <button className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">
-                  View Applicants
-                </button>
+               <Link
+  to={`/employer/applicants/${job._id}`}
+  className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700"
+>
+  View Applicants
+</Link>
 
               </div>
             </div>

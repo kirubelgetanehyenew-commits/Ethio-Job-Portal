@@ -13,6 +13,8 @@ import EmployerDashboard from "./pages/Employer/EmployerDashboard";
 import AdminDashboard from "./pages/Admin/Dashboard";
 import JobSeekerDashboard from "./pages/JobSeeker/Dashboard";
 import CreateJob from "./pages/Employer/CreateJob";
+import EditJob from "./pages/Employer/EditJob";
+import Applicants from "./pages/Employer/Applicants";
 
 function App() {
   return (
@@ -52,6 +54,14 @@ function App() {
            path="/employer/create-job"
             element={<CreateJob />}
           />
+          <Route
+  path="/employer/edit-job/:id"
+  element={<EditJob />}
+/>
+<Route
+  path="/employer/applicants/:jobId"
+  element={<Applicants />}
+/>
 
         </Route>
       </Routes>
