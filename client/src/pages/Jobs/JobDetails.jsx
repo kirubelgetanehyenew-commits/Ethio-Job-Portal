@@ -1,5 +1,16 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import {
+  MapPin,
+  DollarSign,
+  Briefcase,
+  Calendar,
+  Building2,
+  User,
+  Mail,
+  Globe,
+} from "lucide-react";
+
 import { getJobById } from "../../services/jobService";
 import { applyForJob } from "../../services/applicationService";
 
@@ -14,11 +25,10 @@ function JobDetails() {
       const data = await applyForJob(job._id);
       alert(data.message);
     } catch (error) {
-      if (error.response) {
-        alert(error.response.data.message);
-      } else {
-        alert("Something went wrong. Please try again.");
-      }
+      alert(
+        error.response?.data?.message ||
+        "Something went wrong."
+      );
     }
   };
 
@@ -28,7 +38,7 @@ function JobDetails() {
         const data = await getJobById(id);
         setJob(data.job);
       } catch (error) {
-        console.error("Error fetching job:", error);
+        console.error(error);
       } finally {
         setLoading(false);
       }
@@ -37,118 +47,176 @@ function JobDetails() {
     fetchJob();
   }, [id]);
 
-  if (loading) {
+  if (loading)
     return (
-      <section className="max-w-5xl mx-auto py-12 px-6">
-        <h2 className="text-2xl font-bold">Loading...</h2>
-      </section>
+      <div className="py-40 text-center text-3xl font-bold">
+        Loading...
+      </div>
     );
-  }
 
-  if (!job) {
+  if (!job)
     return (
-      <section className="max-w-5xl mx-auto py-12 px-6">
-        <h2 className="text-2xl font-bold text-red-600">
-          Job not found.
-        </h2>
-      </section>
+      <div className="py-40 text-center text-red-600 text-3xl font-bold">
+        Job Not Found
+      </div>
     );
-  }
 
   return (
-    <section className="max-w-5xl mx-auto py-12 px-6">
-      <div className="bg-white shadow-xl rounded-xl p-8">
+    <section className="bg-slate-50 min-h-screen py-16">
 
-        <h1 className="text-3xl font-bold">
-          {job.title}
-        </h1>
+      <div className="max-w-6xl mx-auto px-6">
 
-        <p className="text-gray-500 mt-2">
-          {job.company?.companyName}
-        </p>
+        <div className="grid lg:grid-cols-3 gap-10">
 
-        <p className="mt-4">
-          📍 {job.location}
-        </p>
+          {/* LEFT */}
 
-        <p className="mt-2 text-blue-600 font-bold">
-          💰 ETB {job.salary}
-        </p>
+          <div className="lg:col-span-2">
 
-        <p className="mt-2">
-          💼 {job.jobType}
-        </p>
+            <div className="bg-white rounded-3xl shadow-lg p-10">
 
-        <p className="mt-2">
-          📅 Deadline:{" "}
-          {new Date(job.deadline).toLocaleDateString()}
-        </p>
+              <div className="flex justify-between items-start">
 
-        <p className="mt-2">
-          ⭐ {job.experience}
-        </p>
+                <div>
 
-        <p className="mt-6 text-gray-700">
-          {job.description}
-        </p>
+                  <span className="bg-orange-100 text-orange-700 px-4 py-2 rounded-full text-sm font-semibold">
+                    {job.jobType}
+                  </span>
 
-        <hr className="my-6" />
+                  <h1 className="text-5xl font-black mt-5">
+                    {job.title}
+                  </h1>
 
-        <h2 className="text-xl font-bold">
-          Company Information
-        </h2>
+                  <p className="text-orange-600 text-xl font-semibold mt-2">
+                    {job.company?.companyName}
+                  </p>
 
-        <p className="mt-2">
-          <strong>Name:</strong> {job.company?.companyName}
-        </p>
+                </div>
 
-        <p>
-          <strong>Industry:</strong> {job.company?.industry}
-        </p>
+                <div className="w-20 h-20 rounded-3xl bg-orange-100 flex items-center justify-center">
+                  <Building2
+                    size={40}
+                    className="text-orange-600"
+                  />
+                </div>
 
-        <p>
-          <strong>Location:</strong> {job.company?.location}
-        </p>
+              </div>
 
-        <p>
-          <strong>Website:</strong>{" "}
-          <a
-            href={job.company?.website}
-            target="_blank"
-            rel="noreferrer"
-            className="text-blue-600 underline"
-          >
-            {job.company?.website}
-          </a>
-        </p>
+              <div className="grid md:grid-cols-2 gap-5 mt-10">
 
-        <hr className="my-6" />
+                <Info icon={<MapPin />} text={job.location} />
+                <Info icon={<DollarSign />} text={`ETB ${job.salary}`} />
+                <Info icon={<Briefcase />} text={job.experience} />
+                <Info
+                  icon={<Calendar />}
+                  text={new Date(job.deadline).toLocaleDateString()}
+                />
 
-        <h2 className="text-xl font-bold">
-          Employer Information
-        </h2>
+              </div>
 
-        <p className="mt-2">
-          <strong>Name:</strong> {job.employer?.fullName}
-        </p>
+              <div className="mt-12">
 
-        <p>
-          <strong>Email:</strong> {job.employer?.email}
-        </p>
+                <h2 className="text-2xl font-bold mb-5">
+                  Job Description
+                </h2>
 
-        <button
-          onClick={handleApply}
-          className="mt-8 w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700"
-        >
-          Apply Now
-        </button>
+                <p className="leading-8 text-gray-600">
+                  {job.description}
+                </p>
 
-        <p className="mt-6 text-sm text-gray-500">
-          Job ID: {job._id}
-        </p>
+              </div>
+
+            </div>
+
+          </div>
+
+          {/* RIGHT */}
+
+          <div className="space-y-8">
+
+            <div className="bg-white rounded-3xl shadow-lg p-8">
+
+              <h2 className="text-2xl font-bold mb-6">
+                Company
+              </h2>
+
+              <div className="space-y-4">
+
+                <Info
+                  icon={<Building2 />}
+                  text={job.company?.companyName}
+                />
+
+                <Info
+                  icon={<Briefcase />}
+                  text={job.company?.industry}
+                />
+
+                <Info
+                  icon={<MapPin />}
+                  text={job.company?.location}
+                />
+
+                <Info
+                  icon={<Globe />}
+                  text={job.company?.website}
+                />
+
+              </div>
+
+            </div>
+
+            <div className="bg-white rounded-3xl shadow-lg p-8">
+
+              <h2 className="text-2xl font-bold mb-6">
+                Employer
+              </h2>
+
+              <div className="space-y-4">
+
+                <Info
+                  icon={<User />}
+                  text={job.employer?.fullName}
+                />
+
+                <Info
+                  icon={<Mail />}
+                  text={job.employer?.email}
+                />
+
+              </div>
+
+              <button
+                onClick={handleApply}
+                className="w-full mt-10 bg-gradient-to-r from-orange-500 to-amber-500 text-white py-4 rounded-2xl font-bold text-lg hover:shadow-xl hover:scale-[1.02] transition"
+              >
+                Apply Now
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
 
       </div>
+
     </section>
+  );
+}
+
+function Info({ icon, text }) {
+  return (
+    <div className="flex items-center gap-3 bg-slate-100 rounded-xl p-4">
+
+      <div className="text-orange-500">
+        {icon}
+      </div>
+
+      <span className="font-medium text-gray-700">
+        {text}
+      </span>
+
+    </div>
   );
 }
 

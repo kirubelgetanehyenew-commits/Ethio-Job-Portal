@@ -5,30 +5,34 @@ import {
   DollarSign,
   CalendarDays,
   Building2,
+  ArrowRight,
 } from "lucide-react";
 
 function JobCard({ job }) {
   return (
-    <div className="bg-white rounded-3xl shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 hover:-translate-y-2">
+    <div className="group bg-white rounded-3xl border border-slate-200 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 overflow-hidden">
 
-      {/* Top */}
-      <div className="p-6">
+      {/* Header */}
+      <div className="p-7">
 
         <div className="flex justify-between items-start">
 
           <div className="flex gap-4">
 
-            <div className="w-14 h-14 rounded-2xl bg-blue-100 flex items-center justify-center">
-              <Building2 className="text-blue-600" size={28} />
+            <div className="w-16 h-16 rounded-2xl bg-emerald-100 flex items-center justify-center">
+              <Building2
+                className="text-emerald-600"
+                size={30}
+              />
             </div>
 
             <div>
 
-              <h2 className="text-2xl font-bold text-gray-900">
+              <h2 className="text-2xl font-bold text-slate-900 group-hover:text-emerald-600 transition">
                 {job.title}
               </h2>
 
-              <p className="text-blue-600 font-semibold mt-1">
+              <p className="text-slate-500 mt-1 font-medium">
                 {job.company?.companyName || "Company"}
               </p>
 
@@ -36,64 +40,92 @@ function JobCard({ job }) {
 
           </div>
 
-          <span className="bg-green-100 text-green-700 px-4 py-1 rounded-full text-sm font-semibold">
+          <span className="bg-emerald-100 text-emerald-700 px-4 py-2 rounded-full text-sm font-semibold">
             {job.jobType}
           </span>
 
         </div>
 
-        <p className="text-gray-600 mt-5 line-clamp-2">
+        {/* Description */}
+
+        <p className="text-slate-600 mt-6 leading-7 line-clamp-3">
           {job.description}
         </p>
 
-        <div className="grid grid-cols-2 gap-4 mt-8">
+        {/* Details */}
 
-          <div className="flex items-center gap-2">
+        <div className="grid grid-cols-2 gap-5 mt-8">
+
+          <div className="flex items-center gap-3">
+
             <MapPin
               size={18}
-              className="text-blue-500"
+              className="text-emerald-600"
             />
-            <span>{job.location}</span>
+
+            <span className="text-slate-600">
+              {job.location}
+            </span>
+
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
+
             <DollarSign
               size={18}
-              className="text-green-500"
+              className="text-green-600"
             />
-            <span>ETB {job.salary}</span>
+
+            <span className="font-semibold text-slate-700">
+              ETB {job.salary}
+            </span>
+
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
+
             <Briefcase
               size={18}
-              className="text-purple-500"
+              className="text-amber-500"
             />
-            <span>{job.experience}</span>
+
+            <span className="text-slate-600">
+              {job.experience}
+            </span>
+
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
+
             <CalendarDays
               size={18}
               className="text-red-500"
             />
-            <span>
+
+            <span className="text-slate-600">
               {new Date(job.deadline).toLocaleDateString()}
             </span>
+
           </div>
 
         </div>
 
       </div>
 
-      {/* Bottom */}
-      <div className="bg-gray-50 px-6 py-5">
+      {/* Footer */}
+
+      <div className="bg-slate-50 px-7 py-5 border-t">
 
         <Link
           to={`/jobs/${job._id}`}
-          className="w-full block text-center bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold py-3 rounded-xl hover:shadow-lg transition"
+          className="flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white py-3 rounded-xl font-bold transition-all duration-300"
         >
-          View Details →
+          View Details
+
+          <ArrowRight
+            size={18}
+          />
+
         </Link>
 
       </div>

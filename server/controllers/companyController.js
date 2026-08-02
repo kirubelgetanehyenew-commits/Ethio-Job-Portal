@@ -139,9 +139,29 @@ const updateCompany = async (req, res) => {
     });
   }
 };
+// Public - Get All Companies
+const getAllCompaniesPublic = async (req, res) => {
+  try {
+    const companies = await Company.find().sort({
+      createdAt: -1,
+    });
+
+    res.status(200).json({
+      success: true,
+      companies,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
 module.exports = {
   createCompany,
   getMyCompanies,
   getCompanyById,
   updateCompany,
+  getAllCompaniesPublic,
 };

@@ -1,6 +1,16 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { createJob } from "../../services/jobService";
+import { getMyCompanies } from "../../services/companyService";
+import {
+  Briefcase,
+  Building2,
+  MapPin,
+  DollarSign,
+  Calendar,
+  Award,
+  FileText,
+} from "lucide-react";
 
 function CreateJob() {
   const navigate = useNavigate();
@@ -15,6 +25,19 @@ function CreateJob() {
     experience: "",
     deadline: "",
   });
+  const [companies, setCompanies] = useState([]);
+  useEffect(() => {
+  const fetchCompanies = async () => {
+    try {
+      const data = await getMyCompanies();
+      setCompanies(data.companies);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  fetchCompanies();
+}, []);
 
   const handleChange = (e) => {
     setFormData({
@@ -41,100 +64,270 @@ function CreateJob() {
   };
 
   return (
-    <section className="max-w-3xl mx-auto py-10 px-6">
-      <h1 className="text-3xl font-bold mb-6">
-        Create Job
-      </h1>
+    <section className="min-h-screen bg-slate-100 py-12">
 
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white shadow-lg rounded-xl p-6 space-y-4"
-      >
-        <input
-          type="text"
-          name="title"
-          placeholder="Job Title"
-          value={formData.title}
-          onChange={handleChange}
-          className="w-full border rounded-lg p-3"
-          required
-        />
+      <div className="max-w-5xl mx-auto px-6">
 
-        <textarea
-          name="description"
-          placeholder="Job Description"
-          value={formData.description}
-          onChange={handleChange}
-          className="w-full border rounded-lg p-3"
-          required
-        />
+        <div className="mb-10">
 
-        <input
-          type="text"
-          name="company"
-          placeholder="Company ID"
-          value={formData.company}
-          onChange={handleChange}
-          className="w-full border rounded-lg p-3"
-          required
-        />
+          <p className="uppercase tracking-widest text-orange-500 font-bold">
+            Employer
+          </p>
 
-        <input
-          type="text"
-          name="location"
-          placeholder="Location"
-          value={formData.location}
-          onChange={handleChange}
-          className="w-full border rounded-lg p-3"
-          required
-        />
+          <h1 className="text-5xl font-black text-slate-900 mt-2">
+            Create New Job
+          </h1>
 
-        <input
-          type="number"
-          name="salary"
-          placeholder="Salary"
-          value={formData.salary}
-          onChange={handleChange}
-          className="w-full border rounded-lg p-3"
-          required
-        />
+          <p className="text-slate-500 mt-3">
+            Publish a professional job listing and reach thousands of candidates.
+          </p>
 
-        <input
-          type="text"
-          name="jobType"
-          placeholder="Job Type"
-          value={formData.jobType}
-          onChange={handleChange}
-          className="w-full border rounded-lg p-3"
-          required
-        />
+        </div>
 
-        <input
-          type="text"
-          name="experience"
-          placeholder="Experience"
-          value={formData.experience}
-          onChange={handleChange}
-          className="w-full border rounded-lg p-3"
-          required
-        />
-
-        <input
-          type="date"
-          name="deadline"
-          value={formData.deadline}
-          onChange={handleChange}
-          className="w-full border rounded-lg p-3"
-          required
-        />
-
-        <button
-          type="submit"
-          className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700"
+        <form
+          onSubmit={handleSubmit}
+          className="bg-white rounded-3xl shadow-xl p-10"
         >
-          Create Job
-        </button>
-      </form>
+
+          <div className="grid md:grid-cols-2 gap-8">
+
+            <div>
+
+              <label className="font-semibold mb-2 block">
+                Job Title
+              </label>
+
+              <div className="relative">
+
+                <Briefcase
+                  className="absolute left-4 top-4 text-orange-500"
+                  size={20}
+                />
+
+                <input
+                  type="text"
+                  name="title"
+                  value={formData.title}
+                  onChange={handleChange}
+                  placeholder="Frontend Developer"
+                  className="w-full border rounded-xl pl-12 pr-4 py-4 focus:ring-2 focus:ring-orange-400 outline-none"
+                  required
+                />
+
+              </div>
+
+            </div>
+
+            <div>
+
+            <label className="font-semibold mb-2 block">
+  Company
+</label>
+
+<div className="relative">
+
+  <Building2
+    className="absolute left-4 top-4 text-orange-500 z-10"
+    size={20}
+    style={{ top: "18px" }}
+  />
+
+  <select
+    name="company"
+    value={formData.company}
+    onChange={handleChange}
+    className="w-full border rounded-xl pl-12 pr-4 py-4 focus:ring-2 focus:ring-orange-400 outline-none appearance-none bg-white"
+    required
+  >
+    <option value="">
+      Select Your Company
+    </option>
+
+    {companies.map((company) => (
+      <option
+        key={company._id}
+        value={company._id}
+      >
+        {company.companyName}
+      </option>
+    ))}
+
+  </select>
+
+</div>
+
+            </div>
+
+            <div>
+
+              <label className="font-semibold mb-2 block">
+                Location
+              </label>
+
+              <div className="relative">
+
+                <MapPin
+                  className="absolute left-4 top-4 text-orange-500"
+                  size={20}
+                />
+
+                <input
+                  type="text"
+                  name="location"
+                  value={formData.location}
+                  onChange={handleChange}
+                  placeholder="Addis Ababa"
+                  className="w-full border rounded-xl pl-12 pr-4 py-4 focus:ring-2 focus:ring-orange-400 outline-none"
+                  required
+                />
+
+              </div>
+
+            </div>
+
+            <div>
+
+              <label className="font-semibold mb-2 block">
+                Salary (ETB)
+              </label>
+
+              <div className="relative">
+
+                <DollarSign
+                  className="absolute left-4 top-4 text-orange-500"
+                  size={20}
+                />
+
+                <input
+                  type="number"
+                  name="salary"
+                  value={formData.salary}
+                  onChange={handleChange}
+                  placeholder="30000"
+                  className="w-full border rounded-xl pl-12 pr-4 py-4 focus:ring-2 focus:ring-orange-400 outline-none"
+                  required
+                />
+
+              </div>
+
+            </div>
+
+            <div>
+
+              <label className="font-semibold mb-2 block">
+                Job Type
+              </label>
+
+              <select
+                name="jobType"
+                value={formData.jobType}
+                onChange={handleChange}
+                className="w-full border rounded-xl px-4 py-4 focus:ring-2 focus:ring-orange-400 outline-none"
+                required
+              >
+                <option value="">Select Job Type</option>
+                <option>Full-time</option>
+                <option>Part-time</option>
+                <option>Remote</option>
+                <option>Contract</option>
+                <option>Internship</option>
+              </select>
+
+            </div>
+
+            <div>
+
+              <label className="font-semibold mb-2 block">
+                Experience
+              </label>
+
+              <div className="relative">
+
+                <Award
+                  className="absolute left-4 top-4 text-orange-500"
+                  size={20}
+                />
+
+                <input
+                  type="text"
+                  name="experience"
+                  value={formData.experience}
+                  onChange={handleChange}
+                  placeholder="2 Years"
+                  className="w-full border rounded-xl pl-12 pr-4 py-4 focus:ring-2 focus:ring-orange-400 outline-none"
+                  required
+                />
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <div className="mt-8">
+
+            <label className="font-semibold mb-2 block">
+              Application Deadline
+            </label>
+
+            <div className="relative">
+
+              <Calendar
+                className="absolute left-4 top-4 text-orange-500"
+                size={20}
+              />
+
+              <input
+                type="date"
+                name="deadline"
+                value={formData.deadline}
+                onChange={handleChange}
+                className="w-full border rounded-xl pl-12 pr-4 py-4 focus:ring-2 focus:ring-orange-400 outline-none"
+                required
+              />
+
+            </div>
+
+          </div>
+
+          <div className="mt-8">
+
+            <label className="font-semibold mb-2 block">
+              Job Description
+            </label>
+
+            <div className="relative">
+
+              <FileText
+                className="absolute left-4 top-4 text-orange-500"
+                size={20}
+              />
+
+              <textarea
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                rows="8"
+                placeholder="Describe the role, responsibilities and qualifications..."
+                className="w-full border rounded-xl pl-12 pr-4 py-4 focus:ring-2 focus:ring-orange-400 outline-none resize-none"
+                required
+              />
+
+            </div>
+
+          </div>
+
+          <button
+            type="submit"
+            className="mt-10 w-full bg-orange-500 hover:bg-orange-600 text-white text-lg font-bold py-4 rounded-2xl transition duration-300"
+          >
+            Publish Job
+          </button>
+
+        </form>
+
+      </div>
+
     </section>
   );
 }

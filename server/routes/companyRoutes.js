@@ -6,11 +6,14 @@ const {
   getMyCompanies,
   getCompanyById,
   updateCompany,
+  getAllCompaniesPublic,
 } = require("../controllers/companyController");
 
 const protect = require("../middleware/authMiddleware");
 const authorize = require("../middleware/roleMiddleware");
 
+// Public
+router.get("/", getAllCompaniesPublic);
 // Employer only
 router.post("/", protect, authorize("employer"), createCompany);
 router.get("/my", protect, authorize("employer"), getMyCompanies);

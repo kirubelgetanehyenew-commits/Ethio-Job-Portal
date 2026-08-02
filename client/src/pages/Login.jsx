@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { login } from "../services/authService";
+import { Mail, Lock, BriefcaseBusiness } from "lucide-react";
 
 function Login() {
   const navigate = useNavigate();
@@ -25,7 +26,6 @@ function Login() {
     try {
       const data = await login(formData);
 
-      // Save logged-in user together with token
       localStorage.setItem(
         "user",
         JSON.stringify({
@@ -34,9 +34,6 @@ function Login() {
         })
       );
 
-      alert(data.message);
-
-      // Redirect according to role
       if (data.user.role === "admin") {
         navigate("/admin/dashboard");
       } else if (data.user.role === "employer") {
@@ -45,51 +42,109 @@ function Login() {
         navigate("/jobseeker/dashboard");
       }
     } catch (error) {
-      alert(
-        error.response?.data?.message ||
-        "Login failed."
-      );
+      alert(error.response?.data?.message || "Login failed.");
     }
   };
 
   return (
-    <section className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white shadow-xl rounded-xl p-8 w-full max-w-md">
-        <h1 className="text-3xl font-bold text-center mb-6">
-          Login
-        </h1>
+    <section className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-100 flex items-center justify-center px-6 py-20">
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+      <div className="grid lg:grid-cols-2 max-w-6xl w-full bg-white rounded-3xl shadow-2xl overflow-hidden">
 
-          <input
-            type="email"
-            name="email"
-            value={email}
-            onChange={handleChange}
-            placeholder="Email"
-            className="w-full border rounded-lg p-3"
-            required
-          />
+        {/* Left Side */}
+        <div className="hidden lg:flex bg-gradient-to-br from-orange-500 via-amber-500 to-yellow-500 text-white p-14 flex-col justify-center">
 
-          <input
-            type="password"
-            name="password"
-            value={password}
-            onChange={handleChange}
-            placeholder="Password"
-            className="w-full border rounded-lg p-3"
-            required
-          />
+          <div className="w-20 h-20 rounded-3xl bg-white/20 backdrop-blur-md flex items-center justify-center mb-8">
+            <BriefcaseBusiness size={40} />
+          </div>
 
-          <button
-            type="submit"
-            className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700"
-          >
+          <h1 className="text-5xl font-black leading-tight">
+            Welcome
+            <br />
+            Back
+          </h1>
+
+          <p className="mt-8 text-xl leading-8 text-orange-50">
+            Continue your journey with Ethiopia's modern employment platform.
+            Find opportunities, manage applications, and grow your career.
+          </p>
+
+        </div>
+
+        {/* Right Side */}
+        <div className="p-10 lg:p-16">
+
+          <h2 className="text-4xl font-black text-gray-900 mb-3">
             Login
-          </button>
+          </h2>
 
-        </form>
+          <p className="text-gray-500 mb-10">
+            Enter your account information.
+          </p>
+
+          <form onSubmit={handleSubmit} className="space-y-6">
+
+            <div className="relative">
+
+              <Mail
+                size={20}
+                className="absolute left-4 top-4 text-gray-400"
+              />
+
+              <input
+                type="email"
+                name="email"
+                value={email}
+                onChange={handleChange}
+                placeholder="Email address"
+                className="w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-300 focus:ring-2 focus:ring-orange-400 outline-none"
+                required
+              />
+
+            </div>
+
+            <div className="relative">
+
+              <Lock
+                size={20}
+                className="absolute left-4 top-4 text-gray-400"
+              />
+
+              <input
+                type="password"
+                name="password"
+                value={password}
+                onChange={handleChange}
+                placeholder="Password"
+                className="w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-300 focus:ring-2 focus:ring-orange-400 outline-none"
+                required
+              />
+
+            </div>
+
+            <button
+              type="submit"
+              className="w-full py-4 rounded-2xl font-bold text-lg bg-gradient-to-r from-orange-500 to-amber-500 text-white hover:scale-[1.02] hover:shadow-xl transition"
+            >
+              Login
+            </button>
+
+          </form>
+
+          <p className="text-center text-gray-500 mt-8">
+            Don't have an account?{" "}
+            <Link
+              to="/register"
+              className="font-bold text-orange-600 hover:underline"
+            >
+              Register
+            </Link>
+          </p>
+
+        </div>
+
       </div>
+
     </section>
   );
 }

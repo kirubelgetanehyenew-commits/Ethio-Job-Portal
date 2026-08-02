@@ -15,6 +15,8 @@ import JobSeekerDashboard from "./pages/JobSeeker/Dashboard";
 import CreateJob from "./pages/Employer/CreateJob";
 import EditJob from "./pages/Employer/EditJob";
 import Applicants from "./pages/Employer/Applicants";
+import Jobs from "./pages/Jobs/Jobs";
+import Companies from "./pages/Companies/Companies";
 
 function App() {
   return (
@@ -62,6 +64,8 @@ function App() {
   path="/employer/applicants/:jobId"
   element={<Applicants />}
 />
+<Route path="/jobs" element={<Jobs />} />
+<Route path="/companies" element={<Companies />} />
 
         </Route>
       </Routes>

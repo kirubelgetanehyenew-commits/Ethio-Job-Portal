@@ -13,9 +13,8 @@ html {
 }
 
 body {
-  font-family: "Inter", sans-serif;
-  background-color: #f8fafc;
-  color: #0f172a;
+  background: #f8fafc;
+  color: #1e293b;
 }
 
 button {
@@ -37,4 +36,16 @@ input,
 textarea,
 select {
   font-family: inherit;
+}
+/* =========================
+   Ethio Job Theme
+========================= */
+
+:root {
+  --primary: #059669;
+  --primary-dark: #047857;
+  --secondary: #0f172a;
+  --accent: #f59e0b;
+  --background: #f8fafc;
+  --surface: #ffffff;
 }
