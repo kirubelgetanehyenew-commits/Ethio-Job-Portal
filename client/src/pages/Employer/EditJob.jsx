@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getJobById, updateJob } from "../../services/jobService";
+import { getMyCompanies } from "../../services/companyService";
 
 function EditJob() {
   const { id } = useParams();
@@ -16,8 +17,17 @@ function EditJob() {
     experience: "",
     deadline: "",
   });
+  const [companies, setCompanies] = useState([]);
 
   useEffect(() => {
+    const fetchCompanies = async () => {
+  try {
+    const data = await getMyCompanies();
+    setCompanies(data.companies);
+  } catch (error) {
+    console.error(error);
+  }
+};
     const fetchJob = async () => {
       try {
         const data = await getJobById(id);
@@ -39,7 +49,8 @@ function EditJob() {
       }
     };
 
-    fetchJob();
+    fetchCompanies();
+fetchJob();
   }, [id]);
 
   const handleChange = (e) => {
@@ -67,43 +78,63 @@ function EditJob() {
   };
 
   return (
-    <section className="max-w-3xl mx-auto py-10 px-6">
-      <h1 className="text-3xl font-bold mb-6">
+    <section className="min-h-screen bg-slate-50 py-12">
+  <div className="max-w-4xl mx-auto px-6">
+
+    <div className="mb-10">
+
+      <h1 className="text-5xl font-black text-slate-900">
         Edit Job
       </h1>
 
+      <p className="text-gray-500 mt-3">
+        Update your job posting information.
+      </p>
+</div>
+
+
       <form
-        onSubmit={handleSubmit}
-        className="bg-white shadow-lg rounded-xl p-6 space-y-4"
-      >
+  onSubmit={handleSubmit}
+  className="bg-white rounded-3xl shadow-xl p-10 space-y-6 border border-gray-100"
+>
         <input
           type="text"
           name="title"
           value={formData.title}
           onChange={handleChange}
           placeholder="Job Title"
-          className="w-full border rounded-lg p-3"
+          className="w-full border border-gray-300 rounded-xl px-4 py-4 focus:ring-2 focus:ring-orange-400 focus:border-orange-400 outline-none transition"
           required
         />
 
         <textarea
+  rows={6}
           name="description"
           value={formData.description}
           onChange={handleChange}
           placeholder="Job Description"
-          className="w-full border rounded-lg p-3"
+          className="w-full border border-gray-300 rounded-xl px-4 py-4 focus:ring-2 focus:ring-orange-400 focus:border-orange-400 outline-none transition"
           required
         />
 
-        <input
-          type="text"
-          name="company"
-          value={formData.company}
-          onChange={handleChange}
-          placeholder="Company ID"
-          className="w-full border rounded-lg p-3"
-          required
-        />
+        <select
+  name="company"
+  value={formData.company}
+  onChange={handleChange}
+  className="w-full border border-gray-300 rounded-xl px-4 py-4 focus:ring-2 focus:ring-orange-400 focus:border-orange-400 outline-none transition"
+  required
+>
+  <option value="">Select Company</option>
+
+  {companies.map((company) => (
+    <option
+      key={company._id}
+      value={company._id}
+    >
+      {company.companyName}
+    </option>
+  ))}
+</select>
 
         <input
           type="text"
@@ -111,7 +142,7 @@ function EditJob() {
           value={formData.location}
           onChange={handleChange}
           placeholder="Location"
-          className="w-full border rounded-lg p-3"
+          className="w-full border border-gray-300 rounded-xl px-4 py-4 focus:ring-2 focus:ring-orange-400 focus:border-orange-400 outline-none transition"
           required
         />
 
@@ -121,7 +152,7 @@ function EditJob() {
           value={formData.salary}
           onChange={handleChange}
           placeholder="Salary"
-          className="w-full border rounded-lg p-3"
+          className="w-full border border-gray-300 rounded-xl px-4 py-4 focus:ring-2 focus:ring-orange-400 focus:border-orange-400 outline-none transition"
           required
         />
 
@@ -131,7 +162,7 @@ function EditJob() {
           value={formData.jobType}
           onChange={handleChange}
           placeholder="Job Type"
-          className="w-full border rounded-lg p-3"
+          className="w-full border border-gray-300 rounded-xl px-4 py-4 focus:ring-2 focus:ring-orange-400 focus:border-orange-400 outline-none transition"
           required
         />
 
@@ -141,7 +172,7 @@ function EditJob() {
           value={formData.experience}
           onChange={handleChange}
           placeholder="Experience"
-          className="w-full border rounded-lg p-3"
+          className="w-full border border-gray-300 rounded-xl px-4 py-4 focus:ring-2 focus:ring-orange-400 focus:border-orange-400 outline-none transition"
           required
         />
 
@@ -150,18 +181,21 @@ function EditJob() {
           name="deadline"
           value={formData.deadline}
           onChange={handleChange}
-          className="w-full border rounded-lg p-3"
+         className="w-full border border-gray-300 rounded-xl px-4 py-4 focus:ring-2 focus:ring-orange-400 focus:border-orange-400 outline-none transition"
           required
         />
 
         <button
-          type="submit"
-          className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700"
-        >
-          Update Job
-        </button>
+  type="submit"
+  className="w-full bg-gradient-to-r from-orange-500 to-amber-500 text-white py-4 rounded-2xl font-bold text-lg hover:shadow-xl hover:scale-[1.02] transition-all"
+>
+  Update Job
+</button>
       </form>
-    </section>
+
+  </div>
+
+</section>
   );
 }
 
