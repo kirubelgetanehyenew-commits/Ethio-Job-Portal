@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { login } from "../services/authService";
 import { Mail, Lock, BriefcaseBusiness } from "lucide-react";
+
+import { login } from "../services/authService";
+import { useAuth } from "../context/AuthContext";
 
 function Login() {
   const navigate = useNavigate();
+  const { login: authLogin } = useAuth();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -26,13 +29,11 @@ function Login() {
     try {
       const data = await login(formData);
 
-      localStorage.setItem(
-        "user",
-        JSON.stringify({
-          ...data.user,
-          token: data.token,
-        })
-      );
+      // Login through AuthContext
+      authLogin({
+        ...data.user,
+        token: data.token,
+      });
 
       if (data.user.role === "admin") {
         navigate("/admin/dashboard");

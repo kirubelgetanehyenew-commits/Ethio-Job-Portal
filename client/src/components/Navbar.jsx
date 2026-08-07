@@ -1,6 +1,16 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 function Navbar() {
+  const navigate = useNavigate();
+
+  const { user, logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
+
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-lg border-b border-slate-200 shadow-sm">
       <div className="max-w-7xl mx-auto flex items-center justify-between px-6 h-20">
@@ -51,31 +61,50 @@ function Navbar() {
             Companies
           </Link>
 
-          <Link
-            to="/my-applications"
-            className="font-semibold text-slate-700 hover:text-emerald-600 transition"
-          >
-            Applications
-          </Link>
+          {user?.role === "jobseeker" && (
+            <Link
+              to="/my-applications"
+              className="font-semibold text-slate-700 hover:text-emerald-600 transition"
+            >
+              Applications
+            </Link>
+          )}
 
         </nav>
 
         {/* Right Side */}
         <div className="flex items-center gap-4">
 
-          <Link
-            to="/login"
-            className="font-semibold text-slate-700 hover:text-emerald-600 transition"
-          >
-            Login
-          </Link>
+          {!user ? (
+            <>
+              <Link
+                to="/login"
+                className="font-semibold text-slate-700 hover:text-emerald-600 transition"
+              >
+                Login
+              </Link>
 
-          <Link
-            to="/register"
-            className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
-          >
-            Register
-          </Link>
+              <Link
+                to="/register"
+                className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+              >
+                Register
+              </Link>
+            </>
+          ) : (
+            <>
+              <span className="font-semibold text-slate-700">
+                {user.fullName}
+              </span>
+
+              <button
+                onClick={handleLogout}
+                className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+              >
+                Logout
+              </button>
+            </>
+          )}
 
         </div>
 

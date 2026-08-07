@@ -5,7 +5,7 @@ import {
   Users,
   FileText,
 } from "lucide-react";
-import { getStatistics } from "../../services/statService";
+import statService from "../../services/statService";
 
 function Statistics() {
   const [stats, setStats] = useState(null);
@@ -13,7 +13,7 @@ function Statistics() {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const data = await getStatistics();
+        const data = await statService.getStatistics();
         setStats(data.statistics);
       } catch (error) {
         console.error(error);

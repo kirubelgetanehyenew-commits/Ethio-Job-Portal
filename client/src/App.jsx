@@ -1,75 +1,136 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
-import MainLayout from "./layouts/MainLayout";
+// Layouts
+import PublicLayout from "./layouts/PublicLayout";
+import EmployerLayout from "./layouts/EmployerLayout";
+import JobSeekerLayout from "./layouts/JobSeekerLayout";
+import AdminLayout from "./layouts/AdminLayout";
 
+// Public Pages
 import Home from "./pages/Home/Home";
-import JobDetails from "./pages/jobs/JobDetails";
+import Jobs from "./pages/Jobs/Jobs";
+import JobDetails from "./pages/Jobs/JobDetails";
+import Companies from "./pages/Companies/Companies";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 
-import MyApplications from "./pages/applications/MyApplications";
-
+// Employer Pages
 import EmployerDashboard from "./pages/Employer/EmployerDashboard";
-import AdminDashboard from "./pages/Admin/Dashboard";
-import JobSeekerDashboard from "./pages/JobSeeker/Dashboard";
 import CreateJob from "./pages/Employer/CreateJob";
 import EditJob from "./pages/Employer/EditJob";
 import Applicants from "./pages/Employer/Applicants";
-import Jobs from "./pages/Jobs/Jobs";
-import Companies from "./pages/Companies/Companies";
+
+// Job Seeker Pages
+import Dashboard from "./pages/JobSeeker/Dashboard";
+import MyApplications from "./pages/applications/MyApplications";
+
+// Admin Pages
+import AdminDashboard from "./pages/Admin/Dashboard";
+import Users from "./pages/Admin/Users";
+import CompaniesTable from "./components/dashboard/admin/CompaniesTable";
+import JobsTable from "./components/dashboard/admin/JobsTable";
+import ApplicationsTable from "./components/dashboard/admin/ApplicationsTable";
+
+// Protected Route
+import ProtectedRoute from "./routes/ProtectedRoute";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route element={<MainLayout />}>
+    <Routes>
 
-          {/* Public Routes */}
-          <Route path="/" element={<Home />} />
-          <Route path="/jobs/:id" element={<JobDetails />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+      {/* PUBLIC */}
+      <Route element={<PublicLayout />}>
+        <Route path="/" element={<Home />} />
+        <Route path="/jobs" element={<Jobs />} />
+        <Route path="/jobs/:id" element={<JobDetails />} />
+        <Route path="/companies" element={<Companies />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+      </Route>
 
-          {/* Job Seeker */}
-          <Route
-            path="/my-applications"
-            element={<MyApplications />}
-          />
+      {/* EMPLOYER */}
+      <Route
+        element={
+          <ProtectedRoute allowedRole="employer">
+            <EmployerLayout />
+          </ProtectedRoute>
+        }
+      >
+        <Route
+          path="/employer/dashboard"
+          element={<EmployerDashboard />}
+        />
 
-          <Route
-            path="/jobseeker/dashboard"
-            element={<JobSeekerDashboard />}
-          />
+        <Route
+          path="/employer/create-job"
+          element={<CreateJob />}
+        />
 
-          {/* Employer */}
-          <Route
-            path="/employer/dashboard"
-            element={<EmployerDashboard />}
-          />
+        <Route
+          path="/employer/edit-job/:id"
+          element={<EditJob />}
+        />
 
-          {/* Admin */}
-          <Route
-            path="/admin/dashboard"
-            element={<AdminDashboard />}
-          />
-          <Route
-           path="/employer/create-job"
-            element={<CreateJob />}
-          />
-          <Route
-  path="/employer/edit-job/:id"
-  element={<EditJob />}
-/>
-<Route
-  path="/employer/applicants/:jobId"
-  element={<Applicants />}
-/>
-<Route path="/jobs" element={<Jobs />} />
-<Route path="/companies" element={<Companies />} />
+        <Route
+          path="/employer/applicants/:jobId"
+          element={<Applicants />}
+        />
+      </Route>
 
-        </Route>
-      </Routes>
-    </BrowserRouter>
+      {/* JOB SEEKER */}
+      <Route
+        element={
+          <ProtectedRoute allowedRole="jobseeker">
+            <JobSeekerLayout />
+          </ProtectedRoute>
+        }
+      >
+        <Route
+          path="/jobseeker/dashboard"
+          element={<Dashboard />}
+        />
+
+        <Route
+          path="/my-applications"
+          element={<MyApplications />}
+        />
+      </Route>
+
+      {/* ADMIN */}
+      <Route
+        element={
+          <ProtectedRoute allowedRole="admin">
+            <AdminLayout />
+          </ProtectedRoute>
+        }
+      >
+        <Route
+          path="/admin/dashboard"
+          element={<AdminDashboard />}
+        />
+
+        <Route
+          path="/admin/users"
+          element={<Users />}
+        />
+
+        <Route
+          path="/admin/companies"
+          element={<CompaniesTable />}
+        />
+
+        <Route
+          path="/admin/jobs"
+          element={<JobsTable />}
+        />
+
+        <Route
+           path="/admin/applications"
+          element={<ApplicationsTable />}
+        />
+      </Route>
+
+    </Routes>
   );
 }
 

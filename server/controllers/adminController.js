@@ -245,6 +245,31 @@ const getAllApplications = async (req, res) => {
     });
   }
 };
+// Delete Application
+const deleteApplication = async (req, res) => {
+  try {
+    const application = await Application.findById(req.params.id);
+
+    if (!application) {
+      return res.status(404).json({
+        success: false,
+        message: "Application not found.",
+      });
+    }
+
+    await Application.findByIdAndDelete(req.params.id);
+
+    res.status(200).json({
+      success: true,
+      message: "Application deleted successfully.",
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
 // Public Statistics
 const getPublicStatistics = asyncHandler(async (req, res) => {
   const totalJobs = await Job.countDocuments();
@@ -267,6 +292,7 @@ const getPublicStatistics = asyncHandler(async (req, res) => {
   });
 });
 
+
 module.exports = {
   getDashboardStats,
   getPublicStatistics,
@@ -278,4 +304,5 @@ module.exports = {
   getAllJobs,
   deleteJob,
   getAllApplications,
+  deleteApplication,
 };

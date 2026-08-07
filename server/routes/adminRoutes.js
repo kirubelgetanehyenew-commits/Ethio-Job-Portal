@@ -15,6 +15,7 @@ const {
   getAllJobs,
   deleteJob,
   getAllApplications,
+  deleteApplication,
 } = require("../controllers/adminController");
 
 // Public Statistics
@@ -30,5 +31,7 @@ router.delete("/companies/:id", protect, adminOnly, deleteCompany);
 router.get("/jobs", protect, adminOnly, getAllJobs);
 router.delete("/jobs/:id", protect, adminOnly, deleteJob);
 router.get("/applications", protect, adminOnly, getAllApplications);
+router.get("/applications", protect, adminOnly, getAllApplications);
+router.delete("/applications/:id", protect, adminOnly, deleteApplication);
 
 module.exports = router;

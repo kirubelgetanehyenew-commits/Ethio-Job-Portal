@@ -1,6 +1,17 @@
 import api from "./api";
 
-export const getStatistics = async () => {
-  const response = await api.get("/admin/public-statistics");
+const getStatistics = async () => {
+  const token = localStorage.getItem("token");
+
+  const response = await api.get("/stats", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
   return response.data;
+};
+
+export default {
+  getStatistics,
 };
