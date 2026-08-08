@@ -1,144 +1,382 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
+  Briefcase,
+  Clock,
+  CheckCircle,
+  XCircle,
   Search,
   FileText,
-  Briefcase,
-  User,
   ArrowRight,
 } from "lucide-react";
-import { useAuth } from "../../context/AuthContext";
+
+import { getMyApplications } from "../../services/applicationService";
 
 function Dashboard() {
-  const { user } = useAuth();
+  const [applications, setApplications] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchApplications = async () => {
+      try {
+        const data = await getMyApplications();
+
+        setApplications(data.applications || []);
+      } catch (error) {
+        console.error("Failed to load applications:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchApplications();
+  }, []);
+
+  // Statistics
+  const totalApplications = applications.length;
+
+  const pendingApplications = applications.filter(
+    (application) => application.status === "pending"
+  ).length;
+
+  const acceptedApplications = applications.filter(
+    (application) => application.status === "accepted"
+  ).length;
+
+  const rejectedApplications = applications.filter(
+    (application) => application.status === "rejected"
+  ).length;
+
+  // Show latest 5 applications
+  const recentApplications = applications.slice(0, 5);
+
+  if (loading) {
+    return (
+      <section className="min-h-screen bg-slate-50 py-12">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="bg-white rounded-3xl shadow-lg p-12 text-center">
+            <Briefcase
+              size={50}
+              className="mx-auto text-orange-500 animate-pulse"
+            />
+
+            <h2 className="text-2xl font-bold text-slate-800 mt-4">
+              Loading Dashboard...
+            </h2>
+
+            <p className="text-gray-500 mt-2">
+              Please wait.
+            </p>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
-    <div className="min-h-screen bg-slate-50 px-4 py-8 md:px-8">
-      <div className="max-w-7xl mx-auto">
+    <section className="min-h-screen bg-slate-50 py-12">
+      <div className="max-w-7xl mx-auto px-6">
 
-        {/* Welcome Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-black text-slate-900">
-            Welcome, {user?.fullName || "Job Seeker"} 👋
-          </h1>
+        {/* Welcome Section */}
+        <div className="mb-10">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
 
-          <p className="text-slate-500 mt-2">
-            Find your next opportunity and manage your job applications.
-          </p>
+            <div>
+              <h1 className="text-4xl md:text-5xl font-black text-slate-900">
+                Job Seeker Dashboard
+              </h1>
+
+              <p className="text-gray-500 text-lg mt-3">
+                Track your applications and discover your next opportunity.
+              </p>
+            </div>
+
+            <Link
+              to="/jobs"
+              className="inline-flex items-center justify-center gap-2 bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-xl font-semibold transition"
+            >
+              <Search size={19} />
+              Browse Jobs
+            </Link>
+
+          </div>
         </div>
 
-        {/* Quick Actions */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Statistics */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
 
-          {/* Find Jobs */}
-          <Link
-            to="/jobs"
-            className="group bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition"
-          >
+          {/* Total */}
+          <div className="bg-white rounded-2xl shadow-md p-6 border border-slate-100">
             <div className="flex items-center justify-between">
 
-              <div className="w-12 h-12 rounded-xl bg-orange-100 flex items-center justify-center">
-                <Search
-                  size={24}
-                  className="text-orange-600"
+              <div>
+                <p className="text-gray-500 font-medium">
+                  Total Applications
+                </p>
+
+                <h2 className="text-4xl font-black text-slate-900 mt-2">
+                  {totalApplications}
+                </h2>
+              </div>
+
+              <div className="w-14 h-14 rounded-2xl bg-orange-100 flex items-center justify-center">
+                <Briefcase
+                  size={28}
+                  className="text-orange-500"
                 />
               </div>
 
-              <ArrowRight
-                size={20}
-                className="text-slate-400 group-hover:text-orange-500 transition"
-              />
             </div>
+          </div>
 
-            <h2 className="text-xl font-bold text-slate-900 mt-5">
-              Find Jobs
-            </h2>
-
-            <p className="text-slate-500 mt-2">
-              Browse available jobs and find opportunities that match your skills.
-            </p>
-          </Link>
-
-          {/* My Applications */}
-          <Link
-            to="/applications"
-            className="group bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition"
-          >
+          {/* Pending */}
+          <div className="bg-white rounded-2xl shadow-md p-6 border border-slate-100">
             <div className="flex items-center justify-between">
 
-              <div className="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center">
-                <FileText
-                  size={24}
-                  className="text-blue-600"
+              <div>
+                <p className="text-gray-500 font-medium">
+                  Pending
+                </p>
+
+                <h2 className="text-4xl font-black text-yellow-600 mt-2">
+                  {pendingApplications}
+                </h2>
+              </div>
+
+              <div className="w-14 h-14 rounded-2xl bg-yellow-100 flex items-center justify-center">
+                <Clock
+                  size={28}
+                  className="text-yellow-600"
                 />
               </div>
 
-              <ArrowRight
-                size={20}
-                className="text-slate-400 group-hover:text-blue-500 transition"
-              />
             </div>
+          </div>
 
-            <h2 className="text-xl font-bold text-slate-900 mt-5">
-              My Applications
-            </h2>
+          {/* Accepted */}
+          <div className="bg-white rounded-2xl shadow-md p-6 border border-slate-100">
+            <div className="flex items-center justify-between">
 
-            <p className="text-slate-500 mt-2">
-              View your applications and track their current status.
-            </p>
-          </Link>
+              <div>
+                <p className="text-gray-500 font-medium">
+                  Accepted
+                </p>
 
-          {/* Profile */}
-          <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+                <h2 className="text-4xl font-black text-green-600 mt-2">
+                  {acceptedApplications}
+                </h2>
+              </div>
 
-            <div className="w-12 h-12 rounded-xl bg-green-100 flex items-center justify-center">
-              <User
-                size={24}
-                className="text-green-600"
-              />
+              <div className="w-14 h-14 rounded-2xl bg-green-100 flex items-center justify-center">
+                <CheckCircle
+                  size={28}
+                  className="text-green-600"
+                />
+              </div>
+
             </div>
+          </div>
 
-            <h2 className="text-xl font-bold text-slate-900 mt-5">
-              My Profile
-            </h2>
+          {/* Rejected */}
+          <div className="bg-white rounded-2xl shadow-md p-6 border border-slate-100">
+            <div className="flex items-center justify-between">
 
-            <p className="text-slate-500 mt-2">
-              Keep your personal information ready for employers.
-            </p>
+              <div>
+                <p className="text-gray-500 font-medium">
+                  Rejected
+                </p>
 
+                <h2 className="text-4xl font-black text-red-600 mt-2">
+                  {rejectedApplications}
+                </h2>
+              </div>
+
+              <div className="w-14 h-14 rounded-2xl bg-red-100 flex items-center justify-center">
+                <XCircle
+                  size={28}
+                  className="text-red-600"
+                />
+              </div>
+
+            </div>
           </div>
 
         </div>
 
-        {/* Getting Started */}
-        <div className="mt-8 bg-white border border-slate-200 rounded-2xl shadow-sm p-6 md:p-8">
+        {/* Main Content */}
+        <div className="grid lg:grid-cols-3 gap-8">
 
-          <div className="flex items-start gap-4">
+          {/* Recent Applications */}
+          <div className="lg:col-span-2 bg-white rounded-3xl shadow-md border border-slate-100">
 
-            <div className="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center shrink-0">
-              <Briefcase
-                size={24}
-                className="text-slate-700"
-              />
+            <div className="flex items-center justify-between p-7 border-b border-slate-100">
+
+              <div>
+                <h2 className="text-2xl font-bold text-slate-900">
+                  Recent Applications
+                </h2>
+
+                <p className="text-gray-500 mt-1">
+                  Your latest job applications.
+                </p>
+              </div>
+
+              <Link
+                to="/my-applications"
+                className="text-orange-500 hover:text-orange-600 font-semibold flex items-center gap-1"
+              >
+                View All
+                <ArrowRight size={17} />
+              </Link>
+
             </div>
 
-            <div>
-              <h2 className="text-xl font-bold text-slate-900">
-                Getting Started
-              </h2>
+            {recentApplications.length === 0 ? (
+              <div className="p-10 text-center">
 
-              <p className="text-slate-500 mt-2">
-                Start by browsing available jobs. When you find a position
-                you're interested in, open the job details and submit your
-                application.
-              </p>
+                <FileText
+                  size={45}
+                  className="mx-auto text-gray-300"
+                />
+
+                <h3 className="text-xl font-bold text-slate-800 mt-4">
+                  No Applications Yet
+                </h3>
+
+                <p className="text-gray-500 mt-2">
+                  Start applying for jobs to see them here.
+                </p>
+
+                <Link
+                  to="/jobs"
+                  className="inline-flex items-center gap-2 mt-6 bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-xl font-semibold transition"
+                >
+                  <Search size={18} />
+                  Browse Jobs
+                </Link>
+
+              </div>
+            ) : (
+              <div className="divide-y divide-slate-100">
+
+                {recentApplications.map((application) => {
+
+                  const job = application.job;
+
+                  if (!job) {
+                    return null;
+                  }
+
+                  return (
+                    <div
+                      key={application._id}
+                      className="p-6 hover:bg-slate-50 transition"
+                    >
+
+                      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-5">
+
+                        <div>
+                          <h3 className="text-xl font-bold text-slate-900">
+                            {job.title}
+                          </h3>
+
+                          <p className="text-gray-500 mt-1">
+                            {job.company?.companyName || "Company"}
+                          </p>
+
+                          <p className="text-sm text-gray-400 mt-2">
+                            Applied on{" "}
+                            {new Date(
+                              application.createdAt
+                            ).toLocaleDateString()}
+                          </p>
+                        </div>
+
+                        <div className="flex items-center gap-4">
+
+                          <span
+                            className={`px-4 py-2 rounded-full text-sm font-bold ${
+                              application.status === "accepted"
+                                ? "bg-green-100 text-green-700"
+                                : application.status === "rejected"
+                                ? "bg-red-100 text-red-700"
+                                : "bg-yellow-100 text-yellow-700"
+                            }`}
+                          >
+                            {application.status}
+                          </span>
+
+                          <Link
+                            to={`/jobs/${job._id}`}
+                            className="p-3 rounded-xl bg-orange-100 text-orange-600 hover:bg-orange-500 hover:text-white transition"
+                          >
+                            <ArrowRight size={18} />
+                          </Link>
+
+                        </div>
+
+                      </div>
+
+                    </div>
+                  );
+                })}
+
+              </div>
+            )}
+
+          </div>
+
+          {/* Quick Actions */}
+          <div className="bg-white rounded-3xl shadow-md border border-slate-100 p-7 h-fit">
+
+            <h2 className="text-2xl font-bold text-slate-900">
+              Quick Actions
+            </h2>
+
+            <p className="text-gray-500 mt-1 mb-6">
+              Manage your job search.
+            </p>
+
+            <div className="space-y-4">
 
               <Link
                 to="/jobs"
-                className="inline-flex items-center gap-2 mt-5 bg-orange-500 hover:bg-orange-600 text-white px-5 py-3 rounded-xl font-semibold transition"
+                className="flex items-center gap-4 p-4 rounded-2xl bg-orange-50 hover:bg-orange-100 transition"
               >
-                Browse Jobs
-                <ArrowRight size={18} />
+                <div className="w-11 h-11 rounded-xl bg-orange-500 text-white flex items-center justify-center">
+                  <Search size={21} />
+                </div>
+
+                <div>
+                  <h3 className="font-bold text-slate-900">
+                    Browse Jobs
+                  </h3>
+
+                  <p className="text-sm text-gray-500">
+                    Find new opportunities
+                  </p>
+                </div>
               </Link>
+
+              <Link
+                to="/my-applications"
+                className="flex items-center gap-4 p-4 rounded-2xl bg-blue-50 hover:bg-blue-100 transition"
+              >
+                <div className="w-11 h-11 rounded-xl bg-blue-500 text-white flex items-center justify-center">
+                  <FileText size={21} />
+                </div>
+
+                <div>
+                  <h3 className="font-bold text-slate-900">
+                    My Applications
+                  </h3>
+
+                  <p className="text-sm text-gray-500">
+                    Track your applications
+                  </p>
+                </div>
+              </Link>
+
             </div>
 
           </div>
@@ -146,7 +384,7 @@ function Dashboard() {
         </div>
 
       </div>
-    </div>
+    </section>
   );
 }
 
