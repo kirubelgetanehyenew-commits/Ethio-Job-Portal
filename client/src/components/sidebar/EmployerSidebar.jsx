@@ -3,6 +3,7 @@ import {
   LayoutDashboard,
   Briefcase,
   PlusCircle,
+  Building2,
   LogOut,
 } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
@@ -11,8 +12,9 @@ function EmployerSidebar() {
   const { logout } = useAuth();
 
   return (
-    <aside className="w-72 min-h-screen bg-slate-900 text-white flex flex-col">
+    <aside className="w-full h-full bg-slate-900 text-white flex flex-col">
 
+      {/* Header */}
       <div className="p-8 border-b border-slate-700">
         <h1 className="text-3xl font-black">
           Employer
@@ -23,6 +25,7 @@ function EmployerSidebar() {
         </p>
       </div>
 
+      {/* Navigation */}
       <nav className="flex-1 p-6 space-y-3">
 
         <NavLink
@@ -31,6 +34,14 @@ function EmployerSidebar() {
         >
           <LayoutDashboard size={20} />
           Dashboard
+        </NavLink>
+
+        <NavLink
+          to="/employer/my-companies"
+          className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-800"
+        >
+          <Building2 size={20} />
+          My Companies
         </NavLink>
 
         <NavLink
@@ -51,6 +62,7 @@ function EmployerSidebar() {
 
       </nav>
 
+      {/* Logout */}
       <button
         onClick={logout}
         className="m-6 flex items-center justify-center gap-3 bg-red-600 hover:bg-red-700 rounded-xl py-3"

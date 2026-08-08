@@ -6,6 +6,7 @@ const {
   getMyCompanies,
   getCompanyById,
   updateCompany,
+  deleteCompany,
   getAllCompaniesPublic,
 } = require("../controllers/companyController");
 
@@ -19,5 +20,11 @@ router.post("/", protect, authorize("employer"), createCompany);
 router.get("/my", protect, authorize("employer"), getMyCompanies);
 router.get("/:id", protect, getCompanyById);
 router.put("/:id", protect, authorize("employer"), updateCompany);
+router.delete(
+  "/:id",
+  protect,
+  authorize("employer"),
+  deleteCompany
+);
 
 module.exports = router;

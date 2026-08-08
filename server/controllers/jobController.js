@@ -281,6 +281,45 @@ const getMyJobs = async (req, res) => {
     });
   }
 };
+// Get Jobs By Company
+const getJobsByCompany = async (req, res) => {
+  try {
+    const company = await Company.findById(req.params.companyId);
+
+    if (!company) {
+      return res.status(404).json({
+        success: false,
+        message: "Company not found",
+      });
+    }
+
+    // Check that the employer owns the company
+    if (company.owner.toString() !== req.user.id.toString()) {
+      return res.status(403).json({
+        success: false,
+        message: "You can only view jobs for your own company.",
+      });
+    }
+
+    const jobs = await Job.find({
+      company: req.params.companyId,
+      employer: req.user.id,
+    })
+      .populate("company", "companyName location industry")
+      .sort({ createdAt: -1 });
+
+    res.status(200).json({
+      success: true,
+      count: jobs.length,
+      jobs,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
 
 module.exports = {
   createJob,
@@ -289,4 +328,5 @@ module.exports = {
   updateJob,
   deleteJob,
   getMyJobs,
+  getJobsByCompany,
 };

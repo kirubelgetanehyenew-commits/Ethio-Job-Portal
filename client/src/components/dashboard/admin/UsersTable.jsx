@@ -3,6 +3,8 @@ import adminService from "../../../services/adminService";
 
 function UsersTable() {
   const [users, setUsers] = useState([]);
+  const [search, setSearch] = useState("");
+  const [sortBy, setSortBy] = useState("name");
 
   useEffect(() => {
     loadUsers();
@@ -44,9 +46,30 @@ function UsersTable() {
 return (
   <div className="bg-white rounded-3xl shadow-sm border border-slate-200 p-8">
 
-    <h2 className="text-2xl font-bold mb-6">
-      Registered Users
-    </h2>
+    <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
+
+  <h2 className="text-2xl font-bold">
+    Registered Users
+  </h2>
+
+  <input
+    type="text"
+    placeholder="Search users..."
+    value={search}
+    onChange={(e) => setSearch(e.target.value)}
+    className="mt-4 md:mt-0 border rounded-lg px-4 py-2 w-full md:w-72 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+  />
+  <select
+  value={sortBy}
+  onChange={(e) => setSortBy(e.target.value)}
+  className="border rounded-lg px-4 py-2 md:ml-4 mt-4 md:mt-0"
+>
+  <option value="name">Sort by Name</option>
+  <option value="email">Sort by Email</option>
+  <option value="role">Sort by Role</option>
+</select>
+
+</div>
 
     <div className="overflow-x-auto">
 
@@ -65,7 +88,36 @@ return (
 
         <tbody>
 
-          {users.map((user) => (
+          {users
+  .filter((user) => {
+    return (
+      user.fullName
+        .toLowerCase()
+        .includes(search.toLowerCase()) ||
+      user.email
+        .toLowerCase()
+        .includes(search.toLowerCase()) ||
+      user.role
+        .toLowerCase()
+        .includes(search.toLowerCase())
+    );
+  })
+  .sort((a, b) => {
+    if (sortBy === "name") {
+      return a.fullName.localeCompare(b.fullName);
+    }
+
+    if (sortBy === "email") {
+      return a.email.localeCompare(b.email);
+    }
+
+    if (sortBy === "role") {
+      return a.role.localeCompare(b.role);
+    }
+
+    return 0;
+  })
+  .map((user) => (
 
             <tr
               key={user._id}

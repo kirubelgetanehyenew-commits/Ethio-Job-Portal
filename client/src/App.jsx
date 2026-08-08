@@ -19,6 +19,10 @@ import EmployerDashboard from "./pages/Employer/EmployerDashboard";
 import CreateJob from "./pages/Employer/CreateJob";
 import EditJob from "./pages/Employer/EditJob";
 import Applicants from "./pages/Employer/Applicants";
+import EditCompany from "./pages/Employer/EditCompany";
+import MyCompanies from "./pages/Employer/MyCompanies";
+import CreateCompany from "./pages/Employer/CreateCompany";
+import CompanyJobs from "./pages/Employer/CompanyJobs";
 
 // Job Seeker Pages
 import Dashboard from "./pages/JobSeeker/Dashboard";
@@ -30,6 +34,7 @@ import Users from "./pages/Admin/Users";
 import CompaniesTable from "./components/dashboard/admin/CompaniesTable";
 import JobsTable from "./components/dashboard/admin/JobsTable";
 import ApplicationsTable from "./components/dashboard/admin/ApplicationsTable";
+import Analytics from "./pages/Admin/Analytics";
 
 // Protected Route
 import ProtectedRoute from "./routes/ProtectedRoute";
@@ -60,11 +65,26 @@ function App() {
           path="/employer/dashboard"
           element={<EmployerDashboard />}
         />
-
+        <Route
+  path="/employer/create-company"
+  element={<CreateCompany />}
+/>
+<Route
+  path="/employer/company-jobs/:companyId"
+  element={<CompanyJobs />}
+/>
         <Route
           path="/employer/create-job"
           element={<CreateJob />}
         />
+        <Route
+  path="/employer/edit-company/:id"
+  element={<EditCompany />}
+/>
+        <Route
+  path="/employer/my-companies"
+  element={<MyCompanies />}
+/>
 
         <Route
           path="/employer/edit-job/:id"
@@ -75,6 +95,10 @@ function App() {
           path="/employer/applicants/:jobId"
           element={<Applicants />}
         />
+        <Route
+  path="/employer/edit-company/:id"
+  element={<EditCompany />}
+/>
       </Route>
 
       {/* JOB SEEKER */}
@@ -128,6 +152,10 @@ function App() {
            path="/admin/applications"
           element={<ApplicationsTable />}
         />
+        <Route
+        path="/admin/analytics"
+         element={<Analytics />}
+         />
       </Route>
 
     </Routes>
