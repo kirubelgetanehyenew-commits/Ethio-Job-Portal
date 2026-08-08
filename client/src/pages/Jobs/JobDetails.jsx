@@ -9,6 +9,8 @@ import {
   User,
   Mail,
   Globe,
+  Loader2,
+  CheckCircle,
 } from "lucide-react";
 
 import { getJobById } from "../../services/jobService";
@@ -19,26 +21,27 @@ function JobDetails() {
 
   const [job, setJob] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [applying, setApplying] = useState(false);
+  const [error, setError] = useState("");
+  const [applied, setApplied] = useState(false);
 
-  const handleApply = async () => {
-    try {
-      const data = await applyForJob(job._id);
-      alert(data.message);
-    } catch (error) {
-      alert(
-        error.response?.data?.message ||
-        "Something went wrong."
-      );
-    }
-  };
-
+  // Fetch job
   useEffect(() => {
     const fetchJob = async () => {
       try {
+        setLoading(true);
+        setError("");
+
         const data = await getJobById(id);
+
         setJob(data.job);
       } catch (error) {
         console.error(error);
+
+        setError(
+          error.response?.data?.message ||
+            "Failed to load job details."
+        );
       } finally {
         setLoading(false);
       }
@@ -47,52 +50,109 @@ function JobDetails() {
     fetchJob();
   }, [id]);
 
-  if (loading)
-    return (
-      <div className="py-40 text-center text-3xl font-bold">
-        Loading...
-      </div>
-    );
+  // Apply for job
+  const handleApply = async () => {
+    if (!job || applying || applied) {
+      return;
+    }
 
-  if (!job)
+    try {
+      setApplying(true);
+
+      const data = await applyForJob(job._id);
+
+      alert(data.message || "Application submitted successfully.");
+
+      setApplied(true);
+    } catch (error) {
+      console.error(error);
+
+      alert(
+        error.response?.data?.message ||
+          "Failed to apply for this job."
+      );
+    } finally {
+      setApplying(false);
+    }
+  };
+
+  // Loading
+  if (loading) {
     return (
-      <div className="py-40 text-center text-red-600 text-3xl font-bold">
-        Job Not Found
+      <div className="min-h-screen bg-slate-50 px-6 py-20">
+        <div className="max-w-6xl mx-auto flex flex-col items-center justify-center">
+          <Loader2
+            size={42}
+            className="text-orange-500 animate-spin"
+          />
+
+          <p className="text-slate-500 mt-4">
+            Loading job details...
+          </p>
+        </div>
       </div>
     );
+  }
+
+  // Error / Job not found
+  if (error || !job) {
+    return (
+      <div className="min-h-screen bg-slate-50 px-6 py-20">
+        <div className="max-w-3xl mx-auto bg-white rounded-3xl shadow-sm border border-slate-200 p-10 text-center">
+
+          <div className="w-16 h-16 mx-auto rounded-full bg-red-100 flex items-center justify-center">
+            <Briefcase
+              size={30}
+              className="text-red-500"
+            />
+          </div>
+
+          <h1 className="text-3xl font-black text-slate-900 mt-6">
+            Job Not Found
+          </h1>
+
+          <p className="text-slate-500 mt-3">
+            {error || "This job may have been removed or is no longer available."}
+          </p>
+
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <section className="bg-slate-50 min-h-screen py-16">
+    <div className="min-h-screen bg-slate-50 px-4 py-8 md:px-6">
 
-      <div className="max-w-6xl mx-auto px-6">
+      <div className="max-w-6xl mx-auto">
 
-        <div className="grid lg:grid-cols-3 gap-10">
+        <div className="grid lg:grid-cols-3 gap-8">
 
-          {/* LEFT */}
-
+          {/* LEFT SIDE */}
           <div className="lg:col-span-2">
 
-            <div className="bg-white rounded-3xl shadow-lg p-10">
+            <div className="bg-white rounded-3xl shadow-sm border border-slate-200 p-6 md:p-10">
 
-              <div className="flex justify-between items-start">
+              {/* Job Header */}
+              <div className="flex flex-col md:flex-row justify-between gap-6">
 
                 <div>
 
-                  <span className="bg-orange-100 text-orange-700 px-4 py-2 rounded-full text-sm font-semibold">
+                  <span className="inline-flex bg-orange-100 text-orange-700 px-4 py-2 rounded-full text-sm font-semibold">
                     {job.jobType}
                   </span>
 
-                  <h1 className="text-5xl font-black mt-5">
+                  <h1 className="text-3xl md:text-5xl font-black text-slate-900 mt-5">
                     {job.title}
                   </h1>
 
-                  <p className="text-orange-600 text-xl font-semibold mt-2">
-                    {job.company?.companyName}
+                  <p className="text-orange-600 text-xl font-semibold mt-3">
+                    {job.company?.companyName ||
+                      "Company"}
                   </p>
 
                 </div>
 
-                <div className="w-20 h-20 rounded-3xl bg-orange-100 flex items-center justify-center">
+                <div className="w-20 h-20 rounded-3xl bg-orange-100 flex items-center justify-center shrink-0">
                   <Building2
                     size={40}
                     className="text-orange-600"
@@ -101,25 +161,45 @@ function JobDetails() {
 
               </div>
 
-              <div className="grid md:grid-cols-2 gap-5 mt-10">
+              {/* Job Information */}
+              <div className="grid md:grid-cols-2 gap-4 mt-10">
 
-                <Info icon={<MapPin />} text={job.location} />
-                <Info icon={<DollarSign />} text={`ETB ${job.salary}`} />
-                <Info icon={<Briefcase />} text={job.experience} />
                 <Info
-                  icon={<Calendar />}
-                  text={new Date(job.deadline).toLocaleDateString()}
+                  icon={<MapPin size={20} />}
+                  label="Location"
+                  text={job.location}
+                />
+
+                <Info
+                  icon={<DollarSign size={20} />}
+                  label="Salary"
+                  text={`ETB ${job.salary}`}
+                />
+
+                <Info
+                  icon={<Briefcase size={20} />}
+                  label="Experience"
+                  text={job.experience}
+                />
+
+                <Info
+                  icon={<Calendar size={20} />}
+                  label="Deadline"
+                  text={new Date(
+                    job.deadline
+                  ).toLocaleDateString()}
                 />
 
               </div>
 
+              {/* Description */}
               <div className="mt-12">
 
-                <h2 className="text-2xl font-bold mb-5">
+                <h2 className="text-2xl font-bold text-slate-900 mb-5">
                   Job Description
                 </h2>
 
-                <p className="leading-8 text-gray-600">
+                <p className="leading-8 text-slate-600 whitespace-pre-line">
                   {job.description}
                 </p>
 
@@ -129,67 +209,112 @@ function JobDetails() {
 
           </div>
 
-          {/* RIGHT */}
+          {/* RIGHT SIDE */}
+          <div className="space-y-6">
 
-          <div className="space-y-8">
+            {/* Company */}
+            <div className="bg-white rounded-3xl shadow-sm border border-slate-200 p-7">
 
-            <div className="bg-white rounded-3xl shadow-lg p-8">
-
-              <h2 className="text-2xl font-bold mb-6">
+              <h2 className="text-2xl font-bold text-slate-900 mb-6">
                 Company
               </h2>
 
               <div className="space-y-4">
 
                 <Info
-                  icon={<Building2 />}
-                  text={job.company?.companyName}
+                  icon={<Building2 size={19} />}
+                  label="Company"
+                  text={
+                    job.company?.companyName ||
+                    "Not provided"
+                  }
                 />
 
                 <Info
-                  icon={<Briefcase />}
-                  text={job.company?.industry}
+                  icon={<Briefcase size={19} />}
+                  label="Industry"
+                  text={
+                    job.company?.industry ||
+                    "Not provided"
+                  }
                 />
 
                 <Info
-                  icon={<MapPin />}
-                  text={job.company?.location}
+                  icon={<MapPin size={19} />}
+                  label="Location"
+                  text={
+                    job.company?.location ||
+                    "Not provided"
+                  }
                 />
 
-                <Info
-                  icon={<Globe />}
-                  text={job.company?.website}
-                />
+                {job.company?.website && (
+                  <Info
+                    icon={<Globe size={19} />}
+                    label="Website"
+                    text={job.company.website}
+                  />
+                )}
 
               </div>
 
             </div>
 
-            <div className="bg-white rounded-3xl shadow-lg p-8">
+            {/* Employer */}
+            <div className="bg-white rounded-3xl shadow-sm border border-slate-200 p-7">
 
-              <h2 className="text-2xl font-bold mb-6">
+              <h2 className="text-2xl font-bold text-slate-900 mb-6">
                 Employer
               </h2>
 
               <div className="space-y-4">
 
                 <Info
-                  icon={<User />}
-                  text={job.employer?.fullName}
+                  icon={<User size={19} />}
+                  label="Name"
+                  text={
+                    job.employer?.fullName ||
+                    "Not provided"
+                  }
                 />
 
                 <Info
-                  icon={<Mail />}
-                  text={job.employer?.email}
+                  icon={<Mail size={19} />}
+                  label="Email"
+                  text={
+                    job.employer?.email ||
+                    "Not provided"
+                  }
                 />
 
               </div>
 
+              {/* Apply Button */}
               <button
                 onClick={handleApply}
-                className="w-full mt-10 bg-gradient-to-r from-orange-500 to-amber-500 text-white py-4 rounded-2xl font-bold text-lg hover:shadow-xl hover:scale-[1.02] transition"
+                disabled={applying || applied}
+                className={`w-full mt-8 flex items-center justify-center gap-2 py-4 rounded-2xl font-bold text-lg transition ${
+                  applied
+                    ? "bg-green-600 text-white cursor-not-allowed"
+                    : "bg-gradient-to-r from-orange-500 to-amber-500 hover:shadow-xl hover:scale-[1.02] text-white disabled:opacity-60 disabled:cursor-not-allowed"
+                }`}
               >
-                Apply Now
+                {applying ? (
+                  <>
+                    <Loader2
+                      size={20}
+                      className="animate-spin"
+                    />
+                    Applying...
+                  </>
+                ) : applied ? (
+                  <>
+                    <CheckCircle size={20} />
+                    Applied
+                  </>
+                ) : (
+                  "Apply Now"
+                )}
               </button>
 
             </div>
@@ -200,21 +325,29 @@ function JobDetails() {
 
       </div>
 
-    </section>
+    </div>
   );
 }
 
-function Info({ icon, text }) {
+function Info({ icon, label, text }) {
   return (
-    <div className="flex items-center gap-3 bg-slate-100 rounded-xl p-4">
+    <div className="flex items-center gap-3">
 
-      <div className="text-orange-500">
+      <div className="w-10 h-10 rounded-xl bg-orange-50 flex items-center justify-center text-orange-500 shrink-0">
         {icon}
       </div>
 
-      <span className="font-medium text-gray-700">
-        {text}
-      </span>
+      <div className="min-w-0">
+
+        <p className="text-xs text-slate-400">
+          {label}
+        </p>
+
+        <p className="font-medium text-slate-700 break-words">
+          {text || "Not provided"}
+        </p>
+
+      </div>
 
     </div>
   );
