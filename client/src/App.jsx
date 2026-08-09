@@ -27,6 +27,7 @@ import CompanyJobs from "./pages/Employer/CompanyJobs";
 // Job Seeker Pages
 import Dashboard from "./pages/JobSeeker/Dashboard";
 import MyApplications from "./pages/applications/MyApplications";
+import Profile from "./pages/jobseeker/Profile";
 
 // Admin Pages
 import AdminDashboard from "./pages/Admin/Dashboard";
@@ -43,17 +44,47 @@ function App() {
   return (
     <Routes>
 
-      {/* PUBLIC */}
+      {/* =========================
+          PUBLIC ROUTES
+      ========================= */}
       <Route element={<PublicLayout />}>
-        <Route path="/" element={<Home />} />
-        <Route path="/jobs" element={<Jobs />} />
-        <Route path="/jobs/:id" element={<JobDetails />} />
-        <Route path="/companies" element={<Companies />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+
+        <Route
+          path="/"
+          element={<Home />}
+        />
+
+        <Route
+          path="/jobs"
+          element={<Jobs />}
+        />
+
+        <Route
+          path="/jobs/:id"
+          element={<JobDetails />}
+        />
+
+        <Route
+          path="/companies"
+          element={<Companies />}
+        />
+
+        <Route
+          path="/login"
+          element={<Login />}
+        />
+
+        <Route
+          path="/register"
+          element={<Register />}
+        />
+
       </Route>
 
-      {/* EMPLOYER */}
+
+      {/* =========================
+          EMPLOYER ROUTES
+      ========================= */}
       <Route
         element={
           <ProtectedRoute allowedRole="employer">
@@ -61,30 +92,36 @@ function App() {
           </ProtectedRoute>
         }
       >
+
         <Route
           path="/employer/dashboard"
           element={<EmployerDashboard />}
         />
+
         <Route
-  path="/employer/create-company"
-  element={<CreateCompany />}
-/>
-<Route
-  path="/employer/company-jobs/:companyId"
-  element={<CompanyJobs />}
-/>
+          path="/employer/create-company"
+          element={<CreateCompany />}
+        />
+
+        <Route
+          path="/employer/my-companies"
+          element={<MyCompanies />}
+        />
+
+        <Route
+          path="/employer/edit-company/:id"
+          element={<EditCompany />}
+        />
+
+        <Route
+          path="/employer/company-jobs/:companyId"
+          element={<CompanyJobs />}
+        />
+
         <Route
           path="/employer/create-job"
           element={<CreateJob />}
         />
-        <Route
-  path="/employer/edit-company/:id"
-  element={<EditCompany />}
-/>
-        <Route
-  path="/employer/my-companies"
-  element={<MyCompanies />}
-/>
 
         <Route
           path="/employer/edit-job/:id"
@@ -95,13 +132,13 @@ function App() {
           path="/employer/applicants/:jobId"
           element={<Applicants />}
         />
-        <Route
-  path="/employer/edit-company/:id"
-  element={<EditCompany />}
-/>
+
       </Route>
 
-      {/* JOB SEEKER */}
+
+      {/* =========================
+          JOB SEEKER ROUTES
+      ========================= */}
       <Route
         element={
           <ProtectedRoute allowedRole="jobseeker">
@@ -109,18 +146,43 @@ function App() {
           </ProtectedRoute>
         }
       >
+
+        {/* Dashboard */}
         <Route
           path="/jobseeker/dashboard"
           element={<Dashboard />}
         />
 
+        {/* Profile */}
+        <Route
+          path="/jobseeker/profile"
+          element={<Profile />}
+        />
+
+        {/* Browse Jobs */}
+        <Route
+          path="/jobseeker/jobs"
+          element={<Jobs />}
+        />
+
+        {/* Job Details */}
+        <Route
+          path="/jobseeker/jobs/:id"
+          element={<JobDetails />}
+        />
+
+        {/* Applications */}
         <Route
           path="/my-applications"
           element={<MyApplications />}
         />
+
       </Route>
 
-      {/* ADMIN */}
+
+      {/* =========================
+          ADMIN ROUTES
+      ========================= */}
       <Route
         element={
           <ProtectedRoute allowedRole="admin">
@@ -128,34 +190,43 @@ function App() {
           </ProtectedRoute>
         }
       >
+
+        {/* Dashboard */}
         <Route
           path="/admin/dashboard"
           element={<AdminDashboard />}
         />
 
+        {/* Users */}
         <Route
           path="/admin/users"
           element={<Users />}
         />
 
+        {/* Companies */}
         <Route
           path="/admin/companies"
           element={<CompaniesTable />}
         />
 
+        {/* Jobs */}
         <Route
           path="/admin/jobs"
           element={<JobsTable />}
         />
 
+        {/* Applications */}
         <Route
-           path="/admin/applications"
+          path="/admin/applications"
           element={<ApplicationsTable />}
         />
+
+        {/* Analytics */}
         <Route
-        path="/admin/analytics"
-         element={<Analytics />}
-         />
+          path="/admin/analytics"
+          element={<Analytics />}
+        />
+
       </Route>
 
     </Routes>

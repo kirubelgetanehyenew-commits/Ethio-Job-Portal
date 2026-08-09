@@ -11,6 +11,7 @@ const {
   register,
   login,
   getProfile,
+  updateProfile,
 } = require("../controllers/authController");
 const protect = require("../middleware/authMiddleware");
 const authorize = require("../middleware/roleMiddleware");
@@ -28,6 +29,7 @@ router.post(
   login
 );
 router.get("/profile", protect, getProfile);
+router.put("/profile", protect, updateProfile);
 router.get(
   "/admin",
   protect,

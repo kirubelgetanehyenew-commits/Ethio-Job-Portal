@@ -106,9 +106,42 @@ const getProfile = asyncHandler(async (req, res) => {
     user,
   });
 });
+// Update Profile
+const updateProfile = asyncHandler(async (req, res) => {
+  const { fullName, phone, location } = req.body;
+
+  const user = await User.findById(req.user.id);
+
+  if (!user) {
+    return res.status(404).json({
+      success: false,
+      message: "User not found",
+    });
+  }
+
+  user.fullName = fullName || user.fullName;
+  user.phone = phone || user.phone;
+  user.location = location || user.location;
+
+  await user.save();
+
+  res.status(200).json({
+    success: true,
+    message: "Profile updated successfully",
+    user: {
+      id: user._id,
+      fullName: user.fullName,
+      email: user.email,
+      role: user.role,
+      phone: user.phone,
+      location: user.location,
+    },
+  });
+});
 
 module.exports = {
   register,
   login,
   getProfile,
+  updateProfile,
 };

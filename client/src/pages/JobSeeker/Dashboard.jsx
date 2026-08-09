@@ -92,7 +92,7 @@ function Dashboard() {
             </div>
 
             <Link
-              to="/jobs"
+              to="/jobseeker/jobs"
               className="inline-flex items-center justify-center gap-2 bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-xl font-semibold transition"
             >
               <Search size={19} />
@@ -248,7 +248,7 @@ function Dashboard() {
                 </p>
 
                 <Link
-                  to="/jobs"
+                  to="/jobseeker/jobs"
                   className="inline-flex items-center gap-2 mt-6 bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-xl font-semibold transition"
                 >
                   <Search size={18} />
@@ -307,7 +307,7 @@ function Dashboard() {
                           </span>
 
                           <Link
-                            to={`/jobs/${job._id}`}
+                            to={`/jobseeker/jobs/${job._id}`}
                             className="p-3 rounded-xl bg-orange-100 text-orange-600 hover:bg-orange-500 hover:text-white transition"
                           >
                             <ArrowRight size={18} />
@@ -340,7 +340,7 @@ function Dashboard() {
             <div className="space-y-4">
 
               <Link
-                to="/jobs"
+               to="/jobseeker/jobs"
                 className="flex items-center gap-4 p-4 rounded-2xl bg-orange-50 hover:bg-orange-100 transition"
               >
                 <div className="w-11 h-11 rounded-xl bg-orange-500 text-white flex items-center justify-center">
