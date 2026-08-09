@@ -5,8 +5,8 @@ import {
   Briefcase,
   Building2,
   FileText,
-  UserCheck,
   UserRound,
+  TrendingUp,
 } from "lucide-react";
 
 function Dashboard() {
@@ -19,6 +19,8 @@ function Dashboard() {
     totalApplications: 0,
   });
 
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     loadStats();
   }, []);
@@ -29,120 +31,159 @@ function Dashboard() {
       setStats(data.statistics);
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
+  const statCards = [
+    {
+      title: "Total Users",
+      value: stats.totalUsers,
+      icon: Users,
+      description: "Registered users",
+      iconBg: "bg-blue-100",
+      iconColor: "text-blue-600",
+    },
+    {
+      title: "Employers",
+      value: stats.totalEmployers,
+      icon: Briefcase,
+      description: "Active employers",
+      iconBg: "bg-green-100",
+      iconColor: "text-green-600",
+    },
+    {
+      title: "Job Seekers",
+      value: stats.totalJobSeekers,
+      icon: UserRound,
+      description: "Registered job seekers",
+      iconBg: "bg-purple-100",
+      iconColor: "text-purple-600",
+    },
+    {
+      title: "Companies",
+      value: stats.totalCompanies,
+      icon: Building2,
+      description: "Registered companies",
+      iconBg: "bg-orange-100",
+      iconColor: "text-orange-600",
+    },
+    {
+      title: "Jobs",
+      value: stats.totalJobs,
+      icon: Briefcase,
+      description: "Published jobs",
+      iconBg: "bg-indigo-100",
+      iconColor: "text-indigo-600",
+    },
+    {
+      title: "Applications",
+      value: stats.totalApplications,
+      icon: FileText,
+      description: "Job applications",
+      iconBg: "bg-red-100",
+      iconColor: "text-red-600",
+    },
+  ];
+
   return (
-    <div className="p-8">
-      <h1 className="text-4xl font-bold mb-8">
-        Admin Dashboard
-      </h1>
+    <div className="min-h-screen bg-slate-50 px-6 py-8">
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {/* Header */}
+      <div className="mb-10">
 
-        {/* Total Users */}
-        <div className="bg-white shadow-lg rounded-xl p-6 flex items-center justify-between">
-          <div>
-            <h2 className="text-gray-500 text-lg">
-              Total Users
-            </h2>
-            <p className="text-4xl font-bold mt-2">
-              {stats.totalUsers}
-            </p>
+        <div className="flex items-center gap-3">
+          <div className="w-12 h-12 rounded-2xl bg-orange-100 flex items-center justify-center">
+            <TrendingUp
+              size={26}
+              className="text-orange-600"
+            />
           </div>
 
-          <Users
-            size={45}
-            className="text-blue-600"
-          />
-        </div>
-
-        {/* Employers */}
-        <div className="bg-white shadow-lg rounded-xl p-6 flex items-center justify-between">
           <div>
-            <h2 className="text-gray-500 text-lg">
-              Employers
-            </h2>
-            <p className="text-4xl font-bold mt-2">
-              {stats.totalEmployers}
+            <h1 className="text-4xl md:text-5xl font-black text-slate-900">
+              Admin Dashboard
+            </h1>
+
+            <p className="text-gray-500 mt-1">
+              Monitor your Ethio Job Portal at a glance.
             </p>
           </div>
-
-          <Briefcase
-            size={45}
-            className="text-green-600"
-          />
-        </div>
-
-        {/* Job Seekers */}
-        <div className="bg-white shadow-lg rounded-xl p-6 flex items-center justify-between">
-          <div>
-            <h2 className="text-gray-500 text-lg">
-              Job Seekers
-            </h2>
-            <p className="text-4xl font-bold mt-2">
-              {stats.totalJobSeekers}
-            </p>
-          </div>
-
-          <UserRound
-            size={45}
-            className="text-purple-600"
-          />
-        </div>
-
-        {/* Companies */}
-        <div className="bg-white shadow-lg rounded-xl p-6 flex items-center justify-between">
-          <div>
-            <h2 className="text-gray-500 text-lg">
-              Companies
-            </h2>
-            <p className="text-4xl font-bold mt-2">
-              {stats.totalCompanies}
-            </p>
-          </div>
-
-          <Building2
-            size={45}
-            className="text-orange-600"
-          />
-        </div>
-
-        {/* Jobs */}
-        <div className="bg-white shadow-lg rounded-xl p-6 flex items-center justify-between">
-          <div>
-            <h2 className="text-gray-500 text-lg">
-              Jobs
-            </h2>
-            <p className="text-4xl font-bold mt-2">
-              {stats.totalJobs}
-            </p>
-          </div>
-
-          <Briefcase
-            size={45}
-            className="text-indigo-600"
-          />
-        </div>
-
-        {/* Applications */}
-        <div className="bg-white shadow-lg rounded-xl p-6 flex items-center justify-between">
-          <div>
-            <h2 className="text-gray-500 text-lg">
-              Applications
-            </h2>
-            <p className="text-4xl font-bold mt-2">
-              {stats.totalApplications}
-            </p>
-          </div>
-
-          <FileText
-            size={45}
-            className="text-red-600"
-          />
         </div>
 
       </div>
+
+      {/* Statistics */}
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+
+        {statCards.map((card) => {
+          const Icon = card.icon;
+
+          return (
+            <div
+              key={card.title}
+              className="bg-white rounded-3xl border border-slate-100 shadow-sm hover:shadow-lg transition-all duration-300 p-7"
+            >
+
+              <div className="flex items-start justify-between">
+
+                <div>
+                  <p className="text-sm font-semibold text-gray-500">
+                    {card.title}
+                  </p>
+
+                  <p className="text-4xl font-black text-slate-900 mt-3">
+                    {loading ? "..." : card.value}
+                  </p>
+
+                  <p className="text-sm text-gray-400 mt-2">
+                    {card.description}
+                  </p>
+                </div>
+
+                <div
+                  className={`w-14 h-14 rounded-2xl ${card.iconBg} flex items-center justify-center`}
+                >
+                  <Icon
+                    size={28}
+                    className={card.iconColor}
+                  />
+                </div>
+
+              </div>
+
+            </div>
+          );
+        })}
+
+      </div>
+
+      {/* Summary */}
+      <div className="mt-8 bg-white rounded-3xl border border-slate-100 shadow-sm p-7">
+
+        <h2 className="text-2xl font-bold text-slate-900">
+          Platform Overview
+        </h2>
+
+        <p className="text-gray-500 mt-2">
+          Your platform currently has{" "}
+          <span className="font-bold text-slate-800">
+            {stats.totalUsers}
+          </span>{" "}
+          users,{" "}
+          <span className="font-bold text-slate-800">
+            {stats.totalJobs}
+          </span>{" "}
+          jobs, and{" "}
+          <span className="font-bold text-slate-800">
+            {stats.totalApplications}
+          </span>{" "}
+          applications.
+        </p>
+
+      </div>
+
     </div>
   );
 }

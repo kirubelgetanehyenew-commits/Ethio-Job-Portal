@@ -1,10 +1,20 @@
 import { useEffect, useState } from "react";
+import {
+  Search,
+  Trash2,
+  Users,
+  Mail,
+  Phone,
+  MapPin,
+  ShieldCheck,
+} from "lucide-react";
 import adminService from "../../../services/adminService";
 
 function UsersTable() {
   const [users, setUsers] = useState([]);
   const [search, setSearch] = useState("");
   const [sortBy, setSortBy] = useState("name");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     loadUsers();
@@ -12,19 +22,25 @@ function UsersTable() {
 
   const loadUsers = async () => {
     try {
+      setLoading(true);
+
       const data = await adminService.getAllUsers();
-      setUsers(data.users);
+
+      setUsers(data.users || []);
     } catch (error) {
-      console.error(error);
+      console.error("Failed to load users:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleRoleChange = async (id, role) => {
     try {
       await adminService.updateUserRole(id, role);
-      loadUsers();
+      await loadUsers();
     } catch (error) {
-      console.error(error);
+      console.error("Failed to update user role:", error);
+      alert("Failed to update user role.");
     }
   };
 
@@ -37,136 +53,298 @@ function UsersTable() {
 
     try {
       await adminService.deleteUser(id);
-      loadUsers();
+      await loadUsers();
     } catch (error) {
-      console.error(error);
+      console.error("Failed to delete user:", error);
+      alert("Failed to delete user.");
     }
   };
 
-return (
-  <div className="bg-white rounded-3xl shadow-sm border border-slate-200 p-8">
+  const filteredUsers = users
+    .filter((user) => {
+      const name = user.fullName || "";
+      const email = user.email || "";
+      const role = user.role || "";
 
-    <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
+      const searchText = search.toLowerCase();
 
-  <h2 className="text-2xl font-bold">
-    Registered Users
-  </h2>
+      return (
+        name.toLowerCase().includes(searchText) ||
+        email.toLowerCase().includes(searchText) ||
+        role.toLowerCase().includes(searchText)
+      );
+    })
+    .sort((a, b) => {
+      if (sortBy === "name") {
+        return (a.fullName || "").localeCompare(b.fullName || "");
+      }
 
-  <input
-    type="text"
-    placeholder="Search users..."
-    value={search}
-    onChange={(e) => setSearch(e.target.value)}
-    className="mt-4 md:mt-0 border rounded-lg px-4 py-2 w-full md:w-72 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-  />
-  <select
-  value={sortBy}
-  onChange={(e) => setSortBy(e.target.value)}
-  className="border rounded-lg px-4 py-2 md:ml-4 mt-4 md:mt-0"
->
-  <option value="name">Sort by Name</option>
-  <option value="email">Sort by Email</option>
-  <option value="role">Sort by Role</option>
-</select>
+      if (sortBy === "email") {
+        return (a.email || "").localeCompare(b.email || "");
+      }
 
-</div>
+      if (sortBy === "role") {
+        return (a.role || "").localeCompare(b.role || "");
+      }
 
-    <div className="overflow-x-auto">
+      return 0;
+    });
 
-      <table className="min-w-full">
+  return (
+    <div className="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
 
-        <thead>
-          <tr className="border-b">
-            <th className="text-left py-4">Name</th>
-            <th className="text-left py-4">Email</th>
-            <th className="text-left py-4">Role</th>
-            <th className="text-left py-4">Phone</th>
-            <th className="text-left py-4">Location</th>
-            <th className="text-left py-4">Actions</th>
-          </tr>
-        </thead>
+      {/* Top Controls */}
+      <div className="p-6 border-b border-slate-100">
 
-        <tbody>
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
 
-          {users
-  .filter((user) => {
-    return (
-      user.fullName
-        .toLowerCase()
-        .includes(search.toLowerCase()) ||
-      user.email
-        .toLowerCase()
-        .includes(search.toLowerCase()) ||
-      user.role
-        .toLowerCase()
-        .includes(search.toLowerCase())
-    );
-  })
-  .sort((a, b) => {
-    if (sortBy === "name") {
-      return a.fullName.localeCompare(b.fullName);
-    }
+          {/* Search */}
+          <div className="relative w-full lg:w-96">
 
-    if (sortBy === "email") {
-      return a.email.localeCompare(b.email);
-    }
+            <Search
+              size={20}
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
+            />
 
-    if (sortBy === "role") {
-      return a.role.localeCompare(b.role);
-    }
+            <input
+              type="text"
+              placeholder="Search users..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="w-full border border-slate-200 rounded-xl pl-11 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-400"
+            />
 
-    return 0;
-  })
-  .map((user) => (
+          </div>
 
-            <tr
-              key={user._id}
-              className="border-b hover:bg-slate-50"
-            >
+          {/* Sort */}
+          <select
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value)}
+            className="border border-slate-200 rounded-xl px-4 py-3 bg-white focus:outline-none focus:ring-2 focus:ring-orange-400"
+          >
+            <option value="name">Sort by Name</option>
+            <option value="email">Sort by Email</option>
+            <option value="role">Sort by Role</option>
+          </select>
 
-              <td className="py-4">{user.fullName}</td>
+        </div>
 
-              <td>{user.email}</td>
+        {/* User Count */}
+        <div className="flex items-center gap-2 mt-5 text-gray-500">
 
-              <td>
-                <select
-                  value={user.role}
-                  onChange={(e) =>
-                    handleRoleChange(user._id, e.target.value)
-                  }
-                  className="border rounded-lg px-3 py-2"
+          <Users size={18} />
+
+          <span>
+            {filteredUsers.length} user
+            {filteredUsers.length !== 1 ? "s" : ""} found
+          </span>
+
+        </div>
+
+      </div>
+
+      {/* Loading */}
+      {loading && (
+        <div className="p-10 text-center text-gray-500">
+          Loading users...
+        </div>
+      )}
+
+      {/* Empty */}
+      {!loading && filteredUsers.length === 0 && (
+        <div className="p-12 text-center">
+
+          <Users
+            size={48}
+            className="mx-auto text-gray-300"
+          />
+
+          <h3 className="text-xl font-bold text-slate-900 mt-4">
+            No users found
+          </h3>
+
+          <p className="text-gray-500 mt-2">
+            Try changing your search.
+          </p>
+
+        </div>
+      )}
+
+      {/* Users Table */}
+      {!loading && filteredUsers.length > 0 && (
+        <div className="overflow-x-auto">
+
+          <table className="min-w-full">
+
+            <thead className="bg-slate-50">
+
+              <tr>
+
+                <th className="text-left px-6 py-4 text-sm font-bold text-gray-500">
+                  User
+                </th>
+
+                <th className="text-left px-6 py-4 text-sm font-bold text-gray-500">
+                  Contact
+                </th>
+
+                <th className="text-left px-6 py-4 text-sm font-bold text-gray-500">
+                  Role
+                </th>
+
+                <th className="text-left px-6 py-4 text-sm font-bold text-gray-500">
+                  Location
+                </th>
+
+                <th className="text-left px-6 py-4 text-sm font-bold text-gray-500">
+                  Actions
+                </th>
+
+              </tr>
+
+            </thead>
+
+            <tbody>
+
+              {filteredUsers.map((user) => (
+
+                <tr
+                  key={user._id}
+                  className="border-t border-slate-100 hover:bg-slate-50 transition"
                 >
-                  <option value="admin">Admin</option>
-                  <option value="employer">Employer</option>
-                  <option value="jobseeker">Job Seeker</option>
-                </select>
-              </td>
 
-              <td>{user.phone || "-"}</td>
+                  {/* User */}
+                  <td className="px-6 py-5">
 
-              <td>{user.location || "-"}</td>
+                    <div className="flex items-center gap-4">
 
-              <td>
-                <button
-                  onClick={() => handleDelete(user._id)}
-                  className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg"
-                >
-                  Delete
-                </button>
-              </td>
+                      <div className="w-11 h-11 rounded-full bg-orange-100 flex items-center justify-center">
+                        <Users
+                          size={21}
+                          className="text-orange-600"
+                        />
+                      </div>
 
-            </tr>
+                      <div>
 
-          ))}
+                        <p className="font-bold text-slate-900">
+                          {user.fullName}
+                        </p>
 
-        </tbody>
+                        <p className="text-sm text-gray-500">
+                          ID: {user._id.slice(-6)}
+                        </p>
 
-      </table>
+                      </div>
+
+                    </div>
+
+                  </td>
+
+                  {/* Contact */}
+                  <td className="px-6 py-5">
+
+                    <div className="space-y-2">
+
+                      <div className="flex items-center gap-2 text-sm text-gray-600">
+                        <Mail size={16} />
+                        <span>{user.email}</span>
+                      </div>
+
+                      <div className="flex items-center gap-2 text-sm text-gray-500">
+                        <Phone size={16} />
+                        <span>{user.phone || "Not provided"}</span>
+                      </div>
+
+                    </div>
+
+                  </td>
+
+                  {/* Role */}
+                  <td className="px-6 py-5">
+
+                    <div className="flex items-center gap-2">
+
+                      <ShieldCheck
+                        size={18}
+                        className="text-orange-500"
+                      />
+
+                      <select
+                        value={user.role}
+                        onChange={(e) =>
+                          handleRoleChange(
+                            user._id,
+                            e.target.value
+                          )
+                        }
+                        className="border border-slate-200 rounded-lg px-3 py-2 bg-white font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-orange-400"
+                      >
+
+                        <option value="admin">
+                          Admin
+                        </option>
+
+                        <option value="employer">
+                          Employer
+                        </option>
+
+                        <option value="jobseeker">
+                          Job Seeker
+                        </option>
+
+                      </select>
+
+                    </div>
+
+                  </td>
+
+                  {/* Location */}
+                  <td className="px-6 py-5">
+
+                    <div className="flex items-center gap-2 text-gray-600">
+
+                      <MapPin size={17} />
+
+                      <span>
+                        {user.location || "Not provided"}
+                      </span>
+
+                    </div>
+
+                  </td>
+
+                  {/* Actions */}
+                  <td className="px-6 py-5">
+
+                    <button
+                      onClick={() =>
+                        handleDelete(user._id)
+                      }
+                      className="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2.5 rounded-xl font-semibold transition"
+                    >
+
+                      <Trash2 size={17} />
+
+                      Delete
+
+                    </button>
+
+                  </td>
+
+                </tr>
+
+              ))}
+
+            </tbody>
+
+          </table>
+
+        </div>
+      )}
 
     </div>
-
-  </div>
-);
+  );
 }
 
 export default UsersTable;
