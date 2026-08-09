@@ -8,6 +8,9 @@ import {
   Briefcase,
   ArrowLeft,
   Save,
+  Sparkles,
+  CheckCircle,
+  AlertCircle,
 } from "lucide-react";
 import companyService from "../../services/companyService";
 
@@ -27,7 +30,10 @@ function EditCompany() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
 
-  // Load company
+  // =========================
+  // LOAD COMPANY
+  // =========================
+
   useEffect(() => {
     loadCompany();
   }, [id]);
@@ -60,6 +66,10 @@ function EditCompany() {
     }
   };
 
+  // =========================
+  // HANDLE CHANGE
+  // =========================
+
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -68,6 +78,10 @@ function EditCompany() {
       [name]: value,
     }));
   };
+
+  // =========================
+  // SUBMIT
+  // =========================
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -107,208 +121,541 @@ function EditCompany() {
     }
   };
 
-  // Loading state
+  // =========================
+  // LOADING SCREEN
+  // =========================
+
   if (loading) {
     return (
-      <div className="min-h-[70vh] bg-slate-50 px-4 py-10">
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-8">
-            <p className="text-slate-500 text-center">
-              Loading company information...
-            </p>
+      <section className="min-h-screen bg-slate-950 flex items-center justify-center px-6">
+        <div className="text-center">
+          <div className="relative mx-auto w-20 h-20">
+            <div className="absolute inset-0 rounded-3xl bg-emerald-500/20 animate-ping" />
+
+            <div className="relative w-20 h-20 rounded-3xl bg-gradient-to-br from-emerald-400 to-cyan-500 flex items-center justify-center shadow-2xl">
+              <Building2
+                size={34}
+                className="text-white"
+              />
+            </div>
           </div>
+
+          <h2 className="mt-8 text-2xl font-bold text-white">
+            Loading Company
+          </h2>
+
+          <p className="mt-2 text-slate-400">
+            Preparing your company information...
+          </p>
         </div>
-      </div>
+      </section>
     );
   }
 
   return (
-    <div className="min-h-[70vh] bg-slate-50 px-4 py-8 md:px-6">
-      <div className="max-w-4xl mx-auto">
+    <section className="min-h-screen bg-slate-950 relative overflow-hidden py-10 px-4 sm:px-6 lg:px-8">
 
-        {/* Back button */}
+      {/* =========================
+          BACKGROUND DECORATION
+      ========================= */}
+
+      <div className="absolute -top-40 -left-40 w-96 h-96 bg-emerald-500/20 rounded-full blur-3xl pointer-events-none" />
+
+      <div className="absolute top-1/3 -right-40 w-96 h-96 bg-orange-500/15 rounded-full blur-3xl pointer-events-none" />
+
+      <div className="absolute bottom-0 left-1/3 w-96 h-72 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
+
+      {/* =========================
+          MAIN CONTAINER
+      ========================= */}
+
+      <div className="relative max-w-6xl mx-auto">
+
+        {/* =========================
+            BACK BUTTON
+        ========================= */}
+
         <button
           type="button"
-          onClick={() => navigate("/employer/my-companies")}
-          className="inline-flex items-center gap-2 text-slate-600 hover:text-orange-600 font-semibold mb-6 transition"
+          onClick={() =>
+            navigate("/employer/my-companies")
+          }
+          className="group inline-flex items-center gap-2 text-slate-400 hover:text-white mb-8 transition"
         >
-          <ArrowLeft size={18} />
-          Back to My Companies
+          <span className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-emerald-500/20 group-hover:border-emerald-400/30 transition">
+            <ArrowLeft size={18} />
+          </span>
+
+          <span className="font-semibold">
+            Back to My Companies
+          </span>
         </button>
 
-        {/* Page Header */}
-        <div className="flex items-center gap-4 mb-8">
-          <div className="w-14 h-14 rounded-2xl bg-orange-100 flex items-center justify-center">
+        {/* =========================
+            HEADER
+        ========================= */}
+
+        <div className="grid lg:grid-cols-[1fr_auto] gap-8 items-end mb-10">
+
+          <div>
+
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-400/20 text-emerald-300 text-sm font-semibold mb-5">
+              <Sparkles size={16} />
+              Company Management
+            </div>
+
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight">
+              Edit Your
+              <span className="block bg-gradient-to-r from-emerald-400 via-cyan-400 to-orange-400 bg-clip-text text-transparent">
+                Company Profile
+              </span>
+            </h1>
+
+            <p className="mt-5 max-w-2xl text-slate-400 text-lg leading-relaxed">
+              Keep your company information accurate and
+              professional so job seekers can better understand
+              your organization.
+            </p>
+
+          </div>
+
+          {/* Company Icon */}
+
+          <div className="hidden lg:flex w-28 h-28 rounded-3xl bg-gradient-to-br from-emerald-400 to-cyan-500 items-center justify-center shadow-2xl shadow-emerald-500/20 rotate-3">
             <Building2
-              size={28}
-              className="text-orange-600"
+              size={52}
+              className="text-white -rotate-3"
             />
           </div>
 
-          <div>
-            <h1 className="text-3xl md:text-4xl font-black text-slate-900">
-              Edit Company
-            </h1>
-
-            <p className="text-slate-500 mt-1">
-              Update your company information.
-            </p>
-          </div>
         </div>
 
-        {/* Form Card */}
-        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 md:p-8">
+        {/* =========================
+            ERROR
+        ========================= */}
 
-          {/* Error */}
-          {error && (
-            <div className="mb-6 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-red-700">
-              {error}
+        {error && (
+          <div className="mb-8 flex items-start gap-4 rounded-2xl border border-red-400/20 bg-red-500/10 px-5 py-4 text-red-200">
+
+            <div className="w-10 h-10 shrink-0 rounded-xl bg-red-500/20 flex items-center justify-center">
+              <AlertCircle size={20} />
             </div>
-          )}
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-
-            {/* Company Name */}
             <div>
-              <label className="block text-sm font-semibold text-slate-700 mb-2">
-                Company Name
-              </label>
+              <p className="font-bold">
+                Something went wrong
+              </p>
+
+              <p className="text-sm text-red-200/80 mt-1">
+                {error}
+              </p>
+            </div>
+
+          </div>
+        )}
+
+        {/* =========================
+            FORM LAYOUT
+        ========================= */}
+
+        <div className="grid lg:grid-cols-[280px_1fr] gap-6">
+
+          {/* =========================
+              LEFT INFORMATION PANEL
+          ========================= */}
+
+          <aside className="bg-white/[0.04] border border-white/10 rounded-3xl p-6 h-fit backdrop-blur-xl">
+
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-400/20 to-cyan-400/20 border border-emerald-400/20 flex items-center justify-center mb-5">
+              <Building2
+                size={27}
+                className="text-emerald-400"
+              />
+            </div>
+
+            <h2 className="text-xl font-bold text-white">
+              Company Details
+            </h2>
+
+            <p className="text-sm text-slate-400 mt-3 leading-relaxed">
+              Your company profile helps job seekers learn
+              about your organization before applying.
+            </p>
+
+            <div className="mt-7 space-y-4">
+
+              <Feature
+                text="Professional company profile"
+              />
+
+              <Feature
+                text="Attract qualified candidates"
+              />
+
+              <Feature
+                text="Build employer credibility"
+              />
+
+              <Feature
+                text="Keep information up to date"
+              />
+
+            </div>
+
+            <div className="mt-8 pt-6 border-t border-white/10">
+
+              <p className="text-xs uppercase tracking-wider text-slate-500 font-bold">
+                Required fields
+              </p>
+
+              <p className="text-sm text-slate-400 mt-2">
+                Company name, industry and location
+                must be completed.
+              </p>
+
+            </div>
+
+          </aside>
+
+          {/* =========================
+              FORM CARD
+          ========================= */}
+
+          <div className="bg-white rounded-3xl shadow-2xl overflow-hidden">
+
+            {/* Form Header */}
+
+            <div className="relative px-6 sm:px-8 lg:px-10 py-7 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 overflow-hidden">
+
+              <div className="absolute right-0 top-0 w-48 h-48 bg-emerald-400/10 rounded-full blur-3xl" />
 
               <div className="relative">
-                <Building2
-                  size={20}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
-                />
 
-                <input
-                  type="text"
+                <div className="flex items-center gap-3">
+
+                  <div className="w-11 h-11 rounded-xl bg-emerald-500/20 border border-emerald-400/20 flex items-center justify-center">
+                    <Save
+                      size={20}
+                      className="text-emerald-400"
+                    />
+                  </div>
+
+                  <div>
+                    <h2 className="text-xl font-bold text-white">
+                      Company Information
+                    </h2>
+
+                    <p className="text-sm text-slate-400 mt-1">
+                      Update the information below.
+                    </p>
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+
+            {/* =========================
+                FORM
+            ========================= */}
+
+            <form
+              onSubmit={handleSubmit}
+              className="p-6 sm:p-8 lg:p-10"
+            >
+
+              <div className="grid md:grid-cols-2 gap-6">
+
+                {/* Company Name */}
+
+                <InputField
+                  label="Company Name"
                   name="companyName"
                   value={formData.companyName}
                   onChange={handleChange}
-                  placeholder="Enter company name"
-                  className="w-full pl-11 pr-4 py-3 rounded-xl border border-slate-300 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition"
-                />
-              </div>
-            </div>
-
-            {/* Industry */}
-            <div>
-              <label className="block text-sm font-semibold text-slate-700 mb-2">
-                Industry
-              </label>
-
-              <div className="relative">
-                <Briefcase
-                  size={20}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
+                  placeholder="e.g. Ethio Software PLC"
+                  icon={<Building2 size={19} />}
+                  required
                 />
 
-                <input
-                  type="text"
+                {/* Industry */}
+
+                <InputField
+                  label="Industry"
                   name="industry"
                   value={formData.industry}
                   onChange={handleChange}
-                  placeholder="e.g. Technology"
-                  className="w-full pl-11 pr-4 py-3 rounded-xl border border-slate-300 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition"
-                />
-              </div>
-            </div>
-
-            {/* Location */}
-            <div>
-              <label className="block text-sm font-semibold text-slate-700 mb-2">
-                Location
-              </label>
-
-              <div className="relative">
-                <MapPin
-                  size={20}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
+                  placeholder="e.g. Information Technology"
+                  icon={<Briefcase size={19} />}
+                  required
                 />
 
-                <input
-                  type="text"
+                {/* Location */}
+
+                <InputField
+                  label="Location"
                   name="location"
                   value={formData.location}
                   onChange={handleChange}
                   placeholder="e.g. Addis Ababa"
-                  className="w-full pl-11 pr-4 py-3 rounded-xl border border-slate-300 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition"
-                />
-              </div>
-            </div>
-
-            {/* Website */}
-            <div>
-              <label className="block text-sm font-semibold text-slate-700 mb-2">
-                Website
-              </label>
-
-              <div className="relative">
-                <Globe
-                  size={20}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
+                  icon={<MapPin size={19} />}
+                  required
                 />
 
-                <input
-                  type="url"
+                {/* Website */}
+
+                <InputField
+                  label="Website"
                   name="website"
+                  type="url"
                   value={formData.website}
                   onChange={handleChange}
                   placeholder="https://example.com"
-                  className="w-full pl-11 pr-4 py-3 rounded-xl border border-slate-300 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition"
+                  icon={<Globe size={19} />}
+                  optional
                 />
+
               </div>
-            </div>
 
-            {/* Description */}
-            <div>
-              <label className="block text-sm font-semibold text-slate-700 mb-2">
-                Description
-              </label>
+              {/* Description */}
 
-              <div className="relative">
-                <FileText
-                  size={20}
-                  className="absolute left-3 top-4 text-slate-400"
-                />
+              <div className="mt-6">
 
-                <textarea
-                  name="description"
-                  value={formData.description}
-                  onChange={handleChange}
-                  rows={6}
-                  placeholder="Describe your company..."
-                  className="w-full pl-11 pr-4 py-3 rounded-xl border border-slate-300 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition resize-none"
-                />
+                <label
+                  htmlFor="description"
+                  className="flex items-center gap-2 text-sm font-bold text-slate-700 mb-2"
+                >
+                  <FileText
+                    size={17}
+                    className="text-emerald-600"
+                  />
+
+                  Description
+
+                  <span className="text-xs font-medium text-slate-400">
+                    Optional
+                  </span>
+                </label>
+
+                <div className="relative">
+
+                  <textarea
+                    id="description"
+                    name="description"
+                    value={formData.description}
+                    onChange={handleChange}
+                    rows={7}
+                    placeholder="Describe your company, services, culture, mission and what makes your organization unique..."
+                    className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-5 py-4 text-slate-900 placeholder:text-slate-400 outline-none resize-none transition duration-200 focus:bg-white focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
+                  />
+
+                  <div className="absolute bottom-4 right-4 text-xs text-slate-400">
+                    {formData.description.length} characters
+                  </div>
+
+                </div>
+
               </div>
-            </div>
 
-            {/* Buttons */}
-            <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-slate-100">
+              {/* =========================
+                  PREVIEW
+              ========================= */}
 
-              <button
-                type="button"
-                onClick={() => navigate("/employer/my-companies")}
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl border border-slate-300 text-slate-700 font-semibold hover:bg-slate-100 transition"
-              >
-                Cancel
-              </button>
+              <div className="mt-8 rounded-2xl border border-emerald-100 bg-gradient-to-r from-emerald-50 to-cyan-50 p-5">
 
-              <button
-                type="submit"
-                disabled={saving}
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-semibold transition disabled:opacity-60 disabled:cursor-not-allowed"
-              >
-                <Save size={18} />
+                <div className="flex items-start gap-4">
 
-                {saving ? "Saving..." : "Save Changes"}
-              </button>
+                  <div className="w-12 h-12 shrink-0 rounded-xl bg-white shadow-sm flex items-center justify-center">
+                    <CheckCircle
+                      size={22}
+                      className="text-emerald-600"
+                    />
+                  </div>
 
-            </div>
+                  <div>
 
-          </form>
+                    <h3 className="font-bold text-slate-900">
+                      Profile Preview
+                    </h3>
+
+                    <p className="text-sm text-slate-500 mt-1">
+                      Your changes will be visible to job
+                      seekers after you save the company.
+                    </p>
+
+                  </div>
+
+                </div>
+
+                <div className="grid sm:grid-cols-3 gap-3 mt-5">
+
+                  <PreviewItem
+                    label="Company"
+                    value={formData.companyName}
+                  />
+
+                  <PreviewItem
+                    label="Industry"
+                    value={formData.industry}
+                  />
+
+                  <PreviewItem
+                    label="Location"
+                    value={formData.location}
+                  />
+
+                </div>
+
+              </div>
+
+              {/* =========================
+                  BUTTONS
+              ========================= */}
+
+              <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-3 mt-8 pt-7 border-t border-slate-200">
+
+                <button
+                  type="button"
+                  onClick={() =>
+                    navigate("/employer/my-companies")
+                  }
+                  disabled={saving}
+                  className="px-7 h-12 rounded-xl border border-slate-300 bg-white text-slate-700 font-bold hover:bg-slate-50 transition disabled:opacity-50"
+                >
+                  Cancel
+                </button>
+
+                <button
+                  type="submit"
+                  disabled={saving}
+                  className="group inline-flex items-center justify-center gap-2 px-8 h-12 rounded-xl bg-gradient-to-r from-emerald-500 to-cyan-500 text-white font-bold shadow-lg shadow-emerald-500/20 hover:from-emerald-600 hover:to-cyan-600 hover:shadow-xl transition disabled:opacity-60 disabled:cursor-not-allowed"
+                >
+                  <Save
+                    size={18}
+                    className="group-hover:scale-110 transition"
+                  />
+
+                  {saving
+                    ? "Saving Changes..."
+                    : "Save Changes"}
+                </button>
+
+              </div>
+
+            </form>
+
+          </div>
+
         </div>
+
       </div>
+    </section>
+  );
+}
+
+// =========================
+// INPUT FIELD
+// =========================
+
+function InputField({
+  label,
+  name,
+  type = "text",
+  value,
+  onChange,
+  placeholder,
+  icon,
+  required = false,
+  optional = false,
+}) {
+  return (
+    <div>
+
+      <label
+        htmlFor={name}
+        className="flex items-center gap-2 text-sm font-bold text-slate-700 mb-2"
+      >
+
+        <span className="text-emerald-600">
+          {icon}
+        </span>
+
+        {label}
+
+        {required && (
+          <span className="text-red-500">*</span>
+        )}
+
+        {optional && (
+          <span className="text-xs font-medium text-slate-400">
+            Optional
+          </span>
+        )}
+
+      </label>
+
+      <div className="relative">
+
+        <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
+          {icon}
+        </span>
+
+        <input
+          id={name}
+          type={type}
+          name={name}
+          value={value}
+          onChange={onChange}
+          placeholder={placeholder}
+          required={required}
+          className="w-full h-13 rounded-2xl border border-slate-200 bg-slate-50 pl-12 pr-4 text-slate-900 placeholder:text-slate-400 outline-none transition duration-200 focus:bg-white focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
+        />
+
+      </div>
+
+    </div>
+  );
+}
+
+// =========================
+// FEATURE
+// =========================
+
+function Feature({ text }) {
+  return (
+    <div className="flex items-center gap-3">
+
+      <div className="w-6 h-6 rounded-full bg-emerald-500/10 flex items-center justify-center">
+        <CheckCircle
+          size={15}
+          className="text-emerald-400"
+        />
+      </div>
+
+      <span className="text-sm text-slate-300">
+        {text}
+      </span>
+
+    </div>
+  );
+}
+
+// =========================
+// PREVIEW ITEM
+// =========================
+
+function PreviewItem({ label, value }) {
+  return (
+    <div className="bg-white rounded-xl border border-slate-100 p-3">
+
+      <p className="text-xs uppercase tracking-wide text-slate-400 font-bold">
+        {label}
+      </p>
+
+      <p className="text-sm font-semibold text-slate-800 mt-1 truncate">
+        {value || "Not provided"}
+      </p>
+
     </div>
   );
 }

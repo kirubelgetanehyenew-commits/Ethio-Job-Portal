@@ -7,6 +7,7 @@ import {
   FileText,
   Briefcase,
   ArrowLeft,
+  CheckCircle2,
 } from "lucide-react";
 import companyService from "../../services/companyService";
 
@@ -70,30 +71,36 @@ function CreateCompany() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 px-4 py-8 md:px-8">
-      <div className="max-w-5xl mx-auto">
+    <section className="min-h-screen bg-slate-50 py-10 md:py-14">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        {/* Back */}
+        {/* Back Button */}
         <button
           type="button"
           onClick={() => navigate("/employer/my-companies")}
-          className="inline-flex items-center gap-2 text-slate-500 hover:text-orange-600 font-medium mb-6 transition"
+          className="inline-flex items-center gap-2 text-slate-500 hover:text-emerald-600 font-semibold mb-8 transition"
         >
           <ArrowLeft size={18} />
           Back to My Companies
         </button>
 
-        {/* Page Header */}
+        {/* Header */}
         <div className="mb-8">
-          <div className="flex items-start gap-4">
-            <div className="w-14 h-14 shrink-0 rounded-2xl bg-orange-100 flex items-center justify-center">
+
+          <div className="flex items-start gap-5">
+
+            <div className="w-16 h-16 rounded-2xl bg-emerald-100 flex items-center justify-center shrink-0">
               <Building2
-                size={28}
-                className="text-orange-600"
+                size={30}
+                className="text-emerald-600"
               />
             </div>
 
             <div>
+              <p className="text-sm font-bold uppercase tracking-wider text-emerald-600 mb-2">
+                Employer Portal
+              </p>
+
               <h1 className="text-3xl md:text-4xl font-black text-slate-900">
                 Create Company
               </h1>
@@ -102,29 +109,59 @@ function CreateCompany() {
                 Add your company information to the Ethio Job Portal.
               </p>
             </div>
+
           </div>
+
         </div>
 
-        {/* Error */}
+        {/* Error Message */}
         {error && (
-          <div className="mb-6 flex items-start gap-3 rounded-xl border border-red-200 bg-red-50 px-5 py-4 text-red-700">
-            <span className="font-semibold">Error:</span>
-            <span>{error}</span>
+          <div className="mb-6 flex items-start gap-3 rounded-2xl border border-red-200 bg-red-50 px-5 py-4 text-red-700">
+
+            <div className="w-6 h-6 rounded-full bg-red-100 flex items-center justify-center shrink-0 mt-0.5">
+              <span className="text-sm font-bold">!</span>
+            </div>
+
+            <div>
+              <p className="font-bold">
+                Unable to create company
+              </p>
+
+              <p className="text-sm mt-1">
+                {error}
+              </p>
+            </div>
+
           </div>
         )}
 
-        {/* Form Card */}
-        <div className="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
+        {/* Main Card */}
+        <div className="bg-white border border-slate-200 rounded-3xl shadow-sm overflow-hidden">
 
           {/* Card Header */}
-          <div className="px-6 md:px-8 py-5 border-b border-slate-200">
-            <h2 className="text-xl font-bold text-slate-900">
-              Company Information
-            </h2>
+          <div className="bg-slate-900 px-6 md:px-8 py-7">
 
-            <p className="text-sm text-slate-500 mt-1">
-              Enter the basic information about your company.
-            </p>
+            <div className="flex items-center gap-4">
+
+              <div className="w-11 h-11 rounded-xl bg-emerald-500/10 border border-emerald-400/20 flex items-center justify-center">
+                <Building2
+                  size={22}
+                  className="text-emerald-400"
+                />
+              </div>
+
+              <div>
+                <h2 className="text-xl font-bold text-white">
+                  Company Information
+                </h2>
+
+                <p className="text-slate-400 text-sm mt-1">
+                  Enter the basic information about your company.
+                </p>
+              </div>
+
+            </div>
+
           </div>
 
           {/* Form */}
@@ -134,16 +171,20 @@ function CreateCompany() {
           >
 
             {/* Company Name */}
-            <div className="mb-6">
+            <div className="mb-7">
+
               <label
                 htmlFor="companyName"
-                className="block text-sm font-semibold text-slate-700 mb-2"
+                className="block text-sm font-bold text-slate-700 mb-2"
               >
                 Company Name
-                <span className="text-red-500 ml-1">*</span>
+                <span className="text-red-500 ml-1">
+                  *
+                </span>
               </label>
 
               <div className="relative">
+
                 <Building2
                   size={19}
                   className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"
@@ -156,25 +197,31 @@ function CreateCompany() {
                   value={formData.companyName}
                   onChange={handleChange}
                   placeholder="Enter company name"
-                  className="w-full h-12 rounded-xl border border-slate-300 bg-white pl-11 pr-4 text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-orange-500 focus:ring-4 focus:ring-orange-100"
+                  className="w-full h-13 rounded-xl border border-slate-300 bg-white pl-11 pr-4 text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-50"
                 />
+
               </div>
+
             </div>
 
             {/* Industry + Location */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-7">
 
               {/* Industry */}
               <div>
+
                 <label
                   htmlFor="industry"
-                  className="block text-sm font-semibold text-slate-700 mb-2"
+                  className="block text-sm font-bold text-slate-700 mb-2"
                 >
                   Industry
-                  <span className="text-red-500 ml-1">*</span>
+                  <span className="text-red-500 ml-1">
+                    *
+                  </span>
                 </label>
 
                 <div className="relative">
+
                   <Briefcase
                     size={19}
                     className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"
@@ -187,22 +234,28 @@ function CreateCompany() {
                     value={formData.industry}
                     onChange={handleChange}
                     placeholder="e.g. Technology"
-                    className="w-full h-12 rounded-xl border border-slate-300 bg-white pl-11 pr-4 text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-orange-500 focus:ring-4 focus:ring-orange-100"
+                    className="w-full h-13 rounded-xl border border-slate-300 bg-white pl-11 pr-4 text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-50"
                   />
+
                 </div>
+
               </div>
 
               {/* Location */}
               <div>
+
                 <label
                   htmlFor="location"
-                  className="block text-sm font-semibold text-slate-700 mb-2"
+                  className="block text-sm font-bold text-slate-700 mb-2"
                 >
                   Location
-                  <span className="text-orange-500 ml-1">*</span>
+                  <span className="text-red-500 ml-1">
+                    *
+                  </span>
                 </label>
 
                 <div className="relative">
+
                   <MapPin
                     size={19}
                     className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"
@@ -215,25 +268,30 @@ function CreateCompany() {
                     value={formData.location}
                     onChange={handleChange}
                     placeholder="e.g. Addis Ababa"
-                    className="w-full h-12 rounded-xl border border-slate-300 bg-white pl-11 pr-4 text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-orange-500 focus:ring-4 focus:ring-orange-100"
+                    className="w-full h-13 rounded-xl border border-slate-300 bg-white pl-11 pr-4 text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-50"
                   />
+
                 </div>
+
               </div>
+
             </div>
 
             {/* Website */}
-            <div className="mb-6">
+            <div className="mb-7">
+
               <label
                 htmlFor="website"
-                className="block text-sm font-semibold text-slate-700 mb-2"
+                className="block text-sm font-bold text-slate-700 mb-2"
               >
                 Website
                 <span className="text-slate-400 font-normal ml-2">
-                  (Optional)
+                  Optional
                 </span>
               </label>
 
               <div className="relative">
+
                 <Globe
                   size={19}
                   className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"
@@ -246,24 +304,28 @@ function CreateCompany() {
                   value={formData.website}
                   onChange={handleChange}
                   placeholder="https://example.com"
-                  className="w-full h-12 rounded-xl border border-slate-300 bg-white pl-11 pr-4 text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-orange-500 focus:ring-4 focus:ring-orange-100"
+                  className="w-full h-13 rounded-xl border border-slate-300 bg-white pl-11 pr-4 text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-50"
                 />
+
               </div>
+
             </div>
 
             {/* Description */}
             <div className="mb-8">
+
               <label
                 htmlFor="description"
-                className="block text-sm font-semibold text-slate-700 mb-2"
+                className="block text-sm font-bold text-slate-700 mb-2"
               >
-                Description
+                Company Description
                 <span className="text-slate-400 font-normal ml-2">
-                  (Optional)
+                  Optional
                 </span>
               </label>
 
               <div className="relative">
+
                 <FileText
                   size={19}
                   className="absolute left-4 top-4 text-slate-400 pointer-events-none"
@@ -276,22 +338,47 @@ function CreateCompany() {
                   onChange={handleChange}
                   rows={6}
                   placeholder="Describe your company, what you do, and what makes your organization unique..."
-                  className="w-full rounded-xl border border-slate-300 bg-white pl-11 pr-4 py-3 text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-orange-500 focus:ring-4 focus:ring-orange-100 resize-none"
+                  className="w-full rounded-xl border border-slate-300 bg-white pl-11 pr-4 py-3 text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-50 resize-none"
                 />
+
               </div>
+
+            </div>
+
+            {/* Information Notice */}
+            <div className="flex items-start gap-3 bg-emerald-50 border border-emerald-100 rounded-2xl p-4 mb-7">
+
+              <CheckCircle2
+                size={20}
+                className="text-emerald-600 shrink-0 mt-0.5"
+              />
+
+              <div>
+                <p className="font-semibold text-emerald-800">
+                  Complete company information
+                </p>
+
+                <p className="text-sm text-emerald-700 mt-1">
+                  A complete company profile helps job seekers understand
+                  your organization and trust your job postings.
+                </p>
+              </div>
+
             </div>
 
             {/* Divider */}
-            <div className="border-t border-slate-200 mb-6" />
+            <div className="border-t border-slate-200 mb-7" />
 
             {/* Buttons */}
             <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-3">
 
               <button
                 type="button"
-                onClick={() => navigate("/employer/my-companies")}
+                onClick={() =>
+                  navigate("/employer/my-companies")
+                }
                 disabled={loading}
-                className="px-6 h-12 rounded-xl border border-slate-300 bg-white text-slate-700 font-semibold hover:bg-slate-50 transition disabled:opacity-50"
+                className="px-7 h-12 rounded-xl border border-slate-300 bg-white text-slate-700 font-semibold hover:bg-slate-50 transition disabled:opacity-50"
               >
                 Cancel
               </button>
@@ -299,24 +386,28 @@ function CreateCompany() {
               <button
                 type="submit"
                 disabled={loading}
-                className="px-7 h-12 rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-semibold shadow-sm transition disabled:opacity-60 disabled:cursor-not-allowed"
+                className="px-7 h-12 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold shadow-sm hover:shadow-md transition disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                {loading ? "Creating Company..." : "Create Company"}
+                {loading
+                  ? "Creating Company..."
+                  : "Create Company"}
               </button>
 
             </div>
 
           </form>
+
         </div>
 
         {/* Bottom Note */}
         <p className="text-center text-sm text-slate-400 mt-6">
-          Fields marked with <span className="text-orange-500">*</span> are
-          required.
+          Fields marked with{" "}
+          <span className="text-red-500">*</span>{" "}
+          are required.
         </p>
 
       </div>
-    </div>
+    </section>
   );
 }
 

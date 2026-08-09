@@ -1,12 +1,16 @@
 import { Routes, Route } from "react-router-dom";
 
+// =========================
 // Layouts
+// =========================
 import PublicLayout from "./layouts/PublicLayout";
 import EmployerLayout from "./layouts/EmployerLayout";
 import JobSeekerLayout from "./layouts/JobSeekerLayout";
 import AdminLayout from "./layouts/AdminLayout";
 
+// =========================
 // Public Pages
+// =========================
 import Home from "./pages/Home/Home";
 import Jobs from "./pages/Jobs/Jobs";
 import JobDetails from "./pages/Jobs/JobDetails";
@@ -14,7 +18,9 @@ import Companies from "./pages/Companies/Companies";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 
+// =========================
 // Employer Pages
+// =========================
 import EmployerDashboard from "./pages/Employer/EmployerDashboard";
 import CreateJob from "./pages/Employer/CreateJob";
 import EditJob from "./pages/Employer/EditJob";
@@ -24,29 +30,41 @@ import MyCompanies from "./pages/Employer/MyCompanies";
 import CreateCompany from "./pages/Employer/CreateCompany";
 import CompanyJobs from "./pages/Employer/CompanyJobs";
 
+// =========================
 // Job Seeker Pages
+// =========================
 import Dashboard from "./pages/JobSeeker/Dashboard";
 import MyApplications from "./pages/applications/MyApplications";
-import Profile from "./pages/jobseeker/Profile";
+import Profile from "./pages/JobSeeker/Profile";
 
+// =========================
 // Admin Pages
+// =========================
 import AdminDashboard from "./pages/Admin/Dashboard";
 import Users from "./pages/Admin/Users";
-import CompaniesTable from "./components/dashboard/admin/CompaniesTable";
-import JobsTable from "./components/dashboard/admin/JobsTable";
-import ApplicationsTable from "./components/dashboard/admin/ApplicationsTable";
 import Analytics from "./pages/Admin/Analytics";
 
+// =========================
+// Admin Components
+// =========================
+import JobsTable from "./components/dashboard/admin/JobsTable";
+import CompaniesTable from "./components/dashboard/admin/CompaniesTable";
+import Applications from "./pages/Admin/Applications";
+
+// =========================
 // Protected Route
+// =========================
 import ProtectedRoute from "./routes/ProtectedRoute";
+
 
 function App() {
   return (
     <Routes>
 
-      {/* =========================
+      {/* =====================================================
           PUBLIC ROUTES
-      ========================= */}
+      ===================================================== */}
+
       <Route element={<PublicLayout />}>
 
         <Route
@@ -82,9 +100,10 @@ function App() {
       </Route>
 
 
-      {/* =========================
+      {/* =====================================================
           EMPLOYER ROUTES
-      ========================= */}
+      ===================================================== */}
+
       <Route
         element={
           <ProtectedRoute allowedRole="employer">
@@ -136,9 +155,10 @@ function App() {
       </Route>
 
 
-      {/* =========================
+      {/* =====================================================
           JOB SEEKER ROUTES
-      ========================= */}
+      ===================================================== */}
+
       <Route
         element={
           <ProtectedRoute allowedRole="jobseeker">
@@ -147,31 +167,26 @@ function App() {
         }
       >
 
-        {/* Dashboard */}
         <Route
           path="/jobseeker/dashboard"
           element={<Dashboard />}
         />
 
-        {/* Profile */}
         <Route
           path="/jobseeker/profile"
           element={<Profile />}
         />
 
-        {/* Browse Jobs */}
         <Route
           path="/jobseeker/jobs"
           element={<Jobs />}
         />
 
-        {/* Job Details */}
         <Route
           path="/jobseeker/jobs/:id"
           element={<JobDetails />}
         />
 
-        {/* Applications */}
         <Route
           path="/my-applications"
           element={<MyApplications />}
@@ -180,9 +195,10 @@ function App() {
       </Route>
 
 
-      {/* =========================
+      {/* =====================================================
           ADMIN ROUTES
-      ========================= */}
+      ===================================================== */}
+
       <Route
         element={
           <ProtectedRoute allowedRole="admin">
@@ -191,37 +207,37 @@ function App() {
         }
       >
 
-        {/* Dashboard */}
+        {/* Admin Dashboard */}
         <Route
           path="/admin/dashboard"
           element={<AdminDashboard />}
         />
 
-        {/* Users */}
+        {/* Admin Users */}
         <Route
           path="/admin/users"
           element={<Users />}
         />
 
-        {/* Companies */}
-        <Route
-          path="/admin/companies"
-          element={<CompaniesTable />}
-        />
-
-        {/* Jobs */}
+        {/* Admin Jobs */}
         <Route
           path="/admin/jobs"
           element={<JobsTable />}
         />
 
-        {/* Applications */}
+        {/* Admin Companies */}
         <Route
-          path="/admin/applications"
-          element={<ApplicationsTable />}
+          path="/admin/companies"
+          element={<CompaniesTable />}
         />
 
-        {/* Analytics */}
+        {/* Admin Applications */}
+        <Route
+          path="/admin/applications"
+          element={<Applications  />}
+        />
+
+        {/* Admin Analytics */}
         <Route
           path="/admin/analytics"
           element={<Analytics />}
