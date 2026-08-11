@@ -1,0 +1,227 @@
+/* =========================================================
+   ADMIN NAVBAR
+========================================================= */
+
+.admin-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+
+  background: #0f172a;
+  color: #ffffff;
+
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.18);
+}
+
+.admin-navbar-container {
+  max-width: 1280px;
+  height: 80px;
+
+  margin: 0 auto;
+  padding: 0 24px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* =========================================================
+   LOGO
+========================================================= */
+
+.admin-navbar-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.admin-navbar-logo-icon {
+  width: 48px;
+  height: 48px;
+
+  border-radius: 16px;
+
+  background: linear-gradient(
+    135deg,
+    #6366f1,
+    #9333ea
+  );
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #ffffff;
+
+  flex-shrink: 0;
+}
+
+.admin-navbar-logo-text h1 {
+  margin: 0;
+
+  font-size: 24px;
+  font-weight: 900;
+
+  color: #ffffff;
+}
+
+.admin-navbar-logo-text p {
+  margin: 2px 0 0;
+
+  font-size: 12px;
+
+  color: #cbd5e1;
+}
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.admin-navbar-navigation {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.admin-navbar-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  color: #ffffff;
+
+  text-decoration: none;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.admin-navbar-link:hover {
+  color: #fb923c;
+
+  transform: translateY(-1px);
+}
+
+/* =========================================================
+   USER SECTION
+========================================================= */
+
+.admin-navbar-user {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.admin-navbar-user-info {
+  text-align: right;
+}
+
+.admin-navbar-user-info h3 {
+  margin: 0;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  color: #ffffff;
+}
+
+.admin-navbar-user-info p {
+  margin: 3px 0 0;
+
+  font-size: 13px;
+
+  color: #cbd5e1;
+}
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+.admin-navbar-logout {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 12px 20px;
+
+  border: none;
+  border-radius: 12px;
+
+  background: #dc2626;
+  color: #ffffff;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.admin-navbar-logout:hover {
+  background: #b91c1c;
+
+  transform: translateY(-1px);
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1100px) {
+  .admin-navbar-navigation {
+    gap: 18px;
+  }
+
+  .admin-navbar-container {
+    padding: 0 18px;
+  }
+}
+
+@media (max-width: 900px) {
+  .admin-navbar-navigation {
+    display: none;
+  }
+
+  .admin-navbar-user-info {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .admin-navbar-container {
+    height: 70px;
+    padding: 0 14px;
+  }
+
+  .admin-navbar-logo-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 13px;
+  }
+
+  .admin-navbar-logo-text h1 {
+    font-size: 19px;
+  }
+
+  .admin-navbar-logo-text p {
+    font-size: 10px;
+  }
+
+  .admin-navbar-logout {
+    padding: 10px 13px;
+  }
+
+  .admin-navbar-logout span {
+    display: none;
+  }
+}

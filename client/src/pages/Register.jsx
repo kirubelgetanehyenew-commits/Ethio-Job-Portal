@@ -7,106 +7,131 @@ import {
   MapPin,
   BriefcaseBusiness,
 } from "lucide-react";
+import "./Register.css";
 
 function Register() {
   return (
-    <section className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-100 flex items-center justify-center px-6 py-20">
+    <section className="register-page">
+      <div className="register-container">
 
-      <div className="grid lg:grid-cols-2 max-w-6xl w-full bg-white rounded-3xl shadow-2xl overflow-hidden">
+        {/* ================= LEFT SIDE ================= */}
+        <div className="register-hero">
 
-        {/* Left Side */}
-        <div className="hidden lg:flex bg-gradient-to-br from-orange-500 via-amber-500 to-yellow-500 text-white p-14 flex-col justify-center">
-
-          <div className="w-20 h-20 rounded-3xl bg-white/20 backdrop-blur-md flex items-center justify-center mb-8">
+          <div className="register-logo">
             <BriefcaseBusiness size={40} />
           </div>
 
-          <h1 className="text-5xl font-black leading-tight">
+          <h1>
             Join
             <br />
             Ethio Job
           </h1>
 
-          <p className="mt-8 text-xl leading-8 text-orange-50">
+          <p>
             Create your account and discover jobs, connect with employers,
             and grow your professional career.
           </p>
 
+          <div className="register-hero-decoration">
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+
         </div>
 
-        {/* Right Side */}
-        <div className="p-10 lg:p-16">
+        {/* ================= RIGHT SIDE ================= */}
+        <div className="register-form-container">
 
-          <h2 className="text-4xl font-black text-gray-900 mb-3">
-            Create Account
-          </h2>
+          <div className="register-heading">
+            <h2>Create Account</h2>
 
-          <p className="text-gray-500 mb-10">
-            Fill in your information to get started.
-          </p>
+            <p>
+              Fill in your information to get started.
+            </p>
+          </div>
 
-          <form className="space-y-5">
+          <form className="register-form">
 
-            <div className="relative">
-              <User className="absolute left-4 top-4 text-gray-400" size={20} />
+            {/* Full Name */}
+            <div className="register-input-group">
+
+              <User size={20} />
+
               <input
                 type="text"
                 placeholder="Full Name"
-                className="w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-300 focus:ring-2 focus:ring-orange-400 outline-none"
+                name="fullName"
               />
+
             </div>
 
-            <div className="relative">
-              <Mail className="absolute left-4 top-4 text-gray-400" size={20} />
+            {/* Email */}
+            <div className="register-input-group">
+
+              <Mail size={20} />
+
               <input
                 type="email"
                 placeholder="Email Address"
-                className="w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-300 focus:ring-2 focus:ring-orange-400 outline-none"
+                name="email"
               />
+
             </div>
 
-            <div className="relative">
-              <Phone className="absolute left-4 top-4 text-gray-400" size={20} />
+            {/* Phone */}
+            <div className="register-input-group">
+
+              <Phone size={20} />
+
               <input
                 type="text"
                 placeholder="Phone Number"
-                className="w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-300 focus:ring-2 focus:ring-orange-400 outline-none"
+                name="phone"
               />
+
             </div>
 
-            <div className="relative">
-              <MapPin className="absolute left-4 top-4 text-gray-400" size={20} />
+            {/* Location */}
+            <div className="register-input-group">
+
+              <MapPin size={20} />
+
               <input
                 type="text"
                 placeholder="Location"
-                className="w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-300 focus:ring-2 focus:ring-orange-400 outline-none"
+                name="location"
               />
+
             </div>
 
-            <div className="relative">
-              <Lock className="absolute left-4 top-4 text-gray-400" size={20} />
+            {/* Password */}
+            <div className="register-input-group">
+
+              <Lock size={20} />
+
               <input
                 type="password"
                 placeholder="Password"
-                className="w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-300 focus:ring-2 focus:ring-orange-400 outline-none"
+                name="password"
               />
+
             </div>
 
+            {/* Submit */}
             <button
               type="submit"
-              className="w-full py-4 rounded-2xl font-bold text-lg bg-gradient-to-r from-orange-500 to-amber-500 text-white hover:scale-[1.02] hover:shadow-xl transition"
+              className="register-button"
             >
               Create Account
             </button>
 
           </form>
 
-          <p className="text-center text-gray-500 mt-8">
+          <p className="register-login-text">
             Already have an account?{" "}
-            <Link
-              to="/login"
-              className="font-bold text-orange-600 hover:underline"
-            >
+
+            <Link to="/login">
               Login
             </Link>
           </p>
@@ -114,7 +139,6 @@ function Register() {
         </div>
 
       </div>
-
     </section>
   );
 }

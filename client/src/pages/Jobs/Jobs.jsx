@@ -4,6 +4,7 @@ import { getAllJobs } from "../../services/jobService";
 import JobCard from "../../components/JobCard";
 import Container from "../../components/ui/Container";
 import SectionTitle from "../../components/ui/SectionTitle";
+import "./Jobs.css";
 
 function Jobs() {
   const [jobs, setJobs] = useState([]);
@@ -17,7 +18,7 @@ function Jobs() {
         const data = await getAllJobs();
         setJobs(data.jobs);
       } catch (error) {
-        console.error(error);
+        console.error("Failed to fetch jobs:", error);
       }
     };
 
@@ -27,19 +28,25 @@ function Jobs() {
   const filteredJobs = useMemo(() => {
     let result = jobs;
 
-    if (keyword) {
+    // Filter by keyword
+    if (keyword.trim()) {
+      const searchKeyword = keyword.toLowerCase().trim();
+
       result = result.filter(
         (job) =>
-          job.title.toLowerCase().includes(keyword.toLowerCase()) ||
+          job.title?.toLowerCase().includes(searchKeyword) ||
           job.company?.companyName
             ?.toLowerCase()
-            .includes(keyword.toLowerCase())
+            .includes(searchKeyword)
       );
     }
 
-    if (location) {
+    // Filter by location
+    if (location.trim()) {
+      const searchLocation = location.toLowerCase().trim();
+
       result = result.filter((job) =>
-        job.location.toLowerCase().includes(location.toLowerCase())
+        job.location?.toLowerCase().includes(searchLocation)
       );
     }
 
@@ -47,9 +54,12 @@ function Jobs() {
   }, [jobs, keyword, location]);
 
   return (
-    <section className="bg-slate-50 min-h-screen py-16">
-
+    <section className="jobs-page">
       <Container>
+
+        {/* =====================================================
+            PAGE TITLE
+        ===================================================== */}
 
         <SectionTitle
           title="Explore Jobs"
@@ -57,63 +67,89 @@ function Jobs() {
           center
         />
 
-        {/* Search */}
-        <div className="bg-white rounded-3xl shadow-lg p-6 mb-12">
+        {/* =====================================================
+            SEARCH SECTION
+        ===================================================== */}
 
-          <div className="grid md:grid-cols-3 gap-5">
+        <div className="jobs-search-wrapper">
 
-            <div className="flex items-center gap-3 border rounded-2xl px-4 py-3">
-              <Search className="text-orange-500" size={20} />
+          <div className="jobs-search-grid">
+
+            {/* Keyword */}
+            <div className="jobs-search-field">
+
+              <Search size={20} />
 
               <input
                 type="text"
-                placeholder="Job title..."
+                placeholder="Job title or company..."
                 value={keyword}
                 onChange={(e) => setKeyword(e.target.value)}
-                className="w-full outline-none"
               />
+
             </div>
 
-            <div className="flex items-center gap-3 border rounded-2xl px-4 py-3">
-              <MapPin className="text-orange-500" size={20} />
+            {/* Location */}
+            <div className="jobs-search-field">
+
+              <MapPin size={20} />
 
               <input
                 type="text"
                 placeholder="Location..."
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
-                className="w-full outline-none"
               />
+
             </div>
 
-            <button className="bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-2xl font-bold flex items-center justify-center gap-2 hover:shadow-lg transition">
+            {/* Results */}
+            <button
+              type="button"
+              className="jobs-results-button"
+            >
               <Briefcase size={20} />
-              {filteredJobs.length} Jobs Found
+
+              <span>
+                {filteredJobs.length}{" "}
+                {filteredJobs.length === 1
+                  ? "Job Found"
+                  : "Jobs Found"}
+              </span>
             </button>
 
           </div>
 
         </div>
 
-        {/* Jobs */}
+        {/* =====================================================
+            JOB RESULTS
+        ===================================================== */}
 
         {filteredJobs.length === 0 ? (
 
-          <div className="text-center py-24">
+          /* Empty State */
+          <div className="jobs-empty">
 
-            <h2 className="text-3xl font-bold">
+            <div className="jobs-empty-icon">
+              <Briefcase size={34} />
+            </div>
+
+            <h2>
               No Jobs Found
             </h2>
 
-            <p className="text-gray-500 mt-4">
-              Try changing your search keywords.
+            <p>
+              We couldn't find any jobs matching your search.
+              Try changing your keyword or location.
             </p>
 
           </div>
 
         ) : (
 
-          <div className="grid xl:grid-cols-3 md:grid-cols-2 gap-8">
+          /* Jobs Grid */
+          <div className="jobs-grid">
 
             {filteredJobs.map((job) => (
               <JobCard
@@ -127,7 +163,6 @@ function Jobs() {
         )}
 
       </Container>
-
     </section>
   );
 }

@@ -11,8 +11,12 @@ import {
   Trash2,
 } from "lucide-react";
 
-import { getJobsByCompany } from "../../services/jobService";
-import { deleteJob } from "../../services/jobService";
+import {
+  getJobsByCompany,
+  deleteJob,
+} from "../../services/jobService";
+
+import "../../pages/Employer/CompanyJobs.css";
 
 function CompanyJobs() {
   const { companyId } = useParams();
@@ -25,6 +29,10 @@ function CompanyJobs() {
   useEffect(() => {
     loadJobs();
   }, [companyId]);
+
+  // =====================================================
+  // LOAD COMPANY JOBS
+  // =====================================================
 
   const loadJobs = async () => {
     try {
@@ -46,6 +54,10 @@ function CompanyJobs() {
     }
   };
 
+  // =====================================================
+  // DELETE JOB
+  // =====================================================
+
   const handleDelete = async (jobId, jobTitle) => {
     const confirmed = window.confirm(
       `Are you sure you want to delete "${jobTitle}"?`
@@ -59,7 +71,9 @@ function CompanyJobs() {
       await deleteJob(jobId);
 
       setJobs((previousJobs) =>
-        previousJobs.filter((job) => job._id !== jobId)
+        previousJobs.filter(
+          (job) => job._id !== jobId
+        )
       );
     } catch (error) {
       console.error(error);
@@ -71,139 +85,192 @@ function CompanyJobs() {
     }
   };
 
+  // =====================================================
+  // LOADING STATE
+  // =====================================================
+
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-50 px-4 py-8 md:px-8">
-        <div className="max-w-6xl mx-auto">
-          <div className="bg-white rounded-2xl border border-slate-200 p-10 text-center">
-            <p className="text-slate-500">
-              Loading company jobs...
+      <section className="company-jobs-page">
+        <div className="company-jobs-container">
+          <div className="company-jobs-loading">
+            <div className="company-jobs-loading-icon">
+              <Briefcase size={32} />
+            </div>
+
+            <h2>Loading Company Jobs</h2>
+
+            <p>
+              Please wait while we load the jobs
+              posted for this company.
             </p>
           </div>
         </div>
-      </div>
+      </section>
     );
   }
 
-  return (
-    <div className="min-h-screen bg-slate-50 px-4 py-8 md:px-8">
-      <div className="max-w-6xl mx-auto">
+  // =====================================================
+  // PAGE
+  // =====================================================
 
-        {/* Back Button */}
+  return (
+    <section className="company-jobs-page">
+      <div className="company-jobs-container">
+
+        {/* =================================================
+            BACK BUTTON
+        ================================================= */}
+
         <button
-          onClick={() => navigate("/employer/my-companies")}
-          className="flex items-center gap-2 text-slate-600 hover:text-orange-600 font-semibold mb-6 transition"
+          type="button"
+          onClick={() =>
+            navigate("/employer/my-companies")
+          }
+          className="company-jobs-back-button"
         >
           <ArrowLeft size={18} />
-          Back to My Companies
+          <span>Back to My Companies</span>
         </button>
 
-        {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
+        {/* =================================================
+            HEADER
+        ================================================= */}
 
-          <div>
-            <div className="flex items-center gap-3">
+        <div className="company-jobs-header">
 
-              <div className="w-12 h-12 rounded-xl bg-orange-100 flex items-center justify-center">
-                <Briefcase
-                  size={25}
-                  className="text-orange-600"
-                />
-              </div>
+          <div className="company-jobs-header-content">
 
-              <div>
-                <h1 className="text-3xl md:text-4xl font-black text-slate-900">
-                  Company Jobs
-                </h1>
-
-                <p className="text-slate-500 mt-1">
-                  Manage jobs posted for this company.
-                </p>
-              </div>
-
+            <div className="company-jobs-header-icon">
+              <Briefcase size={27} />
             </div>
+
+            <div>
+              <p className="company-jobs-label">
+                EMPLOYER PORTAL
+              </p>
+
+              <h1 className="company-jobs-title">
+                Company Jobs
+              </h1>
+
+              <p className="company-jobs-description">
+                Manage jobs posted for this company.
+              </p>
+            </div>
+
           </div>
 
           <button
+            type="button"
             onClick={() =>
               navigate("/employer/create-job")
             }
-            className="inline-flex items-center justify-center gap-2 bg-orange-500 hover:bg-orange-600 text-white px-5 py-3 rounded-xl font-semibold transition"
+            className="company-jobs-create-button"
           >
             <Briefcase size={18} />
-            Post New Job
+            <span>Post New Job</span>
           </button>
 
         </div>
 
-        {/* Error */}
+        {/* =================================================
+            ERROR
+        ================================================= */}
+
         {error && (
-          <div className="mb-6 bg-red-50 border border-red-200 text-red-700 rounded-xl px-5 py-4">
-            {error}
+          <div className="company-jobs-error">
+
+            <div className="company-jobs-error-icon">
+              <Briefcase size={19} />
+            </div>
+
+            <div>
+              <strong>
+                Unable to load jobs
+              </strong>
+
+              <p>{error}</p>
+            </div>
+
           </div>
         )}
 
-        {/* No Jobs */}
-        {!error && jobs.length === 0 && (
-          <div className="bg-white border border-slate-200 rounded-2xl shadow-sm p-10 text-center">
+        {/* =================================================
+            EMPTY STATE
+        ================================================= */}
 
-            <div className="w-16 h-16 mx-auto rounded-full bg-slate-100 flex items-center justify-center">
-              <Briefcase
-                size={30}
-                className="text-slate-400"
-              />
+        {!error && jobs.length === 0 && (
+          <div className="company-jobs-empty">
+
+            <div className="company-jobs-empty-icon">
+              <Briefcase size={34} />
             </div>
 
-            <h2 className="text-xl font-bold text-slate-900 mt-5">
-              No jobs found
+            <h2>
+              No Jobs Found
             </h2>
 
-            <p className="text-slate-500 mt-2">
-              This company doesn't have any jobs yet.
+            <p>
+              This company doesn't have any jobs
+              posted yet.
             </p>
 
             <button
+              type="button"
               onClick={() =>
                 navigate("/employer/create-job")
               }
-              className="mt-6 bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-xl font-semibold transition"
+              className="company-jobs-empty-button"
             >
+              <Briefcase size={18} />
               Post Your First Job
             </button>
 
           </div>
         )}
 
-        {/* Jobs */}
-        {jobs.length > 0 && (
-          <div className="space-y-5">
+        {/* =================================================
+            JOBS
+        ================================================= */}
+
+        {!error && jobs.length > 0 && (
+          <div className="company-jobs-list">
 
             {jobs.map((job) => (
               <div
                 key={job._id}
-                className="bg-white border border-slate-200 rounded-2xl shadow-sm hover:shadow-md transition p-6"
+                className="company-job-card"
               >
 
-                {/* Job Header */}
-                <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+                {/* =================================================
+                    JOB HEADER
+                ================================================= */}
 
-                  <div>
-                    <h2 className="text-2xl font-bold text-slate-900">
+                <div className="company-job-header">
+
+                  <div className="company-job-heading">
+
+                    <h2 className="company-job-title">
                       {job.title}
                     </h2>
 
-                    <p className="text-orange-600 font-semibold mt-1">
-                      {job.company?.companyName}
+                    <p className="company-job-company">
+                      {job.company?.companyName ||
+                        "Company"}
                     </p>
+
                   </div>
 
                   <span
-                    className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold w-fit ${
+                    className={`company-job-status ${
                       job.isActive
-                        ? "bg-green-100 text-green-700"
-                        : "bg-slate-100 text-slate-600"
+                        ? "active"
+                        : "inactive"
                     }`}
                   >
+                    <span className="company-job-status-dot" />
+
                     {job.isActive
                       ? "Active"
                       : "Inactive"}
@@ -211,104 +278,168 @@ function CompanyJobs() {
 
                 </div>
 
-                {/* Job Details */}
-                <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
+                {/* =================================================
+                    JOB DETAILS
+                ================================================= */}
 
-                  <div className="flex items-center gap-2 text-slate-600">
-                    <MapPin
-                      size={18}
-                      className="text-orange-500"
-                    />
-                    <span>{job.location}</span>
+                <div className="company-job-details">
+
+                  <div className="company-job-detail">
+
+                    <div className="company-job-detail-icon location">
+                      <MapPin size={18} />
+                    </div>
+
+                    <div>
+                      <span className="company-job-detail-label">
+                        Location
+                      </span>
+
+                      <span className="company-job-detail-value">
+                        {job.location || "-"}
+                      </span>
+                    </div>
+
                   </div>
 
-                  <div className="flex items-center gap-2 text-slate-600">
-                    <DollarSign
-                      size={18}
-                      className="text-green-500"
-                    />
-                    <span>
-                      {job.salary?.toLocaleString()} ETB
-                    </span>
+                  <div className="company-job-detail">
+
+                    <div className="company-job-detail-icon salary">
+                      <DollarSign size={18} />
+                    </div>
+
+                    <div>
+                      <span className="company-job-detail-label">
+                        Salary
+                      </span>
+
+                      <span className="company-job-detail-value">
+                        {job.salary != null
+                          ? `${Number(
+                              job.salary
+                            ).toLocaleString()} ETB`
+                          : "-"}
+                      </span>
+                    </div>
+
                   </div>
 
-                  <div className="flex items-center gap-2 text-slate-600">
-                    <Briefcase
-                      size={18}
-                      className="text-blue-500"
-                    />
-                    <span>{job.jobType}</span>
+                  <div className="company-job-detail">
+
+                    <div className="company-job-detail-icon type">
+                      <Briefcase size={18} />
+                    </div>
+
+                    <div>
+                      <span className="company-job-detail-label">
+                        Job Type
+                      </span>
+
+                      <span className="company-job-detail-value">
+                        {job.jobType || "-"}
+                      </span>
+                    </div>
+
                   </div>
 
-                  <div className="flex items-center gap-2 text-slate-600">
-                    <CalendarDays
-                      size={18}
-                      className="text-purple-500"
-                    />
-                    <span>
-                      {job.deadline
-                        ? new Date(
-                            job.deadline
-                          ).toLocaleDateString()
-                        : "No deadline"}
-                    </span>
+                  <div className="company-job-detail">
+
+                    <div className="company-job-detail-icon deadline">
+                      <CalendarDays size={18} />
+                    </div>
+
+                    <div>
+                      <span className="company-job-detail-label">
+                        Deadline
+                      </span>
+
+                      <span className="company-job-detail-value">
+                        {job.deadline
+                          ? new Date(
+                              job.deadline
+                            ).toLocaleDateString()
+                          : "No deadline"}
+                      </span>
+                    </div>
+
                   </div>
 
                 </div>
 
-                {/* Description */}
-                <p className="text-slate-600 mt-5 line-clamp-3">
-                  {job.description}
-                </p>
+                {/* =================================================
+                    DESCRIPTION
+                ================================================= */}
 
-                {/* Experience */}
-                <div className="mt-4">
-                  <span className="text-sm font-semibold text-slate-700">
+                <div className="company-job-description">
+
+                  <p>
+                    {job.description ||
+                      "No job description provided."}
+                  </p>
+
+                </div>
+
+                {/* =================================================
+                    EXPERIENCE
+                ================================================= */}
+
+                <div className="company-job-experience">
+
+                  <span className="company-job-experience-label">
                     Experience:
-                  </span>{" "}
-                  <span className="text-sm text-slate-500">
-                    {job.experience || "Not specified"}
                   </span>
+
+                  <span className="company-job-experience-value">
+                    {job.experience ||
+                      "Not specified"}
+                  </span>
+
                 </div>
 
-                {/* Actions */}
-                <div className="flex flex-wrap gap-3 mt-6 pt-5 border-t border-slate-100">
+                {/* =================================================
+                    ACTIONS
+                ================================================= */}
+
+                <div className="company-job-actions">
 
                   <button
+                    type="button"
                     onClick={() =>
                       navigate(
                         `/employer/edit-job/${job._id}`
                       )
                     }
-                    className="inline-flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition"
+                    className="company-job-action edit"
                   >
                     <Edit size={16} />
-                    Edit
+                    <span>Edit</span>
                   </button>
 
                   <button
+                    type="button"
                     onClick={() =>
                       handleDelete(
                         job._id,
                         job.title
                       )
                     }
-                    className="inline-flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg font-medium transition"
+                    className="company-job-action delete"
                   >
                     <Trash2 size={16} />
-                    Delete
+                    <span>Delete</span>
                   </button>
 
                   <button
+                    type="button"
                     onClick={() =>
                       navigate(
                         `/employer/applicants/${job._id}`
                       )
                     }
-                    className="inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-lg font-medium transition"
+                    className="company-job-action applicants"
                   >
                     <Users size={16} />
-                    Applicants
+                    <span>Applicants</span>
                   </button>
 
                 </div>
@@ -320,7 +451,7 @@ function CompanyJobs() {
         )}
 
       </div>
-    </div>
+    </section>
   );
 }
 

@@ -5,15 +5,12 @@ import FeaturedCompanies from "../../components/home/FeaturedCompanies";
 
 function Home() {
   return (
-    <>
+    <div className="home-page">
       <Hero />
-
       <Statistics />
-
-      <FeaturedCompanies />
-
       <FeaturedJobs />
-    </>
+      <FeaturedCompanies />
+    </div>
   );
 }
 

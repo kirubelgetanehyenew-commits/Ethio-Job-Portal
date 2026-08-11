@@ -29,53 +29,45 @@ function FeaturedJobs() {
 
   if (loading) {
     return (
-      <Container>
-        <div className="py-28 text-center">
-          <h2 className="text-3xl font-bold text-slate-700">
-            Loading Latest Jobs...
-          </h2>
+      <section className="featured-jobs-section">
+        <div className="featured-jobs-loading">
+          <div className="loading-spinner"></div>
+          <p>Loading Latest Jobs...</p>
         </div>
-      </Container>
+      </section>
     );
   }
 
   return (
-    <section className="py-28 bg-gradient-to-b from-slate-50 to-white">
-
+    <section className="featured-jobs-section">
       <Container>
-
         <SectionTitle
           title="Featured Jobs"
           subtitle="Discover the newest opportunities from trusted Ethiopian employers."
           center
         />
 
-        <div className="grid xl:grid-cols-3 md:grid-cols-2 gap-8 mt-16">
-
+        <div className="featured-jobs-grid">
           {jobs.map((job) => (
-            <JobCard
+            <div
+              className="featured-job-item"
               key={job._id}
-              job={job}
-            />
+            >
+              <JobCard job={job} />
+            </div>
           ))}
-
         </div>
 
-        <div className="flex justify-center mt-16">
-
+        <div className="featured-jobs-action">
           <Link
             to="/jobs"
-            className="inline-flex items-center gap-3 bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 rounded-2xl font-bold shadow-lg hover:shadow-xl transition-all duration-300"
+            className="featured-jobs-button"
           >
-            View All Jobs
-
+            <span>View All Jobs</span>
             <ArrowRight size={20} />
           </Link>
-
         </div>
-
       </Container>
-
     </section>
   );
 }

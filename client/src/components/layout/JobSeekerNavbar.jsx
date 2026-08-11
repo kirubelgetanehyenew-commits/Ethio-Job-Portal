@@ -1,12 +1,15 @@
-import { Link, useNavigate } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard,
   Briefcase,
   FileText,
   User,
   LogOut,
+  X,
 } from "lucide-react";
+
 import { useAuth } from "../../context/AuthContext";
+import "./JobSeekerNavbar.css";
 
 function JobSeekerNavbar() {
   const navigate = useNavigate();
@@ -17,104 +20,121 @@ function JobSeekerNavbar() {
     navigate("/");
   };
 
+  const getNavClass = ({ isActive }) =>
+    `jobseeker-nav-link ${
+      isActive ? "jobseeker-nav-link-active" : ""
+    }`;
+
   return (
-    <header className="bg-white border-b border-slate-200 shadow-sm">
-      <div className="max-w-7xl mx-auto h-20 px-6 flex items-center justify-between">
+    <>
+      {/* Sidebar */}
+      <aside className="jobseeker-sidebar">
 
-        {/* Logo */}
-        <Link
-          to="/jobseeker/dashboard"
-          className="flex items-center gap-3"
-        >
-          <div className="w-12 h-12 rounded-2xl bg-gradient-to-r from-blue-600 to-cyan-500 flex items-center justify-center">
-            <Briefcase
-              className="text-white"
-              size={24}
-            />
-          </div>
+        {/* Sidebar Header */}
+        <div className="jobseeker-sidebar-header">
 
-          <div>
-            <h1 className="text-2xl font-black text-slate-900">
-              Job Seeker
-            </h1>
-
-            <p className="text-xs text-gray-500">
-              Career Dashboard
-            </p>
-          </div>
-        </Link>
-
-        {/* Navigation */}
-        <nav className="hidden lg:flex items-center gap-8">
-
-          {/* Dashboard */}
           <Link
             to="/jobseeker/dashboard"
-            className="flex items-center gap-2 hover:text-blue-600 font-semibold transition"
+            className="jobseeker-logo"
           >
-            <LayoutDashboard size={18} />
-            Dashboard
-          </Link>
-
-          {/* Browse Jobs */}
-          <Link
-  to="/jobseeker/jobs"
-  className="flex items-center gap-2 hover:text-blue-600 font-semibold"
->
-  <Briefcase size={18} />
-  Browse Jobs
-</Link>
-
-          {/* My Applications */}
-          <Link
-            to="/my-applications"
-            className="flex items-center gap-2 hover:text-blue-600 font-semibold transition"
-          >
-            <FileText size={18} />
-            My Applications
-          </Link>
-
-          {/* Profile */}
-          <Link
-            to="/jobseeker/profile"
-            className="flex items-center gap-2 hover:text-blue-600 font-semibold transition"
-          >
-            <User size={18} />
-            Profile
-          </Link>
-
-        </nav>
-
-        {/* Right Side */}
-        <div className="flex items-center gap-5">
-
-          {/* User Information */}
-          <div className="text-right">
-
-            <h3 className="font-bold text-slate-900">
-              {user?.fullName}
-            </h3>
-
-            <div className="flex items-center justify-end gap-1 text-sm text-gray-500">
-              <User size={14} />
-              Job Seeker
+            <div className="jobseeker-logo-icon">
+              <Briefcase size={24} />
             </div>
 
-          </div>
+            <div className="jobseeker-logo-text">
+              <h1>Job Seeker</h1>
+              <p>Career Dashboard</p>
+            </div>
+          </Link>
 
-          {/* Logout */}
+          {/* Mobile Close */}
           <button
-            onClick={handleLogout}
-            className="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white px-5 py-3 rounded-xl font-semibold transition"
+            type="button"
+            className="jobseeker-close-btn"
           >
-            <LogOut size={18} />
-            Logout
+            <X size={20} />
           </button>
 
         </div>
 
-      </div>
-    </header>
+        {/* User Box */}
+        <div className="jobseeker-user-box">
+
+          <div className="jobseeker-user-avatar">
+            <User size={21} />
+          </div>
+
+          <div className="jobseeker-user-info">
+            <h3>
+              {user?.fullName || "Job Seeker"}
+            </h3>
+
+            <p>Job Seeker</p>
+          </div>
+
+        </div>
+
+        {/* Navigation */}
+        <nav className="jobseeker-navigation">
+
+          <div className="jobseeker-menu-label">
+            MAIN MENU
+          </div>
+
+          {/* Dashboard */}
+          <NavLink
+            to="/jobseeker/dashboard"
+            className={getNavClass}
+          >
+            <LayoutDashboard size={19} />
+            <span>Dashboard</span>
+          </NavLink>
+
+          {/* Browse Jobs */}
+          <NavLink
+            to="/jobseeker/jobs"
+            className={getNavClass}
+          >
+            <Briefcase size={19} />
+            <span>Browse Jobs</span>
+          </NavLink>
+
+          {/* My Applications */}
+          <NavLink
+            to="/my-applications"
+            className={getNavClass}
+          >
+            <FileText size={19} />
+            <span>My Applications</span>
+          </NavLink>
+
+          {/* Profile */}
+          <NavLink
+            to="/jobseeker/profile"
+            className={getNavClass}
+          >
+            <User size={19} />
+            <span>Profile</span>
+          </NavLink>
+
+        </nav>
+
+        {/* Bottom */}
+        <div className="jobseeker-sidebar-bottom">
+
+          <button
+            type="button"
+            onClick={handleLogout}
+            className="jobseeker-logout-btn"
+          >
+            <LogOut size={18} />
+            <span>Logout</span>
+          </button>
+
+        </div>
+
+      </aside>
+    </>
   );
 }
 

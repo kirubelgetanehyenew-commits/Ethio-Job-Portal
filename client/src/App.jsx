@@ -24,11 +24,13 @@ import Register from "./pages/Register";
 import EmployerDashboard from "./pages/Employer/EmployerDashboard";
 import CreateJob from "./pages/Employer/CreateJob";
 import EditJob from "./pages/Employer/EditJob";
+import MyJobs from "./pages/Employer/MyJobs";
 import Applicants from "./pages/Employer/Applicants";
 import EditCompany from "./pages/Employer/EditCompany";
 import MyCompanies from "./pages/Employer/MyCompanies";
 import CreateCompany from "./pages/Employer/CreateCompany";
 import CompanyJobs from "./pages/Employer/CompanyJobs";
+import EmployerJobDetails from "./pages/Employer/EmployerJobDetails";
 
 // =========================
 // Job Seeker Pages
@@ -112,6 +114,7 @@ function App() {
         }
       >
 
+
         <Route
           path="/employer/dashboard"
           element={<EmployerDashboard />}
@@ -136,6 +139,14 @@ function App() {
           path="/employer/company-jobs/:companyId"
           element={<CompanyJobs />}
         />
+        <Route
+  path="/employer/my-jobs"
+  element={<MyJobs />}
+/>
+<Route
+  path="/employer/jobs/:id"
+  element={<EmployerJobDetails />}
+/>
 
         <Route
           path="/employer/create-job"

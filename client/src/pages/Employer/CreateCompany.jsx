@@ -8,8 +8,11 @@ import {
   Briefcase,
   ArrowLeft,
   CheckCircle2,
+  Loader2,
 } from "lucide-react";
+
 import companyService from "../../services/companyService";
+import "./CreateCompany.css";
 
 function CreateCompany() {
   const navigate = useNavigate();
@@ -25,12 +28,22 @@ function CreateCompany() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  // =========================
+  // HANDLE CHANGE
+  // =========================
+
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+
+    setFormData((previousData) => ({
+      ...previousData,
+      [name]: value,
+    }));
   };
+
+  // =========================
+  // HANDLE SUBMIT
+  // =========================
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -71,63 +84,63 @@ function CreateCompany() {
   };
 
   return (
-    <section className="min-h-screen bg-slate-50 py-10 md:py-14">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="create-company-page">
+      <div className="create-company-container">
 
-        {/* Back Button */}
+        {/* =========================
+            BACK BUTTON
+        ========================= */}
+
         <button
           type="button"
           onClick={() => navigate("/employer/my-companies")}
-          className="inline-flex items-center gap-2 text-slate-500 hover:text-emerald-600 font-semibold mb-8 transition"
+          className="create-company-back"
         >
           <ArrowLeft size={18} />
           Back to My Companies
         </button>
 
-        {/* Header */}
-        <div className="mb-8">
+        {/* =========================
+            HEADER
+        ========================= */}
 
-          <div className="flex items-start gap-5">
+        <div className="create-company-header">
 
-            <div className="w-16 h-16 rounded-2xl bg-emerald-100 flex items-center justify-center shrink-0">
-              <Building2
-                size={30}
-                className="text-emerald-600"
-              />
-            </div>
+          <div className="create-company-header-icon">
+            <Building2 size={30} />
+          </div>
 
-            <div>
-              <p className="text-sm font-bold uppercase tracking-wider text-emerald-600 mb-2">
-                Employer Portal
-              </p>
+          <div>
+            <p className="create-company-eyebrow">
+              Employer Portal
+            </p>
 
-              <h1 className="text-3xl md:text-4xl font-black text-slate-900">
-                Create Company
-              </h1>
+            <h1>Create Company</h1>
 
-              <p className="mt-2 text-slate-500 text-base md:text-lg">
-                Add your company information to the Ethio Job Portal.
-              </p>
-            </div>
-
+            <p className="create-company-subtitle">
+              Add your company information to the Ethio Job Portal.
+            </p>
           </div>
 
         </div>
 
-        {/* Error Message */}
-        {error && (
-          <div className="mb-6 flex items-start gap-3 rounded-2xl border border-red-200 bg-red-50 px-5 py-4 text-red-700">
+        {/* =========================
+            ERROR MESSAGE
+        ========================= */}
 
-            <div className="w-6 h-6 rounded-full bg-red-100 flex items-center justify-center shrink-0 mt-0.5">
-              <span className="text-sm font-bold">!</span>
+        {error && (
+          <div className="create-company-error">
+
+            <div className="create-company-error-icon">
+              !
             </div>
 
             <div>
-              <p className="font-bold">
+              <p className="create-company-error-title">
                 Unable to create company
               </p>
 
-              <p className="text-sm mt-1">
+              <p className="create-company-error-message">
                 {error}
               </p>
             </div>
@@ -135,60 +148,51 @@ function CreateCompany() {
           </div>
         )}
 
-        {/* Main Card */}
-        <div className="bg-white border border-slate-200 rounded-3xl shadow-sm overflow-hidden">
+        {/* =========================
+            MAIN CARD
+        ========================= */}
+
+        <div className="create-company-card">
 
           {/* Card Header */}
-          <div className="bg-slate-900 px-6 md:px-8 py-7">
 
-            <div className="flex items-center gap-4">
+          <div className="create-company-card-header">
 
-              <div className="w-11 h-11 rounded-xl bg-emerald-500/10 border border-emerald-400/20 flex items-center justify-center">
-                <Building2
-                  size={22}
-                  className="text-emerald-400"
-                />
-              </div>
+            <div className="create-company-card-icon">
+              <Building2 size={22} />
+            </div>
 
-              <div>
-                <h2 className="text-xl font-bold text-white">
-                  Company Information
-                </h2>
+            <div>
+              <h2>Company Information</h2>
 
-                <p className="text-slate-400 text-sm mt-1">
-                  Enter the basic information about your company.
-                </p>
-              </div>
-
+              <p>
+                Enter the basic information about your company.
+              </p>
             </div>
 
           </div>
 
-          {/* Form */}
+          {/* =========================
+              FORM
+          ========================= */}
+
           <form
             onSubmit={handleSubmit}
-            className="p-6 md:p-8"
+            className="create-company-form"
           >
 
             {/* Company Name */}
-            <div className="mb-7">
 
-              <label
-                htmlFor="companyName"
-                className="block text-sm font-bold text-slate-700 mb-2"
-              >
+            <div className="form-group form-group-full">
+
+              <label htmlFor="companyName">
                 Company Name
-                <span className="text-red-500 ml-1">
-                  *
-                </span>
+                <span className="required">*</span>
               </label>
 
-              <div className="relative">
+              <div className="input-wrapper">
 
-                <Building2
-                  size={19}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"
-                />
+                <Building2 size={19} />
 
                 <input
                   id="companyName"
@@ -197,7 +201,7 @@ function CreateCompany() {
                   value={formData.companyName}
                   onChange={handleChange}
                   placeholder="Enter company name"
-                  className="w-full h-13 rounded-xl border border-slate-300 bg-white pl-11 pr-4 text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-50"
+                  required
                 />
 
               </div>
@@ -205,27 +209,21 @@ function CreateCompany() {
             </div>
 
             {/* Industry + Location */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-7">
+
+            <div className="form-grid">
 
               {/* Industry */}
-              <div>
 
-                <label
-                  htmlFor="industry"
-                  className="block text-sm font-bold text-slate-700 mb-2"
-                >
+              <div className="form-group">
+
+                <label htmlFor="industry">
                   Industry
-                  <span className="text-red-500 ml-1">
-                    *
-                  </span>
+                  <span className="required">*</span>
                 </label>
 
-                <div className="relative">
+                <div className="input-wrapper">
 
-                  <Briefcase
-                    size={19}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"
-                  />
+                  <Briefcase size={19} />
 
                   <input
                     id="industry"
@@ -234,7 +232,7 @@ function CreateCompany() {
                     value={formData.industry}
                     onChange={handleChange}
                     placeholder="e.g. Technology"
-                    className="w-full h-13 rounded-xl border border-slate-300 bg-white pl-11 pr-4 text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-50"
+                    required
                   />
 
                 </div>
@@ -242,24 +240,17 @@ function CreateCompany() {
               </div>
 
               {/* Location */}
-              <div>
 
-                <label
-                  htmlFor="location"
-                  className="block text-sm font-bold text-slate-700 mb-2"
-                >
+              <div className="form-group">
+
+                <label htmlFor="location">
                   Location
-                  <span className="text-red-500 ml-1">
-                    *
-                  </span>
+                  <span className="required">*</span>
                 </label>
 
-                <div className="relative">
+                <div className="input-wrapper">
 
-                  <MapPin
-                    size={19}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"
-                  />
+                  <MapPin size={19} />
 
                   <input
                     id="location"
@@ -268,7 +259,7 @@ function CreateCompany() {
                     value={formData.location}
                     onChange={handleChange}
                     placeholder="e.g. Addis Ababa"
-                    className="w-full h-13 rounded-xl border border-slate-300 bg-white pl-11 pr-4 text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-50"
+                    required
                   />
 
                 </div>
@@ -278,24 +269,19 @@ function CreateCompany() {
             </div>
 
             {/* Website */}
-            <div className="mb-7">
 
-              <label
-                htmlFor="website"
-                className="block text-sm font-bold text-slate-700 mb-2"
-              >
+            <div className="form-group">
+
+              <label htmlFor="website">
                 Website
-                <span className="text-slate-400 font-normal ml-2">
+                <span className="optional">
                   Optional
                 </span>
               </label>
 
-              <div className="relative">
+              <div className="input-wrapper">
 
-                <Globe
-                  size={19}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"
-                />
+                <Globe size={19} />
 
                 <input
                   id="website"
@@ -304,7 +290,6 @@ function CreateCompany() {
                   value={formData.website}
                   onChange={handleChange}
                   placeholder="https://example.com"
-                  className="w-full h-13 rounded-xl border border-slate-300 bg-white pl-11 pr-4 text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-50"
                 />
 
               </div>
@@ -312,24 +297,19 @@ function CreateCompany() {
             </div>
 
             {/* Description */}
-            <div className="mb-8">
 
-              <label
-                htmlFor="description"
-                className="block text-sm font-bold text-slate-700 mb-2"
-              >
+            <div className="form-group">
+
+              <label htmlFor="description">
                 Company Description
-                <span className="text-slate-400 font-normal ml-2">
+                <span className="optional">
                   Optional
                 </span>
               </label>
 
-              <div className="relative">
+              <div className="textarea-wrapper">
 
-                <FileText
-                  size={19}
-                  className="absolute left-4 top-4 text-slate-400 pointer-events-none"
-                />
+                <FileText size={19} />
 
                 <textarea
                   id="description"
@@ -338,7 +318,6 @@ function CreateCompany() {
                   onChange={handleChange}
                   rows={6}
                   placeholder="Describe your company, what you do, and what makes your organization unique..."
-                  className="w-full rounded-xl border border-slate-300 bg-white pl-11 pr-4 py-3 text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-50 resize-none"
                 />
 
               </div>
@@ -346,31 +325,32 @@ function CreateCompany() {
             </div>
 
             {/* Information Notice */}
-            <div className="flex items-start gap-3 bg-emerald-50 border border-emerald-100 rounded-2xl p-4 mb-7">
 
-              <CheckCircle2
-                size={20}
-                className="text-emerald-600 shrink-0 mt-0.5"
-              />
+            <div className="create-company-notice">
+
+              <CheckCircle2 size={21} />
 
               <div>
-                <p className="font-semibold text-emerald-800">
+                <p className="notice-title">
                   Complete company information
                 </p>
 
-                <p className="text-sm text-emerald-700 mt-1">
-                  A complete company profile helps job seekers understand
-                  your organization and trust your job postings.
+                <p className="notice-text">
+                  A complete company profile helps job seekers
+                  understand your organization and trust your
+                  job postings.
                 </p>
               </div>
 
             </div>
 
             {/* Divider */}
-            <div className="border-t border-slate-200 mb-7" />
+
+            <div className="create-company-divider" />
 
             {/* Buttons */}
-            <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-3">
+
+            <div className="create-company-actions">
 
               <button
                 type="button"
@@ -378,7 +358,7 @@ function CreateCompany() {
                   navigate("/employer/my-companies")
                 }
                 disabled={loading}
-                className="px-7 h-12 rounded-xl border border-slate-300 bg-white text-slate-700 font-semibold hover:bg-slate-50 transition disabled:opacity-50"
+                className="create-company-cancel"
               >
                 Cancel
               </button>
@@ -386,11 +366,22 @@ function CreateCompany() {
               <button
                 type="submit"
                 disabled={loading}
-                className="px-7 h-12 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold shadow-sm hover:shadow-md transition disabled:opacity-60 disabled:cursor-not-allowed"
+                className="create-company-submit"
               >
-                {loading
-                  ? "Creating Company..."
-                  : "Create Company"}
+                {loading ? (
+                  <>
+                    <Loader2
+                      size={18}
+                      className="create-company-spinner"
+                    />
+                    Creating Company...
+                  </>
+                ) : (
+                  <>
+                    <Building2 size={18} />
+                    Create Company
+                  </>
+                )}
               </button>
 
             </div>
@@ -400,9 +391,10 @@ function CreateCompany() {
         </div>
 
         {/* Bottom Note */}
-        <p className="text-center text-sm text-slate-400 mt-6">
+
+        <p className="create-company-bottom-note">
           Fields marked with{" "}
-          <span className="text-red-500">*</span>{" "}
+          <span>*</span>{" "}
           are required.
         </p>
 

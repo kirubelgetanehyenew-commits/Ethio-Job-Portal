@@ -1,0 +1,170 @@
+/* =========================================================
+   ADMIN SIDEBAR
+========================================================= */
+
+.admin-sidebar {
+  width: 260px;
+  height: 100vh;
+
+  background: #0f172a;
+  color: #ffffff;
+
+  display: flex;
+  flex-direction: column;
+
+  flex-shrink: 0;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.admin-sidebar-header {
+  padding: 24px 20px;
+
+  border-bottom: 1px solid #1e293b;
+}
+
+.admin-sidebar-header h1 {
+  margin: 0;
+
+  font-size: 25px;
+  font-weight: 900;
+
+  color: #ffffff;
+}
+
+.admin-sidebar-header p {
+  margin: 5px 0 0;
+
+  font-size: 12px;
+
+  color: #94a3b8;
+}
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.admin-sidebar-navigation {
+  flex: 1;
+
+  padding: 24px 16px;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 7px;
+
+  overflow-y: auto;
+}
+
+/* =========================================================
+   NAV LINKS
+========================================================= */
+
+.admin-sidebar-link {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 12px 14px;
+
+  border-radius: 11px;
+
+  color: #cbd5e1;
+
+  text-decoration: none;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.admin-sidebar-link svg {
+  flex-shrink: 0;
+}
+
+.admin-sidebar-link:hover {
+  background: #1e293b;
+
+  color: #ffffff;
+
+  transform: translateX(2px);
+}
+
+.admin-sidebar-link.active {
+  background: #059669;
+
+  color: #ffffff;
+
+  box-shadow: 0 6px 15px rgba(5, 150, 105, 0.25);
+}
+
+.admin-sidebar-link.active:hover {
+  background: #059669;
+
+  transform: none;
+}
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+.admin-sidebar-logout {
+  margin: 18px 16px;
+
+  padding: 12px 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+
+  border: 1px solid #7f1d1d;
+
+  border-radius: 11px;
+
+  background: #dc2626;
+
+  color: #ffffff;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.admin-sidebar-logout:hover {
+  background: #b91c1c;
+
+  border-color: #b91c1c;
+}
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+.admin-sidebar-navigation::-webkit-scrollbar {
+  width: 5px;
+}
+
+.admin-sidebar-navigation::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.admin-sidebar-navigation::-webkit-scrollbar-thumb {
+  background: #334155;
+
+  border-radius: 10px;
+}

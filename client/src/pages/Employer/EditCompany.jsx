@@ -12,7 +12,10 @@ import {
   CheckCircle,
   AlertCircle,
 } from "lucide-react";
+
 import companyService from "../../services/companyService";
+
+import "./EditCompany.css";
 
 function EditCompany() {
   const navigate = useNavigate();
@@ -73,8 +76,8 @@ function EditCompany() {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    setFormData((prev) => ({
-      ...prev,
+    setFormData((previous) => ({
+      ...previous,
       [name]: value,
     }));
   };
@@ -108,6 +111,8 @@ function EditCompany() {
 
       await companyService.updateCompany(id, formData);
 
+      alert("Company updated successfully.");
+
       navigate("/employer/my-companies");
     } catch (error) {
       console.error(error);
@@ -122,29 +127,20 @@ function EditCompany() {
   };
 
   // =========================
-  // LOADING SCREEN
+  // LOADING
   // =========================
 
   if (loading) {
     return (
-      <section className="min-h-screen bg-slate-950 flex items-center justify-center px-6">
-        <div className="text-center">
-          <div className="relative mx-auto w-20 h-20">
-            <div className="absolute inset-0 rounded-3xl bg-emerald-500/20 animate-ping" />
-
-            <div className="relative w-20 h-20 rounded-3xl bg-gradient-to-br from-emerald-400 to-cyan-500 flex items-center justify-center shadow-2xl">
-              <Building2
-                size={34}
-                className="text-white"
-              />
-            </div>
+      <section className="edit-company-page">
+        <div className="edit-company-loading">
+          <div className="loading-icon">
+            <Building2 size={34} />
           </div>
 
-          <h2 className="mt-8 text-2xl font-bold text-white">
-            Loading Company
-          </h2>
+          <h2>Loading Company</h2>
 
-          <p className="mt-2 text-slate-400">
+          <p>
             Preparing your company information...
           </p>
         </div>
@@ -153,100 +149,73 @@ function EditCompany() {
   }
 
   return (
-    <section className="min-h-screen bg-slate-950 relative overflow-hidden py-10 px-4 sm:px-6 lg:px-8">
+    <section className="edit-company-page">
 
-      {/* =========================
-          BACKGROUND DECORATION
-      ========================= */}
+      {/* Background Decoration */}
+      <div className="edit-company-decoration decoration-one" />
+      <div className="edit-company-decoration decoration-two" />
+      <div className="edit-company-decoration decoration-three" />
 
-      <div className="absolute -top-40 -left-40 w-96 h-96 bg-emerald-500/20 rounded-full blur-3xl pointer-events-none" />
+      <div className="edit-company-container">
 
-      <div className="absolute top-1/3 -right-40 w-96 h-96 bg-orange-500/15 rounded-full blur-3xl pointer-events-none" />
-
-      <div className="absolute bottom-0 left-1/3 w-96 h-72 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
-
-      {/* =========================
-          MAIN CONTAINER
-      ========================= */}
-
-      <div className="relative max-w-6xl mx-auto">
-
-        {/* =========================
-            BACK BUTTON
-        ========================= */}
-
+        {/* Back Button */}
         <button
           type="button"
           onClick={() =>
             navigate("/employer/my-companies")
           }
-          className="group inline-flex items-center gap-2 text-slate-400 hover:text-white mb-8 transition"
+          className="edit-company-back"
         >
-          <span className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-emerald-500/20 group-hover:border-emerald-400/30 transition">
+          <span className="back-icon">
             <ArrowLeft size={18} />
           </span>
 
-          <span className="font-semibold">
-            Back to My Companies
-          </span>
+          <span>Back to My Companies</span>
         </button>
 
-        {/* =========================
-            HEADER
-        ========================= */}
+        {/* Header */}
+        <div className="edit-company-header">
 
-        <div className="grid lg:grid-cols-[1fr_auto] gap-8 items-end mb-10">
+          <div className="edit-company-header-content">
 
-          <div>
-
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-400/20 text-emerald-300 text-sm font-semibold mb-5">
+            <div className="company-management-badge">
               <Sparkles size={16} />
               Company Management
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight">
+            <h1>
               Edit Your
-              <span className="block bg-gradient-to-r from-emerald-400 via-cyan-400 to-orange-400 bg-clip-text text-transparent">
-                Company Profile
-              </span>
+              <span>Company Profile</span>
             </h1>
 
-            <p className="mt-5 max-w-2xl text-slate-400 text-lg leading-relaxed">
+            <p>
               Keep your company information accurate and
-              professional so job seekers can better understand
-              your organization.
+              professional so job seekers can better
+              understand your organization.
             </p>
 
           </div>
 
-          {/* Company Icon */}
-
-          <div className="hidden lg:flex w-28 h-28 rounded-3xl bg-gradient-to-br from-emerald-400 to-cyan-500 items-center justify-center shadow-2xl shadow-emerald-500/20 rotate-3">
-            <Building2
-              size={52}
-              className="text-white -rotate-3"
-            />
+          <div className="edit-company-header-icon">
+            <Building2 size={52} />
           </div>
 
         </div>
 
-        {/* =========================
-            ERROR
-        ========================= */}
-
+        {/* Error */}
         {error && (
-          <div className="mb-8 flex items-start gap-4 rounded-2xl border border-red-400/20 bg-red-500/10 px-5 py-4 text-red-200">
+          <div className="edit-company-error">
 
-            <div className="w-10 h-10 shrink-0 rounded-xl bg-red-500/20 flex items-center justify-center">
+            <div className="error-icon">
               <AlertCircle size={20} />
             </div>
 
             <div>
-              <p className="font-bold">
+              <p className="error-title">
                 Something went wrong
               </p>
 
-              <p className="text-sm text-red-200/80 mt-1">
+              <p className="error-text">
                 {error}
               </p>
             </div>
@@ -254,61 +223,43 @@ function EditCompany() {
           </div>
         )}
 
-        {/* =========================
-            FORM LAYOUT
-        ========================= */}
+        {/* Main Layout */}
+        <div className="edit-company-layout">
 
-        <div className="grid lg:grid-cols-[280px_1fr] gap-6">
+          {/* Information Panel */}
+          <aside className="company-info-panel">
 
-          {/* =========================
-              LEFT INFORMATION PANEL
-          ========================= */}
-
-          <aside className="bg-white/[0.04] border border-white/10 rounded-3xl p-6 h-fit backdrop-blur-xl">
-
-            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-400/20 to-cyan-400/20 border border-emerald-400/20 flex items-center justify-center mb-5">
-              <Building2
-                size={27}
-                className="text-emerald-400"
-              />
+            <div className="info-panel-icon">
+              <Building2 size={27} />
             </div>
 
-            <h2 className="text-xl font-bold text-white">
-              Company Details
-            </h2>
+            <h2>Company Details</h2>
 
-            <p className="text-sm text-slate-400 mt-3 leading-relaxed">
-              Your company profile helps job seekers learn
-              about your organization before applying.
+            <p className="info-description">
+              Your company profile helps job seekers
+              learn about your organization before
+              applying.
             </p>
 
-            <div className="mt-7 space-y-4">
+            <div className="company-features">
 
-              <Feature
-                text="Professional company profile"
-              />
+              <Feature text="Professional company profile" />
 
-              <Feature
-                text="Attract qualified candidates"
-              />
+              <Feature text="Attract qualified candidates" />
 
-              <Feature
-                text="Build employer credibility"
-              />
+              <Feature text="Build employer credibility" />
 
-              <Feature
-                text="Keep information up to date"
-              />
+              <Feature text="Keep information up to date" />
 
             </div>
 
-            <div className="mt-8 pt-6 border-t border-white/10">
+            <div className="required-fields">
 
-              <p className="text-xs uppercase tracking-wider text-slate-500 font-bold">
+              <p className="required-title">
                 Required fields
               </p>
 
-              <p className="text-sm text-slate-400 mt-2">
+              <p>
                 Company name, industry and location
                 must be completed.
               </p>
@@ -317,57 +268,43 @@ function EditCompany() {
 
           </aside>
 
-          {/* =========================
-              FORM CARD
-          ========================= */}
-
-          <div className="bg-white rounded-3xl shadow-2xl overflow-hidden">
+          {/* Form Card */}
+          <div className="edit-company-form-card">
 
             {/* Form Header */}
+            <div className="edit-form-header">
 
-            <div className="relative px-6 sm:px-8 lg:px-10 py-7 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 overflow-hidden">
+              <div className="form-header-decoration" />
 
-              <div className="absolute right-0 top-0 w-48 h-48 bg-emerald-400/10 rounded-full blur-3xl" />
+              <div className="form-header-content">
 
-              <div className="relative">
+                <div className="form-header-icon">
+                  <Save size={20} />
+                </div>
 
-                <div className="flex items-center gap-3">
+                <div>
+                  <h2>
+                    Company Information
+                  </h2>
 
-                  <div className="w-11 h-11 rounded-xl bg-emerald-500/20 border border-emerald-400/20 flex items-center justify-center">
-                    <Save
-                      size={20}
-                      className="text-emerald-400"
-                    />
-                  </div>
-
-                  <div>
-                    <h2 className="text-xl font-bold text-white">
-                      Company Information
-                    </h2>
-
-                    <p className="text-sm text-slate-400 mt-1">
-                      Update the information below.
-                    </p>
-                  </div>
-
+                  <p>
+                    Update the information below.
+                  </p>
                 </div>
 
               </div>
+
             </div>
 
-            {/* =========================
-                FORM
-            ========================= */}
-
+            {/* Form */}
             <form
               onSubmit={handleSubmit}
-              className="p-6 sm:p-8 lg:p-10"
+              className="edit-company-form"
             >
 
-              <div className="grid md:grid-cols-2 gap-6">
+              <div className="edit-company-fields">
 
                 {/* Company Name */}
-
                 <InputField
                   label="Company Name"
                   name="companyName"
@@ -379,7 +316,6 @@ function EditCompany() {
                 />
 
                 {/* Industry */}
-
                 <InputField
                   label="Industry"
                   name="industry"
@@ -391,7 +327,6 @@ function EditCompany() {
                 />
 
                 {/* Location */}
-
                 <InputField
                   label="Location"
                   name="location"
@@ -403,7 +338,6 @@ function EditCompany() {
                 />
 
                 {/* Website */}
-
                 <InputField
                   label="Website"
                   name="website"
@@ -418,26 +352,21 @@ function EditCompany() {
               </div>
 
               {/* Description */}
+              <div className="description-field">
 
-              <div className="mt-6">
-
-                <label
-                  htmlFor="description"
-                  className="flex items-center gap-2 text-sm font-bold text-slate-700 mb-2"
-                >
-                  <FileText
-                    size={17}
-                    className="text-emerald-600"
-                  />
+                <label htmlFor="description">
+                  <span className="description-label-icon">
+                    <FileText size={17} />
+                  </span>
 
                   Description
 
-                  <span className="text-xs font-medium text-slate-400">
+                  <span className="optional-label">
                     Optional
                   </span>
                 </label>
 
-                <div className="relative">
+                <div className="textarea-wrapper">
 
                   <textarea
                     id="description"
@@ -446,10 +375,9 @@ function EditCompany() {
                     onChange={handleChange}
                     rows={7}
                     placeholder="Describe your company, services, culture, mission and what makes your organization unique..."
-                    className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-5 py-4 text-slate-900 placeholder:text-slate-400 outline-none resize-none transition duration-200 focus:bg-white focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
                   />
 
-                  <div className="absolute bottom-4 right-4 text-xs text-slate-400">
+                  <div className="character-count">
                     {formData.description.length} characters
                   </div>
 
@@ -457,37 +385,28 @@ function EditCompany() {
 
               </div>
 
-              {/* =========================
-                  PREVIEW
-              ========================= */}
+              {/* Preview */}
+              <div className="company-preview">
 
-              <div className="mt-8 rounded-2xl border border-emerald-100 bg-gradient-to-r from-emerald-50 to-cyan-50 p-5">
+                <div className="preview-header">
 
-                <div className="flex items-start gap-4">
-
-                  <div className="w-12 h-12 shrink-0 rounded-xl bg-white shadow-sm flex items-center justify-center">
-                    <CheckCircle
-                      size={22}
-                      className="text-emerald-600"
-                    />
+                  <div className="preview-icon">
+                    <CheckCircle size={22} />
                   </div>
 
                   <div>
+                    <h3>Profile Preview</h3>
 
-                    <h3 className="font-bold text-slate-900">
-                      Profile Preview
-                    </h3>
-
-                    <p className="text-sm text-slate-500 mt-1">
-                      Your changes will be visible to job
-                      seekers after you save the company.
+                    <p>
+                      Your changes will be visible to
+                      job seekers after you save the
+                      company.
                     </p>
-
                   </div>
 
                 </div>
 
-                <div className="grid sm:grid-cols-3 gap-3 mt-5">
+                <div className="preview-grid">
 
                   <PreviewItem
                     label="Company"
@@ -508,11 +427,8 @@ function EditCompany() {
 
               </div>
 
-              {/* =========================
-                  BUTTONS
-              ========================= */}
-
-              <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-3 mt-8 pt-7 border-t border-slate-200">
+              {/* Buttons */}
+              <div className="edit-company-actions">
 
                 <button
                   type="button"
@@ -520,7 +436,7 @@ function EditCompany() {
                     navigate("/employer/my-companies")
                   }
                   disabled={saving}
-                  className="px-7 h-12 rounded-xl border border-slate-300 bg-white text-slate-700 font-bold hover:bg-slate-50 transition disabled:opacity-50"
+                  className="cancel-company-button"
                 >
                   Cancel
                 </button>
@@ -528,12 +444,9 @@ function EditCompany() {
                 <button
                   type="submit"
                   disabled={saving}
-                  className="group inline-flex items-center justify-center gap-2 px-8 h-12 rounded-xl bg-gradient-to-r from-emerald-500 to-cyan-500 text-white font-bold shadow-lg shadow-emerald-500/20 hover:from-emerald-600 hover:to-cyan-600 hover:shadow-xl transition disabled:opacity-60 disabled:cursor-not-allowed"
+                  className="save-company-button"
                 >
-                  <Save
-                    size={18}
-                    className="group-hover:scale-110 transition"
-                  />
+                  <Save size={18} />
 
                   {saving
                     ? "Saving Changes..."
@@ -569,34 +482,33 @@ function InputField({
   optional = false,
 }) {
   return (
-    <div>
+    <div className="input-field">
 
-      <label
-        htmlFor={name}
-        className="flex items-center gap-2 text-sm font-bold text-slate-700 mb-2"
-      >
+      <label htmlFor={name}>
 
-        <span className="text-emerald-600">
+        <span className="input-label-icon">
           {icon}
         </span>
 
         {label}
 
         {required && (
-          <span className="text-red-500">*</span>
+          <span className="required-star">
+            *
+          </span>
         )}
 
         {optional && (
-          <span className="text-xs font-medium text-slate-400">
+          <span className="optional-label">
             Optional
           </span>
         )}
 
       </label>
 
-      <div className="relative">
+      <div className="input-wrapper">
 
-        <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
+        <span className="input-icon">
           {icon}
         </span>
 
@@ -608,7 +520,6 @@ function InputField({
           onChange={onChange}
           placeholder={placeholder}
           required={required}
-          className="w-full h-13 rounded-2xl border border-slate-200 bg-slate-50 pl-12 pr-4 text-slate-900 placeholder:text-slate-400 outline-none transition duration-200 focus:bg-white focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
         />
 
       </div>
@@ -623,18 +534,13 @@ function InputField({
 
 function Feature({ text }) {
   return (
-    <div className="flex items-center gap-3">
+    <div className="company-feature">
 
-      <div className="w-6 h-6 rounded-full bg-emerald-500/10 flex items-center justify-center">
-        <CheckCircle
-          size={15}
-          className="text-emerald-400"
-        />
+      <div className="feature-check">
+        <CheckCircle size={15} />
       </div>
 
-      <span className="text-sm text-slate-300">
-        {text}
-      </span>
+      <span>{text}</span>
 
     </div>
   );
@@ -646,15 +552,13 @@ function Feature({ text }) {
 
 function PreviewItem({ label, value }) {
   return (
-    <div className="bg-white rounded-xl border border-slate-100 p-3">
+    <div className="preview-item">
 
-      <p className="text-xs uppercase tracking-wide text-slate-400 font-bold">
-        {label}
-      </p>
+      <p>{label}</p>
 
-      <p className="text-sm font-semibold text-slate-800 mt-1 truncate">
+      <strong>
         {value || "Not provided"}
-      </p>
+      </strong>
 
     </div>
   );

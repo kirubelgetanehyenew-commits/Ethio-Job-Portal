@@ -8,110 +8,85 @@ import {
   BarChart3,
   LogOut,
 } from "lucide-react";
+
 import { useAuth } from "../../context/AuthContext";
+
+import "./AdminSidebar.css";
 
 function AdminSidebar() {
   const { logout } = useAuth();
 
   return (
-    <aside className="w-64 bg-slate-900 text-white h-screen flex flex-col">
+    <aside className="admin-sidebar">
 
       {/* Header */}
-      <div className="p-5 border-b border-slate-700">
-        <h1 className="text-3xl font-black">
-          Admin
-        </h1>
+      <div className="admin-sidebar-header">
+        <h1>Admin</h1>
 
-        <p className="text-slate-400 mt-2">
-          Dashboard
-        </p>
+        <p>Ethio Job Portal Dashboard</p>
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 p-6 space-y-3">
+      <nav className="admin-sidebar-navigation">
 
         <NavLink
           to="/admin/dashboard"
           className={({ isActive }) =>
-            `flex items-center gap-3 px-4 py-3 rounded-xl transition ${
-              isActive
-                ? "bg-emerald-600 text-white"
-                : "hover:bg-slate-800"
-            }`
+            `admin-sidebar-link ${isActive ? "active" : ""}`
           }
         >
           <LayoutDashboard size={20} />
-          Dashboard
+          <span>Dashboard</span>
         </NavLink>
 
         <NavLink
           to="/admin/users"
           className={({ isActive }) =>
-            `flex items-center gap-3 px-4 py-3 rounded-xl transition ${
-              isActive
-                ? "bg-emerald-600 text-white"
-                : "hover:bg-slate-800"
-            }`
+            `admin-sidebar-link ${isActive ? "active" : ""}`
           }
         >
           <Users size={20} />
-          Users
+          <span>Users</span>
         </NavLink>
 
         <NavLink
           to="/admin/jobs"
           className={({ isActive }) =>
-            `flex items-center gap-3 px-4 py-3 rounded-xl transition ${
-              isActive
-                ? "bg-emerald-600 text-white"
-                : "hover:bg-slate-800"
-            }`
+            `admin-sidebar-link ${isActive ? "active" : ""}`
           }
         >
           <Briefcase size={20} />
-          Jobs
+          <span>Jobs</span>
         </NavLink>
 
         <NavLink
           to="/admin/companies"
           className={({ isActive }) =>
-            `flex items-center gap-3 px-4 py-3 rounded-xl transition ${
-              isActive
-                ? "bg-emerald-600 text-white"
-                : "hover:bg-slate-800"
-            }`
+            `admin-sidebar-link ${isActive ? "active" : ""}`
           }
         >
           <Building2 size={20} />
-          Companies
+          <span>Companies</span>
         </NavLink>
 
         <NavLink
           to="/admin/applications"
           className={({ isActive }) =>
-            `flex items-center gap-3 px-4 py-3 rounded-xl transition ${
-              isActive
-                ? "bg-emerald-600 text-white"
-                : "hover:bg-slate-800"
-            }`
+            `admin-sidebar-link ${isActive ? "active" : ""}`
           }
         >
           <FileText size={20} />
-          Applications
+          <span>Applications</span>
         </NavLink>
 
         <NavLink
           to="/admin/analytics"
           className={({ isActive }) =>
-            `flex items-center gap-3 px-4 py-3 rounded-xl transition ${
-              isActive
-                ? "bg-emerald-600 text-white"
-                : "hover:bg-slate-800"
-            }`
+            `admin-sidebar-link ${isActive ? "active" : ""}`
           }
         >
           <BarChart3 size={20} />
-          Analytics
+          <span>Analytics</span>
         </NavLink>
 
       </nav>
@@ -119,10 +94,10 @@ function AdminSidebar() {
       {/* Logout */}
       <button
         onClick={logout}
-        className="m-6 flex items-center justify-center gap-3 bg-red-600 hover:bg-red-700 rounded-xl py-3 transition"
+        className="admin-sidebar-logout"
       >
         <LogOut size={18} />
-        Logout
+        <span>Logout</span>
       </button>
 
     </aside>

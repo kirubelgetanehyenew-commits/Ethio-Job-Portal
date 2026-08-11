@@ -1,0 +1,140 @@
+/* =========================================================
+   ADMIN LAYOUT
+========================================================= */
+
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+  background: #f1f5f9;
+  overflow: hidden;
+}
+
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+.admin-layout > .admin-sidebar {
+  width: 260px;
+  min-width: 260px;
+  height: 100vh;
+  flex-shrink: 0;
+}
+
+
+/* =========================================================
+   MAIN AREA
+========================================================= */
+
+.admin-main {
+  flex: 1;
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  height: 100vh;
+}
+
+
+/* =========================================================
+   TOP NAVBAR
+========================================================= */
+
+.admin-top-navbar {
+  height: 72px;
+
+  background: #ffffff;
+
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+
+  padding: 0 24px;
+
+  display: flex;
+  align-items: center;
+
+  flex-shrink: 0;
+}
+
+.admin-top-title {
+  margin: 0;
+
+  font-size: 20px;
+  font-weight: 700;
+
+  color: #0f172a;
+}
+
+
+/* =========================================================
+   PAGE CONTENT
+========================================================= */
+
+.admin-content {
+  flex: 1;
+
+  overflow-y: auto;
+
+  padding: 24px;
+}
+
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+.admin-content::-webkit-scrollbar {
+  width: 7px;
+}
+
+.admin-content::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+.admin-content::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+.admin-content::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .admin-layout > .admin-sidebar {
+    width: 240px;
+    min-width: 240px;
+  }
+
+  .admin-content {
+    padding: 20px;
+  }
+}
+
+
+@media (max-width: 600px) {
+
+  .admin-layout > .admin-sidebar {
+    width: 220px;
+    min-width: 220px;
+  }
+
+  .admin-top-navbar {
+    height: 64px;
+    padding: 0 14px;
+  }
+
+  .admin-top-title {
+    font-size: 17px;
+  }
+
+  .admin-content {
+    padding: 14px;
+  }
+}

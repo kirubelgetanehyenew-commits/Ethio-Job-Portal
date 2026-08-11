@@ -1,0 +1,244 @@
+/* =========================================================
+   JOBS PAGE
+========================================================= */
+
+.jobs-page {
+  min-height: 100vh;
+  padding: 90px 0 110px;
+  background: #f8fafc;
+}
+
+/* =========================================================
+   SEARCH PANEL
+========================================================= */
+
+.jobs-search-wrapper {
+  margin: 0 auto 55px;
+  padding: 8px;
+
+  background: #ffffff;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 24px;
+
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+}
+
+.jobs-search-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 220px;
+  gap: 14px;
+}
+
+.jobs-search-field {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  min-height: 62px;
+  padding: 0 18px;
+
+  background: #f8fafc;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 17px;
+
+  transition:
+    border-color 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.jobs-search-field:focus-within {
+  background: #ffffff;
+  border-color: #f59e0b;
+  box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.1);
+}
+
+.jobs-search-field svg {
+  flex-shrink: 0;
+  color: #f59e0b;
+}
+
+.jobs-search-field input {
+  width: 100%;
+  min-width: 0;
+
+  border: none;
+  outline: none;
+
+  background: transparent;
+
+  color: #0f172a;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.jobs-search-field input::placeholder {
+  color: #94a3b8;
+}
+
+/* =========================================================
+   RESULTS COUNT
+========================================================= */
+
+.jobs-results-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  min-height: 62px;
+  padding: 0 20px;
+
+  border-radius: 17px;
+
+  background: linear-gradient(
+    135deg,
+    #f59e0b,
+    #f97316
+  );
+
+  color: #ffffff;
+
+  font-size: 15px;
+  font-weight: 800;
+
+  box-shadow: 0 8px 18px rgba(245, 158, 11, 0.2);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.jobs-results-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 25px rgba(245, 158, 11, 0.3);
+}
+
+/* =========================================================
+   JOB GRID
+========================================================= */
+
+.jobs-grid {
+  display: grid;
+
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  gap: 28px;
+}
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.jobs-empty {
+  min-height: 350px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 50px;
+
+  background: #ffffff;
+
+  border: 1px dashed #cbd5e1;
+  border-radius: 28px;
+
+  text-align: center;
+}
+
+.jobs-empty-icon {
+  width: 76px;
+  height: 76px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 22px;
+
+  border-radius: 22px;
+
+  background: #fff7ed;
+  color: #f59e0b;
+}
+
+.jobs-empty h2 {
+  margin: 0;
+
+  color: #0f172a;
+
+  font-size: 28px;
+  font-weight: 800;
+}
+
+.jobs-empty p {
+  max-width: 500px;
+
+  margin: 10px 0 0;
+
+  color: #64748b;
+
+  font-size: 16px;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1100px) {
+  .jobs-search-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .jobs-results-button {
+    grid-column: 1 / -1;
+  }
+
+  .jobs-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .jobs-page {
+    padding: 65px 0 80px;
+  }
+
+  .jobs-search-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .jobs-results-button {
+    grid-column: auto;
+  }
+
+  .jobs-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .jobs-search-wrapper {
+    padding: 7px;
+    border-radius: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .jobs-search-field,
+  .jobs-results-button {
+    min-height: 56px;
+  }
+
+  .jobs-empty {
+    min-height: 280px;
+    padding: 35px 20px;
+  }
+
+  .jobs-empty h2 {
+    font-size: 23px;
+  }
+}

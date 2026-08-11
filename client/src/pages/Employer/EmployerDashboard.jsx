@@ -13,10 +13,9 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
-import {
-  getMyJobs,
-  deleteJob,
-} from "../../services/jobService";
+import { getMyJobs, deleteJob } from "../../services/jobService";
+
+import "../../styles/dashboard/employer.css";
 
 function EmployerDashboard() {
   const [jobs, setJobs] = useState([]);
@@ -26,9 +25,10 @@ function EmployerDashboard() {
     const fetchMyJobs = async () => {
       try {
         const data = await getMyJobs();
+
         setJobs(data.jobs || []);
       } catch (error) {
-        console.error(error);
+        console.error("Failed to load employer jobs:", error);
       } finally {
         setLoading(false);
       }
@@ -49,9 +49,7 @@ function EmployerDashboard() {
 
       alert(data.message);
 
-      setJobs((prev) =>
-        prev.filter((job) => job._id !== jobId)
-      );
+      setJobs((prev) => prev.filter((job) => job._id !== jobId));
     } catch (error) {
       alert(
         error.response?.data?.message ||
@@ -62,103 +60,87 @@ function EmployerDashboard() {
 
   if (loading) {
     return (
-      <div className="min-h-[70vh] flex items-center justify-center bg-slate-50">
-        <div className="text-center">
-          <div className="w-14 h-14 border-4 border-emerald-200 border-t-emerald-600 rounded-full animate-spin mx-auto" />
+      <div className="employer-dashboard">
+        <main className="employer-main">
+          <div className="employer-empty-state">
+            <div className="employer-empty-icon">
+              <Briefcase size={38} />
+            </div>
 
-          <p className="mt-5 text-slate-600 font-semibold">
-            Loading your dashboard...
-          </p>
-        </div>
+            <h2 className="employer-empty-title">
+              Loading Dashboard
+            </h2>
+
+            <p className="employer-empty-description">
+              Please wait while we load your employer dashboard.
+            </p>
+          </div>
+        </main>
       </div>
     );
   }
 
-  const activeJobs = jobs.filter(
-    (job) => job.isActive
-  ).length;
+  const activeJobs = jobs.filter((job) => job.isActive).length;
 
   const closedJobs = jobs.length - activeJobs;
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="employer-dashboard">
 
-      {/* =========================================
-          HERO SECTION
-      ========================================= */}
+      {/* =================================================
+          HERO
+      ================================================= */}
 
-      <section className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-emerald-950">
+      <section className="employer-hero">
+        <div className="employer-hero-inner">
 
-        {/* Decorative background */}
-        <div className="absolute -top-32 -right-32 w-96 h-96 bg-emerald-500/20 rounded-full blur-3xl" />
+          <div className="employer-hero-content">
 
-        <div className="absolute -bottom-40 -left-20 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl" />
-
-        <div className="relative max-w-7xl mx-auto px-6 py-12 md:py-16">
-
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
-
-            {/* Hero text */}
-
-            <div className="max-w-3xl">
-
-              <div className="inline-flex items-center gap-2 bg-white/10 border border-white/10 text-emerald-300 px-4 py-2 rounded-full text-sm font-semibold mb-5">
-                <Building2 size={16} />
-                Employer Workspace
-              </div>
-
-              <h1 className="text-4xl md:text-6xl font-black text-white tracking-tight">
-                Manage your
-                <span className="text-emerald-400">
-                  {" "}talent
-                </span>
-                <br />
-                with confidence.
-              </h1>
-
-              <p className="text-slate-300 text-lg mt-5 max-w-2xl leading-relaxed">
-                Create job opportunities, manage your postings,
-                and connect with talented professionals across
-                Ethiopia.
-              </p>
-
+            <div className="employer-badge">
+              <Building2 size={16} />
+              Employer Workspace
             </div>
 
-            {/* Create Job */}
+            <h1 className="employer-hero-title">
+              Manage your{" "}
+              <span>talent</span>
+              <br />
+              with confidence.
+            </h1>
 
-            <div>
-              <Link
-                to="/employer/create-job"
-                className="group inline-flex items-center gap-3 bg-emerald-500 hover:bg-emerald-400 text-white px-7 py-4 rounded-2xl font-bold shadow-xl shadow-emerald-900/30 transition-all duration-300 hover:-translate-y-1"
-              >
-                <Plus size={21} />
+            <p className="employer-hero-description">
+              Create job opportunities, manage your postings,
+              and connect with talented professionals across
+              Ethiopia.
+            </p>
 
-                Create New Job
+          </div>
 
-                <ArrowRight
-                  size={19}
-                  className="group-hover:translate-x-1 transition"
-                />
-              </Link>
-            </div>
-
+          <div>
+            <Link
+              to="/employer/create-job"
+              className="employer-create-button"
+            >
+              <Plus size={21} />
+              Create New Job
+              <ArrowRight size={19} />
+            </Link>
           </div>
 
         </div>
       </section>
 
+      {/* =================================================
+          MAIN
+      ================================================= */}
 
-      {/* =========================================
-          MAIN CONTENT
-      ========================================= */}
+      <main className="employer-main">
 
-      <main className="max-w-7xl mx-auto px-6 py-10">
-
-        {/* =========================================
+        {/* =================================================
             STATISTICS
-        ========================================= */}
+        ================================================= */}
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-12">
+        <div className="employer-stats">
 
           <StatCard
             icon={<Briefcase size={25} />}
@@ -186,93 +168,74 @@ function EmployerDashboard() {
 
         </div>
 
+        {/* =================================================
+            SECTION HEADER
+        ================================================= */}
 
-        {/* =========================================
-            JOB SECTION HEADER
-        ========================================= */}
-
-        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-7">
+        <div className="employer-section-header">
 
           <div>
-
-            <p className="text-emerald-600 font-bold text-sm uppercase tracking-wider">
+            <p className="employer-section-label">
               Recruitment
             </p>
 
-            <h2 className="text-3xl md:text-4xl font-black text-slate-900 mt-1">
+            <h2 className="employer-section-title">
               Your Job Postings
             </h2>
 
-            <p className="text-slate-500 mt-2">
+            <p className="employer-section-description">
               Manage and monitor your current opportunities.
             </p>
-
           </div>
 
-          <div className="text-sm font-semibold text-slate-500">
+          <div className="employer-job-count">
             {jobs.length}{" "}
             {jobs.length === 1 ? "job" : "jobs"} posted
           </div>
 
         </div>
 
-
-        {/* =========================================
-            EMPTY STATE
-        ========================================= */}
+        {/* =================================================
+            EMPTY STATE / JOB LIST
+        ================================================= */}
 
         {jobs.length === 0 ? (
 
-          <div className="relative overflow-hidden bg-white border border-slate-200 rounded-3xl shadow-sm">
+          <div className="employer-empty-state">
 
-            <div className="absolute top-0 right-0 w-72 h-72 bg-emerald-50 rounded-full blur-3xl" />
-
-            <div className="relative text-center px-6 py-20">
-
-              <div className="w-20 h-20 mx-auto rounded-3xl bg-emerald-100 flex items-center justify-center">
-                <Briefcase
-                  size={38}
-                  className="text-emerald-600"
-                />
-              </div>
-
-              <h3 className="text-3xl font-black text-slate-900 mt-7">
-                No jobs posted yet
-              </h3>
-
-              <p className="text-slate-500 mt-3 max-w-md mx-auto">
-                Create your first job posting and start
-                connecting with qualified candidates.
-              </p>
-
-              <Link
-                to="/employer/create-job"
-                className="inline-flex items-center gap-2 mt-7 bg-slate-900 hover:bg-emerald-600 text-white px-6 py-3.5 rounded-xl font-bold transition"
-              >
-                <Plus size={19} />
-                Create Your First Job
-              </Link>
-
+            <div className="employer-empty-icon">
+              <Briefcase size={38} />
             </div>
+
+            <h3 className="employer-empty-title">
+              No jobs posted yet
+            </h3>
+
+            <p className="employer-empty-description">
+              Create your first job posting and start
+              connecting with qualified candidates.
+            </p>
+
+            <Link
+              to="/employer/create-job"
+              className="employer-empty-button"
+            >
+              <Plus size={19} />
+              Create Your First Job
+            </Link>
 
           </div>
 
         ) : (
 
-          /* =========================================
-             JOB LIST
-          ========================================= */
-
-          <div className="grid gap-5">
+          <div className="employer-job-list">
 
             {jobs.map((job) => (
-
               <JobCard
                 key={job._id}
                 job={job}
                 onDelete={handleDelete}
               />
-
             ))}
 
           </div>
@@ -285,10 +248,9 @@ function EmployerDashboard() {
   );
 }
 
-
-/* ==================================================
+/* =========================================================
    STAT CARD
-================================================== */
+========================================================= */
 
 function StatCard({
   icon,
@@ -297,52 +259,29 @@ function StatCard({
   description,
   color,
 }) {
-  const styles = {
-    blue: {
-      box: "bg-blue-50 text-blue-600",
-      accent: "bg-blue-500",
-    },
-
-    green: {
-      box: "bg-emerald-50 text-emerald-600",
-      accent: "bg-emerald-500",
-    },
-
-    red: {
-      box: "bg-red-50 text-red-600",
-      accent: "bg-red-500",
-    },
-  };
-
-  const style = styles[color];
-
   return (
-    <div className="relative overflow-hidden bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+    <div className="employer-stat-card">
 
-      <div
-        className={`absolute left-0 top-0 bottom-0 w-1 ${style.accent}`}
-      />
+      <div className={`employer-stat-accent ${color}`} />
 
-      <div className="flex items-start justify-between">
+      <div className="employer-stat-content">
 
         <div>
-
-          <p className="text-sm font-semibold text-slate-500">
+          <p className="employer-stat-title">
             {title}
           </p>
 
-          <h3 className="text-4xl font-black text-slate-900 mt-2">
+          <h3 className="employer-stat-value">
             {value}
           </h3>
 
-          <p className="text-xs text-slate-400 mt-2">
+          <p className="employer-stat-description">
             {description}
           </p>
-
         </div>
 
         <div
-          className={`w-12 h-12 rounded-xl flex items-center justify-center ${style.box}`}
+          className={`employer-stat-icon ${color}`}
         >
           {icon}
         </div>
@@ -353,65 +292,51 @@ function StatCard({
   );
 }
 
-
-/* ==================================================
+/* =========================================================
    JOB CARD
-================================================== */
+========================================================= */
 
 function JobCard({ job, onDelete }) {
   return (
-    <div className="group bg-white border border-slate-200 rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden">
-
-      {/* Top accent */}
+    <div className="employer-job-card">
 
       <div
-        className={`h-1 ${
-          job.isActive
-            ? "bg-gradient-to-r from-emerald-400 to-teal-500"
-            : "bg-gradient-to-r from-red-400 to-orange-400"
+        className={`employer-job-accent ${
+          job.isActive ? "active" : "closed"
         }`}
       />
 
-      <div className="p-6 md:p-8">
+      <div className="employer-job-body">
 
-        <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-7">
+        <div className="employer-job-layout">
 
-          {/* Job information */}
+          {/* JOB INFORMATION */}
 
-          <div className="flex-1">
+          <div className="employer-job-main">
 
-            {/* Title */}
+            <div className="employer-job-heading">
 
-            <div className="flex flex-wrap items-center gap-3">
-
-              <h3 className="text-2xl md:text-3xl font-black text-slate-900">
+              <h3 className="employer-job-title">
                 {job.title}
               </h3>
 
               <span
-                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold ${
-                  job.isActive
-                    ? "bg-emerald-100 text-emerald-700"
-                    : "bg-red-100 text-red-700"
+                className={`employer-job-status ${
+                  job.isActive ? "active" : "closed"
                 }`}
               >
-                <span
-                  className={`w-1.5 h-1.5 rounded-full ${
-                    job.isActive
-                      ? "bg-emerald-500"
-                      : "bg-red-500"
-                  }`}
-                />
+                <span className="employer-job-status-dot" />
 
-                {job.isActive ? "Active" : "Closed"}
+                {job.isActive
+                  ? "Active"
+                  : "Closed"}
               </span>
 
             </div>
 
+            {/* JOB INFORMATION */}
 
-            {/* Job information */}
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mt-7">
+            <div className="employer-job-info">
 
               <Info
                 icon={<MapPin size={17} />}
@@ -435,22 +360,21 @@ function JobCard({ job, onDelete }) {
 
             </div>
 
-
-            {/* Deadline */}
+            {/* DEADLINE */}
 
             {job.deadline && (
-              <div className="flex items-center gap-2 mt-5 text-sm text-slate-500">
+              <div className="employer-deadline">
 
                 <CalendarDays
                   size={17}
-                  className="text-orange-500"
+                  className="employer-deadline-icon"
                 />
 
                 <span>
                   Application deadline:
                 </span>
 
-                <span className="font-semibold text-slate-700">
+                <span className="employer-deadline-date">
                   {new Date(
                     job.deadline
                   ).toLocaleDateString()}
@@ -461,29 +385,29 @@ function JobCard({ job, onDelete }) {
 
           </div>
 
+          {/* ACTIONS */}
 
-          {/* Actions */}
-
-          <div className="flex flex-wrap xl:flex-col gap-2 xl:w-40">
+          <div className="employer-job-actions">
 
             <Link
               to={`/employer/edit-job/${job._id}`}
-              className="flex-1 xl:w-full text-center bg-amber-500 hover:bg-amber-400 text-white px-5 py-3 rounded-xl font-bold transition"
+              className="employer-action employer-action-edit"
             >
               Edit
             </Link>
 
             <Link
               to={`/employer/applicants/${job._id}`}
-              className="flex-1 xl:w-full inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white px-5 py-3 rounded-xl font-bold transition"
+              className="employer-action employer-action-applicants"
             >
               <Users size={17} />
               Applicants
             </Link>
 
             <button
+              type="button"
               onClick={() => onDelete(job._id)}
-              className="flex-1 xl:w-full bg-red-50 hover:bg-red-100 text-red-600 border border-red-100 px-5 py-3 rounded-xl font-bold transition"
+              className="employer-action employer-action-delete"
             >
               Delete
             </button>
@@ -498,26 +422,24 @@ function JobCard({ job, onDelete }) {
   );
 }
 
-
-/* ==================================================
+/* =========================================================
    JOB INFO
-================================================== */
+========================================================= */
 
 function Info({ icon, text }) {
   return (
-    <div className="flex items-center gap-3 bg-slate-50 border border-slate-100 rounded-xl px-4 py-3">
+    <div className="employer-job-info-item">
 
-      <span className="text-emerald-600">
+      <span className="employer-job-info-icon">
         {icon}
       </span>
 
-      <span className="text-sm font-semibold text-slate-700 truncate">
+      <span className="employer-job-info-text">
         {text || "-"}
       </span>
 
     </div>
   );
 }
-
 
 export default EmployerDashboard;

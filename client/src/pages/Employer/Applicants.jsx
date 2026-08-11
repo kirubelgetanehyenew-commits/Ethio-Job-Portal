@@ -1,54 +1,70 @@
 import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import {
+  ArrowLeft,
+  Briefcase,
   User,
   Mail,
   Phone,
   MapPin,
-  CheckCircle,
-  XCircle,
-  Users,
+  CalendarDays,
+  FileText,
   Loader2,
+  Users,
 } from "lucide-react";
-import { useParams } from "react-router-dom";
 
 import {
   getApplicationsForJob,
   updateApplicationStatus,
 } from "../../services/applicationService";
 
+import { getJobById } from "../../services/jobService";
+
+import "../../styles/dashboard/employer.css";
+
 function Applicants() {
   const { jobId } = useParams();
 
+  const [job, setJob] = useState(null);
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [updatingId, setUpdatingId] = useState(null);
   const [error, setError] = useState("");
+  const [updatingId, setUpdatingId] = useState(null);
 
   useEffect(() => {
-    const fetchApplications = async () => {
-      try {
-        setLoading(true);
-        setError("");
-
-        const data = await getApplicationsForJob(jobId);
-
-        setApplications(data.applications || []);
-      } catch (error) {
-        console.error(error);
-
-        setError(
-          error.response?.data?.message ||
-            "Failed to load applicants."
-        );
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchApplications();
+    loadApplicants();
   }, [jobId]);
 
-  const handleStatusUpdate = async (
+  const loadApplicants = async () => {
+    try {
+      setLoading(true);
+      setError("");
+
+      const [jobData, applicationData] = await Promise.all([
+        getJobById(jobId),
+        getApplicationsForJob(jobId),
+      ]);
+
+      setJob(jobData.job || null);
+
+      setApplications(
+        applicationData.applications ||
+          applicationData.data ||
+          []
+      );
+    } catch (error) {
+      console.error(error);
+
+      setError(
+        error.response?.data?.message ||
+          "Failed to load applicants."
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleStatusChange = async (
     applicationId,
     status
   ) => {
@@ -60,14 +76,13 @@ function Applicants() {
         status
       );
 
-      alert(data.message);
-
       setApplications((prev) =>
         prev.map((application) =>
           application._id === applicationId
             ? {
                 ...application,
-                status,
+                status:
+                  data.application?.status || status,
               }
             : application
         )
@@ -77,310 +92,450 @@ function Applicants() {
 
       alert(
         error.response?.data?.message ||
-          "Failed to update application."
+          "Failed to update application status."
       );
     } finally {
       setUpdatingId(null);
     }
   };
 
-  // Loading
+  // ============================================
+  // LOADING
+  // ============================================
+
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-50 px-4 py-8 md:px-8">
-        <div className="max-w-6xl mx-auto">
-          <div className="bg-white border border-slate-200 rounded-2xl shadow-sm p-10 flex flex-col items-center justify-center">
-            <Loader2
-              size={40}
-              className="text-orange-500 animate-spin"
-            />
+      <div className="employer-dashboard">
+        <main className="employer-main">
+          <div className="employer-empty-state">
+            <div className="employer-empty-icon">
+              <Loader2
+                size={38}
+                className="applicants-spin"
+              />
+            </div>
 
-            <p className="text-slate-500 mt-4">
-              Loading applicants...
+            <h2 className="employer-empty-title">
+              Loading Applicants
+            </h2>
+
+            <p className="employer-empty-description">
+              Please wait while we load the applications.
             </p>
           </div>
-        </div>
+        </main>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 px-4 py-8 md:px-8">
-      <div className="max-w-6xl mx-auto">
+    <div className="employer-dashboard">
+      <main className="employer-main applicants-page">
 
-        {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-2xl bg-orange-100 flex items-center justify-center">
-              <Users
-                size={28}
-                className="text-orange-600"
-              />
+        {/* ============================================
+            BACK
+        ============================================ */}
+
+        <Link
+          to="/employer/dashboard"
+          className="applicants-back-link"
+        >
+          <ArrowLeft size={18} />
+          Back to Dashboard
+        </Link>
+
+        {/* ============================================
+            ERROR
+        ============================================ */}
+
+        {error && (
+          <div className="applicants-error">
+            <strong>Error:</strong>
+            <span>{error}</span>
+          </div>
+        )}
+
+        {/* ============================================
+            HEADER
+        ============================================ */}
+
+        <div className="applicants-header">
+
+          <div className="applicants-header-content">
+
+            <div className="applicants-header-icon">
+              <Users size={32} />
             </div>
 
             <div>
-              <h1 className="text-3xl md:text-4xl font-black text-slate-900">
+              <span className="employer-section-label">
+                Recruitment
+              </span>
+
+              <h1 className="applicants-title">
                 Applicants
               </h1>
 
-              <p className="text-slate-500 mt-1">
-                Review and manage everyone who applied
-                for this job.
+              <p className="applicants-description">
+                Review candidates who applied for this
+                position.
               </p>
             </div>
+
           </div>
+
+          <div className="applicants-count">
+
+            <span>Total Applicants</span>
+
+            <strong>
+              {applications.length}
+            </strong>
+
+          </div>
+
         </div>
 
-        {/* Applicant Count */}
-        <div className="bg-white border border-slate-200 rounded-2xl shadow-sm p-6 mb-8">
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-orange-100 flex items-center justify-center">
-              <Users
-                size={24}
-                className="text-orange-600"
-              />
+        {/* ============================================
+            JOB INFORMATION
+        ============================================ */}
+
+        {job && (
+          <div className="applicants-job-summary">
+
+            <div className="applicants-job-main">
+
+              <div className="applicants-job-title-row">
+
+                <h2>
+                  {job.title}
+                </h2>
+
+                <span
+                  className={`applicants-status-badge ${
+                    job.isActive
+                      ? "active"
+                      : "closed"
+                  }`}
+                >
+                  {job.isActive
+                    ? "Active"
+                    : "Closed"}
+                </span>
+
+              </div>
+
+              <div className="applicants-job-meta">
+
+                <div>
+                  <MapPin size={18} />
+                  <span>
+                    {job.location || "-"}
+                  </span>
+                </div>
+
+                <div>
+                  <Briefcase size={18} />
+                  <span>
+                    {job.jobType || "-"}
+                  </span>
+                </div>
+
+                <div>
+                  <CalendarDays size={18} />
+                  <span>
+                    Deadline:{" "}
+                    {job.deadline
+                      ? new Date(
+                          job.deadline
+                        ).toLocaleDateString()
+                      : "-"}
+                  </span>
+                </div>
+
+              </div>
+
             </div>
 
-            <div>
-              <h2 className="text-3xl font-black text-slate-900">
-                {applications.length}
-              </h2>
-
-              <p className="text-sm text-slate-500">
-                Total Applicants
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Error */}
-        {error && (
-          <div className="mb-6 bg-red-50 border border-red-200 text-red-700 rounded-xl px-5 py-4">
-            {error}
           </div>
         )}
 
-        {/* No Applicants */}
-        {!error && applications.length === 0 && (
-          <div className="bg-white border border-slate-200 rounded-2xl shadow-sm p-10 text-center">
-            <div className="w-16 h-16 mx-auto rounded-full bg-slate-100 flex items-center justify-center">
-              <Users
-                size={30}
-                className="text-slate-400"
-              />
+        {/* ============================================
+            NO APPLICANTS
+        ============================================ */}
+
+        {applications.length === 0 ? (
+          <div className="applicants-empty">
+
+            <div className="applicants-empty-icon">
+              <Users size={42} />
             </div>
 
-            <h2 className="text-xl font-bold text-slate-900 mt-5">
-              No applicants yet
+            <h2>
+              No Applicants Yet
             </h2>
 
-            <p className="text-slate-500 mt-2">
+            <p>
               Nobody has applied for this job yet.
+              Once candidates submit applications,
+              they will appear here.
             </p>
-          </div>
-        )}
 
-        {/* Applicants */}
-        {applications.length > 0 && (
-          <div className="space-y-5">
+            <Link
+              to="/employer/dashboard"
+              className="employer-empty-button"
+            >
+              <ArrowLeft size={18} />
+              Back to Jobs
+            </Link>
+
+          </div>
+        ) : (
+
+          /* ============================================
+             APPLICATION LIST
+          ============================================ */
+
+          <div className="applicants-list">
+
             {applications.map((application) => {
-              const applicant = application.applicant;
+
+              const applicant =
+                application.applicant ||
+                application.user ||
+                {};
+
+              const currentStatus =
+                String(
+                  application.status || "pending"
+                ).toLowerCase();
 
               return (
                 <div
                   key={application._id}
-                  className="bg-white border border-slate-200 rounded-2xl shadow-sm hover:shadow-md transition p-6"
+                  className="applicant-card"
                 >
 
-                  {/* Applicant Header */}
-                  <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+                  {/* ==================================
+                      APPLICANT HEADER
+                  ================================== */}
 
-                    <div className="flex items-center gap-4">
-                      <div className="w-14 h-14 rounded-full bg-orange-100 flex items-center justify-center">
-                        <User
-                          size={26}
-                          className="text-orange-600"
-                        />
+                  <div className="applicant-card-top">
+
+                    <div className="applicant-profile">
+
+                      <div className="applicant-avatar">
+                        <User size={30} />
                       </div>
 
-                      <div>
-                        <h2 className="text-2xl font-bold text-slate-900">
-                          {applicant?.fullName ||
+                      <div className="applicant-details">
+
+                        <h3>
+                          {applicant.fullName ||
+                            applicant.name ||
                             "Unknown Applicant"}
-                        </h2>
+                        </h3>
 
-                        <p className="text-slate-500">
-                          Job Seeker
-                        </p>
+                        <div className="applicant-contact">
+
+                          <div>
+                            <Mail size={17} />
+
+                            <span>
+                              {applicant.email || "-"}
+                            </span>
+                          </div>
+
+                          {applicant.phone && (
+                            <div>
+                              <Phone size={17} />
+
+                              <span>
+                                {applicant.phone}
+                              </span>
+                            </div>
+                          )}
+
+                          {applicant.location && (
+                            <div>
+                              <MapPin size={17} />
+
+                              <span>
+                                {applicant.location}
+                              </span>
+                            </div>
+                          )}
+
+                        </div>
+
                       </div>
+
                     </div>
 
-                    {/* Status */}
-                    <span
-                      className={`inline-flex items-center gap-2 px-4 py-2 rounded-full font-semibold w-fit ${
-                        application.status ===
-                        "accepted"
-                          ? "bg-green-100 text-green-700"
-                          : application.status ===
+                    {/* ==================================
+                        APPLICATION META
+                    ================================== */}
+
+                    <div className="applicant-meta">
+
+                      <div className="applicant-meta-box">
+
+                        <div className="applicant-meta-label">
+                          <CalendarDays size={16} />
+                          Applied
+                        </div>
+
+                        <strong>
+                          {application.createdAt
+                            ? new Date(
+                                application.createdAt
+                              ).toLocaleDateString()
+                            : "-"}
+                        </strong>
+
+                      </div>
+
+                      <div className="applicant-meta-box">
+
+                        <div className="applicant-meta-label">
+                          <FileText size={16} />
+                          Status
+                        </div>
+
+                        <strong
+                          className={`applicant-current-status ${currentStatus}`}
+                        >
+                          {application.status ||
+                            "Pending"}
+                        </strong>
+
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                  {/* ==================================
+                      COVER LETTER
+                  ================================== */}
+
+                  {application.coverLetter && (
+                    <div className="applicant-cover-letter">
+
+                      <div className="applicant-cover-title">
+                        <FileText size={18} />
+                        Cover Letter
+                      </div>
+
+                      <p>
+                        {application.coverLetter}
+                      </p>
+
+                    </div>
+                  )}
+
+                  {/* ==================================
+                      ACTIONS
+                  ================================== */}
+
+                  <div className="applicant-actions">
+
+                    <div>
+                      <span className="applicant-action-label">
+                        Update Application
+                      </span>
+
+                      <p className="applicant-action-description">
+                        Change the candidate's application
+                        status.
+                      </p>
+                    </div>
+
+                    <div className="applicant-status-actions">
+
+                      <button
+                        type="button"
+                        disabled={
+                          updatingId ===
+                          application._id
+                        }
+                        className={`applicant-status-button pending ${
+                          currentStatus === "pending"
+                            ? "selected"
+                            : ""
+                        }`}
+                        onClick={() =>
+                          handleStatusChange(
+                            application._id,
+                            "pending"
+                          )
+                        }
+                      >
+                        Pending
+                      </button>
+
+                      <button
+                        type="button"
+                        disabled={
+                          updatingId ===
+                          application._id
+                        }
+                        className={`applicant-status-button accepted ${
+                          currentStatus === "accepted"
+                            ? "selected"
+                            : ""
+                        }`}
+                        onClick={() =>
+                          handleStatusChange(
+                            application._id,
+                            "accepted"
+                          )
+                        }
+                      >
+                        Accept
+                      </button>
+
+                      <button
+                        type="button"
+                        disabled={
+                          updatingId ===
+                          application._id
+                        }
+                        className={`applicant-status-button rejected ${
+                          currentStatus === "rejected"
+                            ? "selected"
+                            : ""
+                        }`}
+                        onClick={() =>
+                          handleStatusChange(
+                            application._id,
                             "rejected"
-                          ? "bg-red-100 text-red-700"
-                          : "bg-yellow-100 text-yellow-700"
-                      }`}
-                    >
-                      {application.status ===
-                      "accepted" ? (
-                        <CheckCircle size={18} />
-                      ) : application.status ===
-                        "rejected" ? (
-                        <XCircle size={18} />
-                      ) : (
-                        <Users size={18} />
-                      )}
+                          )
+                        }
+                      >
+                        Reject
+                      </button>
 
-                      {application.status}
-                    </span>
-                  </div>
-
-                  {/* Applicant Information */}
-                  <div className="grid md:grid-cols-3 gap-4 mt-6">
-
-                    <div className="flex items-center gap-3 bg-slate-50 rounded-xl p-4">
-                      <Mail
-                        size={19}
-                        className="text-orange-500"
-                      />
-
-                      <div>
-                        <p className="text-xs text-slate-400">
-                          Email
-                        </p>
-
-                        <p className="text-sm font-medium text-slate-700 break-all">
-                          {applicant?.email ||
-                            "Not provided"}
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center gap-3 bg-slate-50 rounded-xl p-4">
-                      <Phone
-                        size={19}
-                        className="text-orange-500"
-                      />
-
-                      <div>
-                        <p className="text-xs text-slate-400">
-                          Phone
-                        </p>
-
-                        <p className="text-sm font-medium text-slate-700">
-                          {applicant?.phone ||
-                            "Not provided"}
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center gap-3 bg-slate-50 rounded-xl p-4">
-                      <MapPin
-                        size={19}
-                        className="text-orange-500"
-                      />
-
-                      <div>
-                        <p className="text-xs text-slate-400">
-                          Location
-                        </p>
-
-                        <p className="text-sm font-medium text-slate-700">
-                          {applicant?.location ||
-                            "Not provided"}
-                        </p>
-                      </div>
-                    </div>
-
-                  </div>
-
-                  {/* Application Info */}
-                  <div className="mt-6">
-                    <p className="text-xs text-slate-400">
-                      Applied On
-                    </p>
-
-                    <p className="text-sm font-medium text-slate-700 mt-1">
-                      {application.createdAt
-                        ? new Date(
-                            application.createdAt
-                          ).toLocaleDateString()
-                        : "Unknown"}
-                    </p>
-                  </div>
-
-                  {/* Actions */}
-                  <div className="flex flex-wrap gap-3 mt-6 pt-5 border-t border-slate-100">
-
-                    <button
-                      onClick={() =>
-                        handleStatusUpdate(
-                          application._id,
-                          "accepted"
-                        )
-                      }
-                      disabled={
-                        updatingId ===
-                          application._id ||
-                        application.status ===
-                          "accepted"
-                      }
-                      className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 disabled:bg-green-300 text-white px-5 py-3 rounded-xl font-semibold transition disabled:cursor-not-allowed"
-                    >
                       {updatingId ===
-                      application._id ? (
+                        application._id && (
                         <Loader2
-                          size={18}
-                          className="animate-spin"
+                          size={19}
+                          className="applicants-spin"
                         />
-                      ) : (
-                        <CheckCircle size={18} />
                       )}
 
-                      Accept
-                    </button>
-
-                    <button
-                      onClick={() =>
-                        handleStatusUpdate(
-                          application._id,
-                          "rejected"
-                        )
-                      }
-                      disabled={
-                        updatingId ===
-                          application._id ||
-                        application.status ===
-                          "rejected"
-                      }
-                      className="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 disabled:bg-red-300 text-white px-5 py-3 rounded-xl font-semibold transition disabled:cursor-not-allowed"
-                    >
-                      {updatingId ===
-                      application._id ? (
-                        <Loader2
-                          size={18}
-                          className="animate-spin"
-                        />
-                      ) : (
-                        <XCircle size={18} />
-                      )}
-
-                      Reject
-                    </button>
+                    </div>
 
                   </div>
+
                 </div>
               );
             })}
+
           </div>
         )}
-      </div>
+
+      </main>
     </div>
   );
 }

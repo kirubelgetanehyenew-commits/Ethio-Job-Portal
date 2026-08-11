@@ -1,70 +1,147 @@
+﻿import {
+  Mail,
+  Phone,
+  MapPin,
+  Briefcase,
+  Building2,
+  ArrowUpRight,
+} from "lucide-react";
+import { Link } from "react-router-dom";
+import "./Footer.css";
+
 function Footer() {
   return (
-    <footer className="bg-gray-900 text-white mt-16">
+    <footer className="ethio-footer">
 
-      <div className="max-w-7xl mx-auto px-6 py-12">
+      <div className="ethio-footer-container">
 
-        <div className="grid md:grid-cols-4 gap-8">
+        {/* Brand */}
+        <div className="footer-column footer-brand">
 
-          <div>
-            <h2 className="text-2xl font-bold text-blue-400">
-              Ethio Job Portal
-            </h2>
+          <div className="footer-brand-header">
 
-            <p className="mt-4 text-gray-400">
-              Connecting Ethiopian job seekers with employers across the country.
-            </p>
+            <div className="footer-logo">
+              E
+            </div>
+
+            <div>
+              <h2>Ethio Job Portal</h2>
+              <p>Ethiopia's Career Platform</p>
+            </div>
+
           </div>
 
-          <div>
-            <h3 className="font-semibold mb-4">
-              Job Seekers
-            </h3>
+          <p className="footer-description">
+            Connecting talented professionals with trusted Ethiopian
+            employers and creating better career opportunities across
+            Ethiopia.
+          </p>
 
-            <ul className="space-y-2 text-gray-400">
-              <li>Browse Jobs</li>
-              <li>My Applications</li>
-              <li>Profile</li>
-            </ul>
-          </div>
+        </div>
 
-          <div>
-            <h3 className="font-semibold mb-4">
-              Employers
-            </h3>
+        {/* Job Seekers */}
+        <div className="footer-column">
 
-            <ul className="space-y-2 text-gray-400">
-              <li>Dashboard</li>
-              <li>Create Job</li>
-              <li>Applicants</li>
-            </ul>
-          </div>
+          <h3>Job Seekers</h3>
 
-          <div>
-            <h3 className="font-semibold mb-4">
-              Contact
-            </h3>
+          <div className="footer-links">
 
-            <p className="text-gray-400">
-              Addis Ababa, Ethiopia
-            </p>
+            <Link to="/jobs">
+              <Briefcase size={17} />
+              <span>Browse Jobs</span>
+            </Link>
 
-            <p className="text-gray-400">
-              support@ethiojobportal.com
-            </p>
+            <Link to="/my-applications">
+              <ArrowUpRight size={17} />
+              <span>My Applications</span>
+            </Link>
 
-            <p className="text-gray-400">
-              +251 900 000 000
-            </p>
+            <Link to="/jobseeker/profile">
+              <ArrowUpRight size={17} />
+              <span>My Profile</span>
+            </Link>
+
           </div>
 
         </div>
 
-        <hr className="my-8 border-gray-700" />
+        {/* Employers */}
+        <div className="footer-column">
 
-        <p className="text-center text-gray-400">
-          © {new Date().getFullYear()} Ethio Job Portal. All rights reserved.
+          <h3>Employers</h3>
+
+          <div className="footer-links">
+
+            <Link to="/employer/dashboard">
+              <Building2 size={17} />
+              <span>Dashboard</span>
+            </Link>
+
+            <Link to="/employer/create-job">
+              <Briefcase size={17} />
+              <span>Create Job</span>
+            </Link>
+
+            <Link to="/employer/my-companies">
+              <Building2 size={17} />
+              <span>My Companies</span>
+            </Link>
+
+          </div>
+
+        </div>
+
+        {/* Contact */}
+        <div className="footer-column">
+
+          <h3>Contact Us</h3>
+
+          <div className="footer-contact">
+
+            <div>
+              <MapPin />
+              <span>Addis Ababa, Ethiopia</span>
+            </div>
+
+            <div>
+              <Mail />
+              <span>support@ethiojobportal.com</span>
+            </div>
+
+            <div>
+              <Phone />
+              <span>+251 900 000 000</span>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      {/* Bottom */}
+      <div className="footer-bottom">
+
+        <p>
+          © {new Date().getFullYear()} Ethio Job Portal.
+          All rights reserved.
         </p>
+
+        <div className="footer-bottom-links">
+
+          <Link to="/">
+            Home
+          </Link>
+
+          <Link to="/jobs">
+            Jobs
+          </Link>
+
+          <Link to="/companies">
+            Companies
+          </Link>
+
+        </div>
 
       </div>
 

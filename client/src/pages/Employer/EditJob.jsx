@@ -16,6 +16,8 @@ import {
 import { getJobById, updateJob } from "../../services/jobService";
 import { getMyCompanies } from "../../services/companyService";
 
+import "./EditJob.css";
+
 function EditJob() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -81,8 +83,8 @@ function EditJob() {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    setFormData((prev) => ({
-      ...prev,
+    setFormData((previousData) => ({
+      ...previousData,
       [name]: value,
     }));
   };
@@ -154,64 +156,56 @@ function EditJob() {
 
   if (loading) {
     return (
-      <div className="min-h-[70vh] flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-16 h-16 mx-auto rounded-2xl bg-orange-100 flex items-center justify-center">
-            <Loader2
-              size={30}
-              className="text-orange-600 animate-spin"
-            />
+      <section className="edit-job-page">
+        <div className="edit-job-container">
+          <div className="edit-job-loading">
+            <div className="edit-job-loading-icon">
+              <Loader2 size={32} className="edit-job-spin" />
+            </div>
+
+            <h2>Loading Job</h2>
+
+            <p>
+              Please wait while we load your job information.
+            </p>
           </div>
-
-          <h2 className="text-xl font-bold text-slate-900 mt-5">
-            Loading Job
-          </h2>
-
-          <p className="text-slate-500 mt-2">
-            Please wait while we load your job information.
-          </p>
         </div>
-      </div>
+      </section>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50 py-10 md:py-14">
-      <div className="max-w-6xl mx-auto px-5 md:px-8">
+    <section className="edit-job-page">
+      <div className="edit-job-container">
 
         {/* Back Button */}
         <button
           type="button"
           onClick={() => navigate("/employer/dashboard")}
-          className="inline-flex items-center gap-2 text-slate-600 hover:text-orange-600 font-semibold mb-8 transition"
+          className="edit-job-back-button"
         >
           <ArrowLeft size={18} />
           Back to Dashboard
         </button>
 
         {/* Header */}
-        <div className="mb-10">
-          <div className="flex flex-col md:flex-row md:items-center gap-5">
+        <div className="edit-job-header">
+          <div className="edit-job-header-content">
 
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center shadow-lg shadow-orange-200">
-              <Briefcase
-                size={30}
-                className="text-white"
-              />
+            <div className="edit-job-header-icon">
+              <Briefcase size={30} />
             </div>
 
             <div>
-              <p className="text-orange-600 font-bold uppercase tracking-widest text-sm">
-                Employer
+              <p className="edit-job-header-label">
+                EMPLOYER
               </p>
 
-              <h1 className="text-4xl md:text-5xl font-black text-slate-900 mt-1">
-                Edit Job
-              </h1>
+              <h1>Edit Job</h1>
 
-              <p className="text-slate-500 mt-2 text-base md:text-lg">
-                Update your job posting and keep your opportunity
-                information accurate.
+              <p className="edit-job-header-description">
+                Update your job posting and keep your
+                opportunity information accurate.
               </p>
             </div>
 
@@ -220,71 +214,67 @@ function EditJob() {
 
         {/* Error */}
         {error && (
-          <div className="mb-7 rounded-2xl border border-red-200 bg-red-50 px-5 py-4 text-red-700">
-            <div className="flex items-start gap-3">
-              <div className="font-bold">Error</div>
-              <div>{error}</div>
+          <div className="edit-job-error">
+            <div className="edit-job-error-title">
+              Error
             </div>
+
+            <div>{error}</div>
           </div>
         )}
 
         {/* Form */}
         <form
           onSubmit={handleSubmit}
-          className="bg-white rounded-[2rem] shadow-xl border border-orange-100 overflow-hidden"
+          className="edit-job-form"
         >
 
           {/* Form Header */}
-          <div className="bg-gradient-to-r from-slate-900 to-slate-800 px-6 md:px-10 py-7 text-white">
-            <h2 className="text-2xl font-bold">
-              Job Information
-            </h2>
+          <div className="edit-job-form-header">
+            <h2>Job Information</h2>
 
-            <p className="text-slate-300 mt-1">
-              Update the details candidates will see when viewing
-              your job.
+            <p>
+              Update the details candidates will see
+              when viewing your job.
             </p>
           </div>
 
-          <div className="p-6 md:p-10">
+          <div className="edit-job-form-body">
 
             {/* Basic Information */}
-            <div className="mb-10">
+            <div className="edit-job-section">
 
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-xl bg-orange-100 flex items-center justify-center">
-                  <Briefcase
-                    size={20}
-                    className="text-orange-600"
-                  />
+              <div className="edit-job-section-heading">
+
+                <div className="edit-job-section-icon orange">
+                  <Briefcase size={20} />
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-bold text-slate-900">
-                    Basic Information
-                  </h3>
+                  <h3>Basic Information</h3>
 
-                  <p className="text-sm text-slate-500">
+                  <p>
                     Tell candidates about the position.
                   </p>
                 </div>
+
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="edit-job-fields">
 
                 {/* Job Title */}
-                <div className="md:col-span-2">
-                  <label className="block text-sm font-bold text-slate-700 mb-2">
+                <div className="edit-job-field full-width">
+
+                  <label>
                     Job Title
-                    <span className="text-red-500 ml-1">
-                      *
-                    </span>
+                    <span>*</span>
                   </label>
 
-                  <div className="relative">
+                  <div className="edit-job-input-wrapper">
+
                     <Briefcase
                       size={19}
-                      className="absolute left-4 top-1/2 -translate-y-1/2 text-orange-500"
+                      className="edit-job-input-icon"
                     />
 
                     <input
@@ -293,32 +283,32 @@ function EditJob() {
                       value={formData.title}
                       onChange={handleChange}
                       placeholder="e.g. Senior Full Stack Developer"
-                      className="w-full h-13 rounded-xl border border-slate-300 bg-slate-50 pl-12 pr-4 text-slate-900 placeholder:text-slate-400 outline-none transition focus:bg-white focus:border-orange-500 focus:ring-4 focus:ring-orange-100"
                       required
                     />
+
                   </div>
+
                 </div>
 
                 {/* Company */}
-                <div>
-                  <label className="block text-sm font-bold text-slate-700 mb-2">
+                <div className="edit-job-field">
+
+                  <label>
                     Company
-                    <span className="text-red-500 ml-1">
-                      *
-                    </span>
+                    <span>*</span>
                   </label>
 
-                  <div className="relative">
+                  <div className="edit-job-input-wrapper">
+
                     <Building2
                       size={19}
-                      className="absolute left-4 top-1/2 -translate-y-1/2 text-orange-500 z-10"
+                      className="edit-job-input-icon"
                     />
 
                     <select
                       name="company"
                       value={formData.company}
                       onChange={handleChange}
-                      className="w-full h-13 rounded-xl border border-slate-300 bg-slate-50 pl-12 pr-4 text-slate-900 outline-none transition focus:bg-white focus:border-orange-500 focus:ring-4 focus:ring-orange-100 appearance-none"
                       required
                     >
                       <option value="">
@@ -334,22 +324,24 @@ function EditJob() {
                         </option>
                       ))}
                     </select>
+
                   </div>
+
                 </div>
 
                 {/* Location */}
-                <div>
-                  <label className="block text-sm font-bold text-slate-700 mb-2">
+                <div className="edit-job-field">
+
+                  <label>
                     Location
-                    <span className="text-red-500 ml-1">
-                      *
-                    </span>
+                    <span>*</span>
                   </label>
 
-                  <div className="relative">
+                  <div className="edit-job-input-wrapper">
+
                     <MapPin
                       size={19}
-                      className="absolute left-4 top-1/2 -translate-y-1/2 text-orange-500"
+                      className="edit-job-input-icon"
                     />
 
                     <input
@@ -358,25 +350,26 @@ function EditJob() {
                       value={formData.location}
                       onChange={handleChange}
                       placeholder="e.g. Addis Ababa"
-                      className="w-full h-13 rounded-xl border border-slate-300 bg-slate-50 pl-12 pr-4 text-slate-900 placeholder:text-slate-400 outline-none transition focus:bg-white focus:border-orange-500 focus:ring-4 focus:ring-orange-100"
                       required
                     />
+
                   </div>
+
                 </div>
 
                 {/* Salary */}
-                <div>
-                  <label className="block text-sm font-bold text-slate-700 mb-2">
+                <div className="edit-job-field">
+
+                  <label>
                     Salary
-                    <span className="text-red-500 ml-1">
-                      *
-                    </span>
+                    <span>*</span>
                   </label>
 
-                  <div className="relative">
+                  <div className="edit-job-input-wrapper">
+
                     <DollarSign
                       size={19}
-                      className="absolute left-4 top-1/2 -translate-y-1/2 text-orange-500"
+                      className="edit-job-input-icon"
                     />
 
                     <input
@@ -386,30 +379,29 @@ function EditJob() {
                       onChange={handleChange}
                       placeholder="30000"
                       min="0"
-                      className="w-full h-13 rounded-xl border border-slate-300 bg-slate-50 pl-12 pr-4 text-slate-900 placeholder:text-slate-400 outline-none transition focus:bg-white focus:border-orange-500 focus:ring-4 focus:ring-orange-100"
                       required
                     />
+
                   </div>
 
-                  <p className="text-xs text-slate-400 mt-2">
+                  <p className="edit-job-help-text">
                     Salary amount in Ethiopian Birr (ETB).
                   </p>
+
                 </div>
 
                 {/* Job Type */}
-                <div>
-                  <label className="block text-sm font-bold text-slate-700 mb-2">
+                <div className="edit-job-field">
+
+                  <label>
                     Job Type
-                    <span className="text-red-500 ml-1">
-                      *
-                    </span>
+                    <span>*</span>
                   </label>
 
                   <select
                     name="jobType"
                     value={formData.jobType}
                     onChange={handleChange}
-                    className="w-full h-13 rounded-xl border border-slate-300 bg-slate-50 px-4 text-slate-900 outline-none transition focus:bg-white focus:border-orange-500 focus:ring-4 focus:ring-orange-100"
                     required
                   >
                     <option value="">
@@ -432,21 +424,22 @@ function EditJob() {
                       Contract
                     </option>
                   </select>
+
                 </div>
 
                 {/* Experience */}
-                <div>
-                  <label className="block text-sm font-bold text-slate-700 mb-2">
+                <div className="edit-job-field">
+
+                  <label>
                     Experience
-                    <span className="text-red-500 ml-1">
-                      *
-                    </span>
+                    <span>*</span>
                   </label>
 
-                  <div className="relative">
+                  <div className="edit-job-input-wrapper">
+
                     <Award
                       size={19}
-                      className="absolute left-4 top-1/2 -translate-y-1/2 text-orange-500"
+                      className="edit-job-input-icon"
                     />
 
                     <input
@@ -455,25 +448,26 @@ function EditJob() {
                       value={formData.experience}
                       onChange={handleChange}
                       placeholder="e.g. 2 Years"
-                      className="w-full h-13 rounded-xl border border-slate-300 bg-slate-50 pl-12 pr-4 text-slate-900 placeholder:text-slate-400 outline-none transition focus:bg-white focus:border-orange-500 focus:ring-4 focus:ring-orange-100"
                       required
                     />
+
                   </div>
+
                 </div>
 
                 {/* Deadline */}
-                <div>
-                  <label className="block text-sm font-bold text-slate-700 mb-2">
+                <div className="edit-job-field">
+
+                  <label>
                     Application Deadline
-                    <span className="text-red-500 ml-1">
-                      *
-                    </span>
+                    <span>*</span>
                   </label>
 
-                  <div className="relative">
+                  <div className="edit-job-input-wrapper">
+
                     <CalendarDays
                       size={19}
-                      className="absolute left-4 top-1/2 -translate-y-1/2 text-orange-500"
+                      className="edit-job-input-icon"
                     />
 
                     <input
@@ -481,70 +475,71 @@ function EditJob() {
                       name="deadline"
                       value={formData.deadline}
                       onChange={handleChange}
-                      className="w-full h-13 rounded-xl border border-slate-300 bg-slate-50 pl-12 pr-4 text-slate-900 outline-none transition focus:bg-white focus:border-orange-500 focus:ring-4 focus:ring-orange-100"
                       required
                     />
+
                   </div>
+
                 </div>
 
               </div>
             </div>
 
             {/* Description */}
-            <div className="border-t border-slate-200 pt-10">
+            <div className="edit-job-description-section">
 
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center">
-                  <FileText
-                    size={20}
-                    className="text-amber-600"
-                  />
+              <div className="edit-job-section-heading">
+
+                <div className="edit-job-section-icon amber">
+                  <FileText size={20} />
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-bold text-slate-900">
-                    Job Description
-                  </h3>
+                  <h3>Job Description</h3>
 
-                  <p className="text-sm text-slate-500">
-                    Explain the role, responsibilities and
-                    requirements.
+                  <p>
+                    Explain the role, responsibilities
+                    and requirements.
                   </p>
                 </div>
+
               </div>
 
-              <label className="block text-sm font-bold text-slate-700 mb-2">
-                Description
-                <span className="text-red-500 ml-1">
-                  *
-                </span>
-              </label>
+              <div className="edit-job-field">
 
-              <div className="relative">
-                <FileText
-                  size={20}
-                  className="absolute left-4 top-4 text-orange-500"
-                />
+                <label>
+                  Description
+                  <span>*</span>
+                </label>
 
-                <textarea
-                  name="description"
-                  value={formData.description}
-                  onChange={handleChange}
-                  rows={9}
-                  placeholder="Describe the position, responsibilities, qualifications, skills and other important information..."
-                  className="w-full rounded-xl border border-slate-300 bg-slate-50 pl-12 pr-4 py-4 text-slate-900 placeholder:text-slate-400 outline-none transition focus:bg-white focus:border-orange-500 focus:ring-4 focus:ring-orange-100 resize-none"
-                  required
-                />
+                <div className="edit-job-textarea-wrapper">
+
+                  <FileText
+                    size={20}
+                    className="edit-job-textarea-icon"
+                  />
+
+                  <textarea
+                    name="description"
+                    value={formData.description}
+                    onChange={handleChange}
+                    rows={9}
+                    placeholder="Describe the position, responsibilities, qualifications, skills and other important information..."
+                    required
+                  />
+
+                </div>
+
+                <p className="edit-job-help-text">
+                  Give candidates enough information to
+                  understand the position and its requirements.
+                </p>
+
               </div>
-
-              <p className="text-xs text-slate-400 mt-2">
-                Give candidates enough information to understand
-                the position and its requirements.
-              </p>
             </div>
 
             {/* Buttons */}
-            <div className="border-t border-slate-200 mt-10 pt-7 flex flex-col-reverse sm:flex-row sm:justify-end gap-3">
+            <div className="edit-job-actions">
 
               <button
                 type="button"
@@ -552,7 +547,7 @@ function EditJob() {
                   navigate("/employer/dashboard")
                 }
                 disabled={saving}
-                className="h-13 px-7 rounded-xl border border-slate-300 bg-white text-slate-700 font-bold hover:bg-slate-50 transition disabled:opacity-50"
+                className="edit-job-cancel-button"
               >
                 Cancel
               </button>
@@ -560,13 +555,13 @@ function EditJob() {
               <button
                 type="submit"
                 disabled={saving}
-                className="h-13 px-8 rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 text-white font-bold shadow-lg shadow-orange-200 hover:shadow-xl hover:from-orange-600 hover:to-amber-600 transition disabled:opacity-60 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2"
+                className="edit-job-save-button"
               >
                 {saving ? (
                   <>
                     <Loader2
                       size={19}
-                      className="animate-spin"
+                      className="edit-job-spin"
                     />
                     Saving Changes...
                   </>
@@ -584,14 +579,14 @@ function EditJob() {
         </form>
 
         {/* Footer Note */}
-        <p className="text-center text-sm text-slate-400 mt-6">
+        <p className="edit-job-footer-note">
           Fields marked with{" "}
-          <span className="text-red-500">*</span>{" "}
+          <span>*</span>{" "}
           are required.
         </p>
 
       </div>
-    </div>
+    </section>
   );
 }
 

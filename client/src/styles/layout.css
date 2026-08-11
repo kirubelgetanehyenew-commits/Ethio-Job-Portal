@@ -1,0 +1,167 @@
+/* =========================================
+   GLOBAL LAYOUT SYSTEM
+========================================= */
+
+.app-layout {
+  min-height: 100vh;
+  background: var(--color-bg);
+}
+
+/* =========================================
+   PUBLIC / MAIN CONTENT
+========================================= */
+
+.main-content {
+  min-height: calc(100vh - 72px);
+  padding: 40px 0;
+}
+
+/* =========================================
+   DASHBOARD LAYOUT
+========================================= */
+
+.dashboard-layout {
+  min-height: 100vh;
+  display: flex;
+  background: var(--color-bg);
+}
+
+.dashboard-main {
+  flex: 1;
+  min-width: 0;
+  padding: 40px;
+  transition: margin-left 0.3s ease;
+}
+
+/* =========================================
+   DASHBOARD CONTENT
+========================================= */
+
+.dashboard-container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* =========================================
+   PAGE HEADER
+========================================= */
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.page-header-content {
+  flex: 1;
+}
+
+.page-title {
+  font-size: 36px;
+  font-weight: 800;
+  line-height: 1.2;
+  color: var(--color-text);
+}
+
+.page-subtitle {
+  margin-top: 8px;
+  color: var(--color-text-muted);
+  font-size: 16px;
+}
+
+/* =========================================
+   CONTENT GRID
+========================================= */
+
+.content-grid {
+  display: grid;
+  gap: 24px;
+}
+
+.content-grid-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.content-grid-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.content-grid-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+/* =========================================
+   FLEX UTILITIES
+========================================= */
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 1200px) {
+  .dashboard-main {
+    padding: 32px;
+  }
+
+  .content-grid-4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .dashboard-main {
+    padding: 28px 20px;
+  }
+
+  .content-grid-3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .content-grid-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .page-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 640px) {
+  .main-content {
+    padding: 28px 0;
+  }
+
+  .dashboard-main {
+    padding: 24px 16px;
+  }
+
+  .page-title {
+    font-size: 28px;
+  }
+
+  .content-grid-3,
+  .content-grid-4 {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import {
   MapPin,
   DollarSign,
@@ -11,21 +11,34 @@ import {
   Globe,
   Loader2,
   CheckCircle,
+  ArrowLeft,
+  Award,
+  FileText,
 } from "lucide-react";
 
 import { getJobById } from "../../services/jobService";
-import { applyForJob } from "../../services/applicationService";
+import {
+  applyForJob,
+  getMyApplications,
+} from "../../services/applicationService";
+
+import "./JobDetails.css";
 
 function JobDetails() {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const [job, setJob] = useState(null);
   const [loading, setLoading] = useState(true);
   const [applying, setApplying] = useState(false);
-  const [error, setError] = useState("");
+  const [checkingApplication, setCheckingApplication] = useState(true);
   const [applied, setApplied] = useState(false);
+  const [error, setError] = useState("");
 
-  // Fetch job
+  // =====================================================
+  // LOAD JOB
+  // =====================================================
+
   useEffect(() => {
     const fetchJob = async () => {
       try {
@@ -50,7 +63,43 @@ function JobDetails() {
     fetchJob();
   }, [id]);
 
-  // Apply for job
+  // =====================================================
+  // CHECK APPLICATION STATUS
+  // =====================================================
+
+  useEffect(() => {
+    const checkApplication = async () => {
+      try {
+        setCheckingApplication(true);
+
+        const data = await getMyApplications();
+
+        const applications = data.applications || [];
+
+        const alreadyApplied = applications.some(
+          (application) =>
+            application.job?._id === id ||
+            application.job === id
+        );
+
+        setApplied(alreadyApplied);
+      } catch (error) {
+        console.error(
+          "Could not check application status:",
+          error
+        );
+      } finally {
+        setCheckingApplication(false);
+      }
+    };
+
+    checkApplication();
+  }, [id]);
+
+  // =====================================================
+  // APPLY FOR JOB
+  // =====================================================
+
   const handleApply = async () => {
     if (!job || applying || applied) {
       return;
@@ -61,7 +110,10 @@ function JobDetails() {
 
       const data = await applyForJob(job._id);
 
-      alert(data.message || "Application submitted successfully.");
+      alert(
+        data.message ||
+          "Application submitted successfully."
+      );
 
       setApplied(true);
     } catch (error) {
@@ -76,132 +128,197 @@ function JobDetails() {
     }
   };
 
-  // Loading
+  // =====================================================
+  // LOADING
+  // =====================================================
+
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-50 px-6 py-20">
-        <div className="max-w-6xl mx-auto flex flex-col items-center justify-center">
-          <Loader2
-            size={42}
-            className="text-orange-500 animate-spin"
-          />
+      <section className="job-details-page">
+        <div className="job-details-state">
 
-          <p className="text-slate-500 mt-4">
-            Loading job details...
-          </p>
-        </div>
-      </div>
-    );
-  }
-
-  // Error / Job not found
-  if (error || !job) {
-    return (
-      <div className="min-h-screen bg-slate-50 px-6 py-20">
-        <div className="max-w-3xl mx-auto bg-white rounded-3xl shadow-sm border border-slate-200 p-10 text-center">
-
-          <div className="w-16 h-16 mx-auto rounded-full bg-red-100 flex items-center justify-center">
-            <Briefcase
-              size={30}
-              className="text-red-500"
+          <div className="job-details-loading-icon">
+            <Loader2
+              size={34}
+              className="job-details-spinner"
             />
           </div>
 
-          <h1 className="text-3xl font-black text-slate-900 mt-6">
-            Job Not Found
-          </h1>
+          <h2>Loading Job...</h2>
 
-          <p className="text-slate-500 mt-3">
-            {error || "This job may have been removed or is no longer available."}
+          <p>
+            Please wait while we load the job details.
           </p>
 
         </div>
-      </div>
+      </section>
     );
   }
 
+  // =====================================================
+  // ERROR / NOT FOUND
+  // =====================================================
+
+  if (error || !job) {
+    return (
+      <section className="job-details-page">
+        <div className="job-details-state">
+
+          <div className="job-details-error-icon">
+            <Briefcase size={34} />
+          </div>
+
+          <h1>Job Not Found</h1>
+
+          <p>
+            {error ||
+              "This job may have been removed or is no longer available."}
+          </p>
+
+          <button
+            onClick={() => navigate("/jobs")}
+            className="job-details-back-button"
+          >
+            <ArrowLeft size={18} />
+            Back to Jobs
+          </button>
+
+        </div>
+      </section>
+    );
+  }
+
+  // =====================================================
+  // MAIN PAGE
+  // =====================================================
+
   return (
-    <div className="min-h-screen bg-slate-50 px-4 py-8 md:px-6">
+    <section className="job-details-page">
 
-      <div className="max-w-6xl mx-auto">
+      <div className="job-details-container">
 
-        <div className="grid lg:grid-cols-3 gap-8">
+        {/* =================================================
+            BACK BUTTON
+        ================================================= */}
 
-          {/* LEFT SIDE */}
-          <div className="lg:col-span-2">
+        <button
+          onClick={() => navigate("/jobs")}
+          className="job-details-back-link"
+        >
+          <ArrowLeft size={18} />
+          Back to Jobs
+        </button>
 
-            <div className="bg-white rounded-3xl shadow-sm border border-slate-200 p-6 md:p-10">
+        {/* =================================================
+            MAIN GRID
+        ================================================= */}
 
-              {/* Job Header */}
-              <div className="flex flex-col md:flex-row justify-between gap-6">
+        <div className="job-details-layout">
 
-                <div>
+          {/* =================================================
+              LEFT COLUMN
+          ================================================= */}
 
-                  <span className="inline-flex bg-orange-100 text-orange-700 px-4 py-2 rounded-full text-sm font-semibold">
-                    {job.jobType}
+          <div className="job-details-main">
+
+            {/* JOB HEADER */}
+
+            <div className="job-details-header">
+
+              <div className="job-details-header-content">
+
+                <div className="job-details-badges">
+
+                  <span className="job-details-type">
+                    <Briefcase size={16} />
+                    {job.jobType || "Job"}
                   </span>
 
-                  <h1 className="text-3xl md:text-5xl font-black text-slate-900 mt-5">
-                    {job.title}
-                  </h1>
-
-                  <p className="text-orange-600 text-xl font-semibold mt-3">
-                    {job.company?.companyName ||
-                      "Company"}
-                  </p>
+                  {job.isActive && (
+                    <span className="job-details-active">
+                      <CheckCircle size={16} />
+                      Active
+                    </span>
+                  )}
 
                 </div>
 
-                <div className="w-20 h-20 rounded-3xl bg-orange-100 flex items-center justify-center shrink-0">
-                  <Building2
-                    size={40}
-                    className="text-orange-600"
-                  />
-                </div>
+                <h1>
+                  {job.title}
+                </h1>
+
+                <p className="job-details-company-name">
+                  {job.company?.companyName ||
+                    "Company"}
+                </p>
 
               </div>
 
-              {/* Job Information */}
-              <div className="grid md:grid-cols-2 gap-4 mt-10">
+              <div className="job-details-company-icon">
+                <Building2 size={48} />
+              </div>
 
-                <Info
-                  icon={<MapPin size={20} />}
+            </div>
+
+            {/* JOB INFORMATION */}
+
+            <div className="job-details-content">
+
+              <div className="job-details-info-grid">
+
+                <InfoCard
+                  icon={<MapPin size={21} />}
                   label="Location"
                   text={job.location}
                 />
 
-                <Info
-                  icon={<DollarSign size={20} />}
+                <InfoCard
+                  icon={<DollarSign size={21} />}
                   label="Salary"
-                  text={`ETB ${job.salary}`}
+                  text={`ETB ${
+                    job.salary || "Negotiable"
+                  }`}
                 />
 
-                <Info
-                  icon={<Briefcase size={20} />}
+                <InfoCard
+                  icon={<Award size={21} />}
                   label="Experience"
                   text={job.experience}
                 />
 
-                <Info
-                  icon={<Calendar size={20} />}
-                  label="Deadline"
-                  text={new Date(
+                <InfoCard
+                  icon={<Calendar size={21} />}
+                  label="Application Deadline"
+                  text={
                     job.deadline
-                  ).toLocaleDateString()}
+                      ? new Date(
+                          job.deadline
+                        ).toLocaleDateString()
+                      : "Not provided"
+                  }
                 />
 
               </div>
 
-              {/* Description */}
-              <div className="mt-12">
+              {/* DESCRIPTION */}
 
-                <h2 className="text-2xl font-bold text-slate-900 mb-5">
-                  Job Description
-                </h2>
+              <div className="job-description">
 
-                <p className="leading-8 text-slate-600 whitespace-pre-line">
+                <div className="job-section-heading">
+
+                  <div className="job-section-icon">
+                    <FileText size={21} />
+                  </div>
+
+                  <h2>
+                    Job Description
+                  </h2>
+
+                </div>
+
+                <div className="job-description-text">
                   {job.description}
-                </p>
+                </div>
 
               </div>
 
@@ -209,20 +326,100 @@ function JobDetails() {
 
           </div>
 
-          {/* RIGHT SIDE */}
-          <div className="space-y-6">
+          {/* =================================================
+              RIGHT COLUMN
+          ================================================= */}
 
-            {/* Company */}
-            <div className="bg-white rounded-3xl shadow-sm border border-slate-200 p-7">
+          <aside className="job-details-sidebar">
 
-              <h2 className="text-2xl font-bold text-slate-900 mb-6">
-                Company
+            {/* APPLY CARD */}
+
+            <div className="job-sidebar-card job-apply-card">
+
+              <h2>
+                Interested in this job?
               </h2>
 
-              <div className="space-y-4">
+              <p>
+                Submit your application and let the
+                employer know you're interested.
+              </p>
+
+              <button
+                onClick={handleApply}
+                disabled={
+                  applying ||
+                  applied ||
+                  checkingApplication ||
+                  !job.isActive
+                }
+                className={`job-apply-button ${
+                  applied
+                    ? "job-apply-success"
+                    : !job.isActive
+                    ? "job-apply-disabled"
+                    : ""
+                }`}
+              >
+
+                {checkingApplication ? (
+                  <>
+                    <Loader2
+                      size={20}
+                      className="job-details-spinner"
+                    />
+                    Checking...
+                  </>
+                ) : applying ? (
+                  <>
+                    <Loader2
+                      size={20}
+                      className="job-details-spinner"
+                    />
+                    Applying...
+                  </>
+                ) : applied ? (
+                  <>
+                    <CheckCircle size={20} />
+                    Already Applied
+                  </>
+                ) : !job.isActive ? (
+                  "Job Closed"
+                ) : (
+                  "Apply Now"
+                )}
+
+              </button>
+
+              {applied && (
+                <p className="job-applied-message">
+                  You have already submitted an
+                  application for this job.
+                </p>
+              )}
+
+            </div>
+
+            {/* COMPANY CARD */}
+
+            <div className="job-sidebar-card">
+
+              <div className="job-sidebar-heading">
+
+                <div className="job-sidebar-icon">
+                  <Building2 size={21} />
+                </div>
+
+                <h2>
+                  Company
+                </h2>
+
+              </div>
+
+              <div className="job-sidebar-info">
 
                 <Info
-                  icon={<Building2 size={19} />}
+                  icon={<Building2 size={18} />}
                   label="Company"
                   text={
                     job.company?.companyName ||
@@ -231,7 +428,7 @@ function JobDetails() {
                 />
 
                 <Info
-                  icon={<Briefcase size={19} />}
+                  icon={<Briefcase size={18} />}
                   label="Industry"
                   text={
                     job.company?.industry ||
@@ -240,7 +437,7 @@ function JobDetails() {
                 />
 
                 <Info
-                  icon={<MapPin size={19} />}
+                  icon={<MapPin size={18} />}
                   label="Location"
                   text={
                     job.company?.location ||
@@ -250,7 +447,7 @@ function JobDetails() {
 
                 {job.company?.website && (
                   <Info
-                    icon={<Globe size={19} />}
+                    icon={<Globe size={18} />}
                     label="Website"
                     text={job.company.website}
                   />
@@ -260,17 +457,26 @@ function JobDetails() {
 
             </div>
 
-            {/* Employer */}
-            <div className="bg-white rounded-3xl shadow-sm border border-slate-200 p-7">
+            {/* EMPLOYER CARD */}
 
-              <h2 className="text-2xl font-bold text-slate-900 mb-6">
-                Employer
-              </h2>
+            <div className="job-sidebar-card">
 
-              <div className="space-y-4">
+              <div className="job-sidebar-heading">
+
+                <div className="job-sidebar-icon">
+                  <User size={21} />
+                </div>
+
+                <h2>
+                  Employer
+                </h2>
+
+              </div>
+
+              <div className="job-sidebar-info">
 
                 <Info
-                  icon={<User size={19} />}
+                  icon={<User size={18} />}
                   label="Name"
                   text={
                     job.employer?.fullName ||
@@ -279,7 +485,7 @@ function JobDetails() {
                 />
 
                 <Info
-                  icon={<Mail size={19} />}
+                  icon={<Mail size={18} />}
                   label="Email"
                   text={
                     job.employer?.email ||
@@ -289,39 +495,39 @@ function JobDetails() {
 
               </div>
 
-              {/* Apply Button */}
-              <button
-                onClick={handleApply}
-                disabled={applying || applied}
-                className={`w-full mt-8 flex items-center justify-center gap-2 py-4 rounded-2xl font-bold text-lg transition ${
-                  applied
-                    ? "bg-green-600 text-white cursor-not-allowed"
-                    : "bg-gradient-to-r from-orange-500 to-amber-500 hover:shadow-xl hover:scale-[1.02] text-white disabled:opacity-60 disabled:cursor-not-allowed"
-                }`}
-              >
-                {applying ? (
-                  <>
-                    <Loader2
-                      size={20}
-                      className="animate-spin"
-                    />
-                    Applying...
-                  </>
-                ) : applied ? (
-                  <>
-                    <CheckCircle size={20} />
-                    Applied
-                  </>
-                ) : (
-                  "Apply Now"
-                )}
-              </button>
-
             </div>
 
-          </div>
+          </aside>
 
         </div>
+
+      </div>
+
+    </section>
+  );
+}
+
+// =====================================================
+// INFO CARD
+// =====================================================
+
+function InfoCard({ icon, label, text }) {
+  return (
+    <div className="job-info-card">
+
+      <div className="job-info-icon">
+        {icon}
+      </div>
+
+      <div className="job-info-content">
+
+        <p>
+          {label}
+        </p>
+
+        <strong>
+          {text || "Not provided"}
+        </strong>
 
       </div>
 
@@ -329,24 +535,26 @@ function JobDetails() {
   );
 }
 
+// =====================================================
+// SIDEBAR INFO
+// =====================================================
+
 function Info({ icon, label, text }) {
   return (
-    <div className="flex items-center gap-3">
+    <div className="job-sidebar-info-row">
 
-      <div className="w-10 h-10 rounded-xl bg-orange-50 flex items-center justify-center text-orange-500 shrink-0">
+      <div className="job-sidebar-info-icon">
         {icon}
       </div>
 
-      <div className="min-w-0">
-
-        <p className="text-xs text-slate-400">
+      <div>
+        <p>
           {label}
         </p>
 
-        <p className="font-medium text-slate-700 break-words">
+        <strong>
           {text || "Not provided"}
-        </p>
-
+        </strong>
       </div>
 
     </div>

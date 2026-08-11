@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import adminService from "../../services/adminService";
+
 import {
   Users,
   Briefcase,
@@ -7,7 +8,13 @@ import {
   FileText,
   UserRound,
   TrendingUp,
+  ArrowUpRight,
+  Activity,
+  ShieldCheck,
 } from "lucide-react";
+
+import "./Dashboard.css";
+
 
 function Dashboard() {
   const [stats, setStats] = useState({
@@ -21,13 +28,16 @@ function Dashboard() {
 
   const [loading, setLoading] = useState(true);
 
+
   useEffect(() => {
     loadStats();
   }, []);
 
+
   const loadStats = async () => {
     try {
       const data = await adminService.getDashboardStats();
+
       setStats(data.statistics);
     } catch (error) {
       console.error(error);
@@ -36,156 +46,356 @@ function Dashboard() {
     }
   };
 
+
   const statCards = [
     {
       title: "Total Users",
       value: stats.totalUsers,
+      description: "All registered users",
       icon: Users,
-      description: "Registered users",
-      iconBg: "bg-blue-100",
-      iconColor: "text-blue-600",
+      color: "blue",
     },
     {
       title: "Employers",
       value: stats.totalEmployers,
-      icon: Briefcase,
       description: "Active employers",
-      iconBg: "bg-green-100",
-      iconColor: "text-green-600",
+      icon: Briefcase,
+      color: "green",
     },
     {
       title: "Job Seekers",
       value: stats.totalJobSeekers,
+      description: "People looking for jobs",
       icon: UserRound,
-      description: "Registered job seekers",
-      iconBg: "bg-purple-100",
-      iconColor: "text-purple-600",
+      color: "purple",
     },
     {
       title: "Companies",
       value: stats.totalCompanies,
-      icon: Building2,
       description: "Registered companies",
-      iconBg: "bg-orange-100",
-      iconColor: "text-orange-600",
+      icon: Building2,
+      color: "orange",
     },
     {
-      title: "Jobs",
+      title: "Published Jobs",
       value: stats.totalJobs,
+      description: "Available opportunities",
       icon: Briefcase,
-      description: "Published jobs",
-      iconBg: "bg-indigo-100",
-      iconColor: "text-indigo-600",
+      color: "indigo",
     },
     {
       title: "Applications",
       value: stats.totalApplications,
+      description: "Applications submitted",
       icon: FileText,
-      description: "Job applications",
-      iconBg: "bg-red-100",
-      iconColor: "text-red-600",
+      color: "red",
     },
   ];
 
+
   return (
-    <div className="min-h-screen bg-slate-50 px-6 py-8">
+    <div className="admin-dashboard">
 
-      {/* Header */}
-      <div className="mb-10">
+      {/* =================================================
+          WELCOME SECTION
+      ================================================= */}
 
-        <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-2xl bg-orange-100 flex items-center justify-center">
-            <TrendingUp
-              size={26}
-              className="text-orange-600"
-            />
+      <section className="admin-welcome-card">
+
+        <div className="admin-welcome-content">
+
+          <div className="admin-welcome-icon">
+            <ShieldCheck size={28} />
           </div>
 
           <div>
-            <h1 className="text-4xl md:text-5xl font-black text-slate-900">
-              Admin Dashboard
+
+            <span className="admin-welcome-label">
+              ADMIN CONTROL CENTER
+            </span>
+
+            <h1>
+              Welcome to your dashboard
             </h1>
 
-            <p className="text-gray-500 mt-1">
-              Monitor your Ethio Job Portal at a glance.
+            <p>
+              Manage users, jobs, companies and applications
+              across the Ethio Job Portal.
             </p>
+
           </div>
+
+        </div>
+
+
+        <div className="admin-welcome-status">
+
+          <div className="admin-status-dot"></div>
+
+          <span>
+            System Active
+          </span>
+
+        </div>
+
+      </section>
+
+
+      {/* =================================================
+          QUICK SUMMARY
+      ================================================= */}
+
+      <section className="admin-summary-grid">
+
+        <div className="admin-summary-card">
+
+          <div className="admin-summary-icon">
+            <Activity size={22} />
+          </div>
+
+          <div>
+
+            <span>
+              Platform Activity
+            </span>
+
+            <strong>
+              {loading ? "..." : stats.totalApplications}
+            </strong>
+
+            <small>
+              Total applications
+            </small>
+
+          </div>
+
+        </div>
+
+
+        <div className="admin-summary-card">
+
+          <div className="admin-summary-icon jobs">
+            <Briefcase size={22} />
+          </div>
+
+          <div>
+
+            <span>
+              Job Market
+            </span>
+
+            <strong>
+              {loading ? "..." : stats.totalJobs}
+            </strong>
+
+            <small>
+              Published opportunities
+            </small>
+
+          </div>
+
+        </div>
+
+
+        <div className="admin-summary-card">
+
+          <div className="admin-summary-icon users">
+            <Users size={22} />
+          </div>
+
+          <div>
+
+            <span>
+              Community
+            </span>
+
+            <strong>
+              {loading ? "..." : stats.totalUsers}
+            </strong>
+
+            <small>
+              Registered members
+            </small>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      {/* =================================================
+          STATISTICS HEADER
+      ================================================= */}
+
+      <div className="admin-section-heading">
+
+        <div>
+
+          <span>
+            PLATFORM STATISTICS
+          </span>
+
+          <h2>
+            Overview
+          </h2>
+
+        </div>
+
+        <div className="admin-live-indicator">
+
+          <span></span>
+
+          Live Data
+
         </div>
 
       </div>
 
-      {/* Statistics */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+
+      {/* =================================================
+          STATISTICS CARDS
+      ================================================= */}
+
+      <section className="admin-statistics-grid">
 
         {statCards.map((card) => {
+
           const Icon = card.icon;
 
           return (
             <div
               key={card.title}
-              className="bg-white rounded-3xl border border-slate-100 shadow-sm hover:shadow-lg transition-all duration-300 p-7"
+              className={`admin-stat-card ${card.color}`}
             >
 
-              <div className="flex items-start justify-between">
+              <div className="admin-stat-card-header">
 
-                <div>
-                  <p className="text-sm font-semibold text-gray-500">
-                    {card.title}
-                  </p>
-
-                  <p className="text-4xl font-black text-slate-900 mt-3">
-                    {loading ? "..." : card.value}
-                  </p>
-
-                  <p className="text-sm text-gray-400 mt-2">
-                    {card.description}
-                  </p>
+                <div className="admin-stat-icon">
+                  <Icon size={24} />
                 </div>
 
-                <div
-                  className={`w-14 h-14 rounded-2xl ${card.iconBg} flex items-center justify-center`}
-                >
-                  <Icon
-                    size={28}
-                    className={card.iconColor}
-                  />
-                </div>
+                <ArrowUpRight
+                  size={20}
+                  className="admin-stat-arrow"
+                />
+
+              </div>
+
+
+              <div className="admin-stat-card-body">
+
+                <span>
+                  {card.title}
+                </span>
+
+                <h3>
+                  {loading ? "..." : card.value}
+                </h3>
+
+                <p>
+                  {card.description}
+                </p>
 
               </div>
 
             </div>
           );
+
         })}
 
-      </div>
+      </section>
 
-      {/* Summary */}
-      <div className="mt-8 bg-white rounded-3xl border border-slate-100 shadow-sm p-7">
 
-        <h2 className="text-2xl font-bold text-slate-900">
-          Platform Overview
-        </h2>
+      {/* =================================================
+          PLATFORM OVERVIEW
+      ================================================= */}
 
-        <p className="text-gray-500 mt-2">
-          Your platform currently has{" "}
-          <span className="font-bold text-slate-800">
-            {stats.totalUsers}
-          </span>{" "}
-          users,{" "}
-          <span className="font-bold text-slate-800">
-            {stats.totalJobs}
-          </span>{" "}
-          jobs, and{" "}
-          <span className="font-bold text-slate-800">
-            {stats.totalApplications}
-          </span>{" "}
-          applications.
-        </p>
+      <section className="admin-overview-card">
 
-      </div>
+        <div className="admin-overview-header">
+
+          <div>
+
+            <span>
+              PLATFORM OVERVIEW
+            </span>
+
+            <h2>
+              Ethio Job Portal
+            </h2>
+
+          </div>
+
+          <div className="admin-overview-icon">
+            <TrendingUp size={24} />
+          </div>
+
+        </div>
+
+
+        <div className="admin-overview-content">
+
+          <p>
+            Your platform currently connects{" "}
+            <strong>
+              {stats.totalJobSeekers}
+            </strong>{" "}
+            job seekers with{" "}
+            <strong>
+              {stats.totalEmployers}
+            </strong>{" "}
+            employers across{" "}
+            <strong>
+              {stats.totalCompanies}
+            </strong>{" "}
+            companies.
+          </p>
+
+          <p>
+            There are currently{" "}
+            <strong>
+              {stats.totalJobs}
+            </strong>{" "}
+            published jobs and{" "}
+            <strong>
+              {stats.totalApplications}
+            </strong>{" "}
+            applications submitted through the platform.
+          </p>
+
+        </div>
+
+
+        <div className="admin-overview-footer">
+
+          <div>
+            <span>Total Members</span>
+            <strong>{stats.totalUsers}</strong>
+          </div>
+
+          <div>
+            <span>Companies</span>
+            <strong>{stats.totalCompanies}</strong>
+          </div>
+
+          <div>
+            <span>Jobs</span>
+            <strong>{stats.totalJobs}</strong>
+          </div>
+
+          <div>
+            <span>Applications</span>
+            <strong>{stats.totalApplications}</strong>
+          </div>
+
+        </div>
+
+      </section>
 
     </div>
   );
 }
+
 
 export default Dashboard;

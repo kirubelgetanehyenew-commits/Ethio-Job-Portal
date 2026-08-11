@@ -6,8 +6,14 @@ import {
   DollarSign,
   Calendar,
   Eye,
+  Loader2,
+  Search,
+  CheckCircle,
+  XCircle,
+  Clock,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+
 import { getMyApplications } from "../../services/applicationService";
 
 function MyApplications() {
@@ -30,96 +36,193 @@ function MyApplications() {
     fetchApplications();
   }, []);
 
+  /* =========================
+     STATISTICS
+  ========================= */
+
+  const totalApplications = applications.length;
+
+  const pendingApplications = applications.filter(
+    (application) => application.status === "pending"
+  ).length;
+
+  const acceptedApplications = applications.filter(
+    (application) => application.status === "accepted"
+  ).length;
+
+  const rejectedApplications = applications.filter(
+    (application) => application.status === "rejected"
+  ).length;
+
+  /* =========================
+     LOADING
+  ========================= */
+
   if (loading) {
     return (
-      <section className="min-h-screen bg-slate-50 py-16">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="bg-white rounded-3xl shadow-lg p-12 text-center">
-            <Briefcase
-              className="mx-auto text-orange-500 mb-5 animate-pulse"
-              size={55}
-            />
+      <section className="jobseeker-applications-page">
+        <div className="jobseeker-applications-loading">
 
-            <h2 className="text-2xl font-bold text-slate-800">
-              Loading Applications...
-            </h2>
-
-            <p className="text-gray-500 mt-2">
-              Please wait while we load your applications.
-            </p>
+          <div className="jobseeker-loading-icon">
+            <Loader2 size={34} />
           </div>
+
+          <h2>Loading Applications...</h2>
+
+          <p>
+            Please wait while we load your applications.
+          </p>
+
         </div>
       </section>
     );
   }
 
   return (
-    <section className="min-h-screen bg-slate-50 py-12">
-      <div className="max-w-7xl mx-auto px-6">
+    <section className="jobseeker-applications-page">
+      <div className="jobseeker-applications-container">
 
-        {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-10">
+        {/* =========================
+            PAGE HEADER
+        ========================= */}
+
+        <div className="jobseeker-applications-header">
+
           <div>
-            <h1 className="text-4xl md:text-5xl font-black text-slate-900">
-              My Applications
-            </h1>
+            <span className="jobseeker-applications-badge">
+              Career Tracking
+            </span>
 
-            <p className="text-gray-500 mt-2 text-lg">
-              Track every job you've applied for.
+            <h1>My Applications</h1>
+
+            <p>
+              Track every job you've applied for and monitor
+              your application progress.
             </p>
           </div>
 
-          {/* Application Count */}
-          <div className="bg-white shadow-md rounded-2xl px-6 py-4 flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-orange-100 flex items-center justify-center">
-              <Briefcase
-                className="text-orange-500"
-                size={26}
-              />
-            </div>
+          <Link
+            to="/jobs"
+            className="jobseeker-browse-jobs-button"
+          >
+            <Search size={19} />
+            Browse Jobs
+          </Link>
 
-            <div>
-              <h2 className="text-3xl font-black text-slate-900">
-                {applications.length}
-              </h2>
-
-              <p className="text-gray-500 text-sm">
-                Applications
-              </p>
-            </div>
-          </div>
         </div>
 
-        {/* Empty State */}
-        {applications.length === 0 ? (
-          <div className="bg-white rounded-3xl shadow-lg p-12 text-center border border-slate-100">
-            <div className="w-20 h-20 mx-auto rounded-2xl bg-orange-100 flex items-center justify-center">
-              <Briefcase
-                className="text-orange-500"
-                size={40}
-              />
+        {/* =========================
+            STATISTICS
+        ========================= */}
+
+        <div className="jobseeker-application-stats">
+
+          {/* Total */}
+          <div className="jobseeker-application-stat-card">
+
+            <div>
+              <p>Total Applications</p>
+
+              <h2>{totalApplications}</h2>
             </div>
 
-            <h2 className="text-3xl font-bold text-slate-800 mt-6">
-              No Applications Yet
-            </h2>
+            <div className="application-stat-icon total">
+              <Briefcase size={27} />
+            </div>
 
-            <p className="text-gray-500 mt-3">
+          </div>
+
+          {/* Pending */}
+          <div className="jobseeker-application-stat-card">
+
+            <div>
+              <p>Pending</p>
+
+              <h2 className="pending-number">
+                {pendingApplications}
+              </h2>
+            </div>
+
+            <div className="application-stat-icon pending">
+              <Clock size={27} />
+            </div>
+
+          </div>
+
+          {/* Accepted */}
+          <div className="jobseeker-application-stat-card">
+
+            <div>
+              <p>Accepted</p>
+
+              <h2 className="accepted-number">
+                {acceptedApplications}
+              </h2>
+            </div>
+
+            <div className="application-stat-icon accepted">
+              <CheckCircle size={27} />
+            </div>
+
+          </div>
+
+          {/* Rejected */}
+          <div className="jobseeker-application-stat-card">
+
+            <div>
+              <p>Rejected</p>
+
+              <h2 className="rejected-number">
+                {rejectedApplications}
+              </h2>
+            </div>
+
+            <div className="application-stat-icon rejected">
+              <XCircle size={27} />
+            </div>
+
+          </div>
+
+        </div>
+
+        {/* =========================
+            EMPTY STATE
+        ========================= */}
+
+        {applications.length === 0 ? (
+          <div className="jobseeker-applications-empty">
+
+            <div className="jobseeker-empty-icon">
+              <Briefcase size={42} />
+            </div>
+
+            <h2>No Applications Yet</h2>
+
+            <p>
               You haven't applied for any jobs yet.
+              Start exploring opportunities and submit
+              your first application.
             </p>
 
             <Link
               to="/jobs"
-              className="inline-flex items-center gap-2 mt-8 bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-xl font-semibold transition"
+              className="jobseeker-empty-button"
             >
-              <Briefcase size={18} />
+              <Search size={18} />
               Browse Jobs
             </Link>
+
           </div>
         ) : (
-          /* Applications */
-          <div className="space-y-6">
+
+          /* =========================
+             APPLICATION LIST
+          ========================= */
+
+          <div className="jobseeker-applications-list">
+
             {applications.map((application) => {
+
               const job = application.job;
 
               if (!job) {
@@ -127,148 +230,192 @@ function MyApplications() {
               }
 
               return (
-                <div
+                <article
                   key={application._id}
-                  className="bg-white rounded-3xl shadow-md hover:shadow-xl transition-all duration-300 p-7 md:p-8 border border-slate-100"
+                  className="jobseeker-application-card"
                 >
-                  {/* Top */}
-                  <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-5">
 
-                    <div>
-                      <h2 className="text-2xl md:text-3xl font-bold text-slate-900">
-                        {job.title}
-                      </h2>
+                  {/* =========================
+                      TOP
+                  ========================= */}
 
-                      {/* Company */}
-                      <div className="flex items-center gap-2 text-gray-600 mt-4">
-                        <Building2
-                          size={18}
-                          className="text-blue-500"
-                        />
+                  <div className="jobseeker-application-top">
 
-                        <span className="font-medium">
-                          {job.company?.companyName || "Company"}
-                        </span>
+                    <div className="jobseeker-application-title">
+
+                      <div className="jobseeker-job-icon">
+                        <Briefcase size={25} />
                       </div>
+
+                      <div>
+                        <h2>
+                          {job.title}
+                        </h2>
+
+                        <div className="jobseeker-company-name">
+                          <Building2 size={17} />
+
+                          <span>
+                            {job.company?.companyName ||
+                              "Company"}
+                          </span>
+                        </div>
+                      </div>
+
                     </div>
 
                     {/* Status */}
-                    <span
-                      className={`inline-flex w-fit px-4 py-2 rounded-full text-sm font-bold ${
-                        application.status === "accepted"
-                          ? "bg-green-100 text-green-700"
-                          : application.status === "rejected"
-                          ? "bg-red-100 text-red-700"
-                          : "bg-yellow-100 text-yellow-700"
-                      }`}
-                    >
-                      {application.status}
-                    </span>
+                    <ApplicationStatus
+                      status={application.status}
+                    />
+
                   </div>
 
-                  {/* Job Information */}
-                  <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-7">
+                  {/* =========================
+                      JOB DETAILS
+                  ========================= */}
+
+                  <div className="jobseeker-application-details">
 
                     {/* Location */}
-                    <div className="flex items-center gap-3">
-                      <MapPin
-                        size={19}
-                        className="text-orange-500"
-                      />
-
-                      <div>
-                        <p className="text-xs text-gray-400">
-                          Location
-                        </p>
-
-                        <p className="font-medium text-slate-700">
-                          {job.location}
-                        </p>
-                      </div>
-                    </div>
+                    <ApplicationDetail
+                      icon={<MapPin size={19} />}
+                      label="Location"
+                      value={job.location}
+                      type="location"
+                    />
 
                     {/* Salary */}
-                    <div className="flex items-center gap-3">
-                      <DollarSign
-                        size={19}
-                        className="text-green-600"
-                      />
-
-                      <div>
-                        <p className="text-xs text-gray-400">
-                          Salary
-                        </p>
-
-                        <p className="font-medium text-slate-700">
-                          ETB {job.salary}
-                        </p>
-                      </div>
-                    </div>
+                    <ApplicationDetail
+                      icon={<DollarSign size={19} />}
+                      label="Salary"
+                      value={
+                        job.salary
+                          ? `ETB ${job.salary}`
+                          : "Negotiable"
+                      }
+                      type="salary"
+                    />
 
                     {/* Job Type */}
-                    <div className="flex items-center gap-3">
-                      <Briefcase
-                        size={19}
-                        className="text-indigo-500"
-                      />
-
-                      <div>
-                        <p className="text-xs text-gray-400">
-                          Job Type
-                        </p>
-
-                        <p className="font-medium text-slate-700">
-                          {job.jobType}
-                        </p>
-                      </div>
-                    </div>
+                    <ApplicationDetail
+                      icon={<Briefcase size={19} />}
+                      label="Job Type"
+                      value={job.jobType || "Not provided"}
+                      type="type"
+                    />
 
                     {/* Applied Date */}
-                    <div className="flex items-center gap-3">
-                      <Calendar
-                        size={19}
-                        className="text-sky-500"
-                      />
+                    <ApplicationDetail
+                      icon={<Calendar size={19} />}
+                      label="Applied"
+                      value={
+                        application.createdAt
+                          ? new Date(
+                              application.createdAt
+                            ).toLocaleDateString()
+                          : "Not provided"
+                      }
+                      type="date"
+                    />
 
-                      <div>
-                        <p className="text-xs text-gray-400">
-                          Applied
-                        </p>
-
-                        <p className="font-medium text-slate-700">
-                          {new Date(
-                            application.createdAt
-                          ).toLocaleDateString()}
-                        </p>
-                      </div>
-                    </div>
                   </div>
 
-                  {/* Footer */}
-                  <div className="border-t border-slate-100 mt-7 pt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                  {/* =========================
+                      FOOTER
+                  ========================= */}
 
-                    <p className="text-gray-500 text-sm">
-                      Application ID:{" "}
-                      <span className="font-medium text-slate-600">
+                  <div className="jobseeker-application-footer">
+
+                    <div className="jobseeker-application-id">
+                      <span>Application ID</span>
+
+                      <strong>
                         {application._id}
-                      </span>
-                    </p>
+                      </strong>
+                    </div>
 
                     <Link
-                      to={`/jobs/${job._id}`}
-                      className="inline-flex items-center justify-center gap-2 bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-xl font-semibold transition"
-                    >
+  to={`/jobseeker/jobs/${job._id}`}
+  className="jobseeker-view-job-button"
+>
                       <Eye size={18} />
                       View Job
                     </Link>
+
                   </div>
-                </div>
+
+                </article>
               );
             })}
+
           </div>
         )}
+
       </div>
     </section>
+  );
+}
+
+/* =========================================================
+   APPLICATION STATUS
+========================================================= */
+
+function ApplicationStatus({ status }) {
+  const normalizedStatus = status?.toLowerCase() || "pending";
+
+  if (normalizedStatus === "accepted") {
+    return (
+      <span className="jobseeker-application-status accepted">
+        <CheckCircle size={16} />
+        Accepted
+      </span>
+    );
+  }
+
+  if (normalizedStatus === "rejected") {
+    return (
+      <span className="jobseeker-application-status rejected">
+        <XCircle size={16} />
+        Rejected
+      </span>
+    );
+  }
+
+  return (
+    <span className="jobseeker-application-status pending">
+      <Clock size={16} />
+      Pending
+    </span>
+  );
+}
+
+/* =========================================================
+   APPLICATION DETAIL
+========================================================= */
+
+function ApplicationDetail({
+  icon,
+  label,
+  value,
+  type,
+}) {
+  return (
+    <div className="jobseeker-application-detail">
+
+      <div className={`application-detail-icon ${type}`}>
+        {icon}
+      </div>
+
+      <div>
+        <span>{label}</span>
+
+        <strong>
+          {value || "Not provided"}
+        </strong>
+      </div>
+
+    </div>
   );
 }
 

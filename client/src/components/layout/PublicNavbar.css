@@ -1,0 +1,498 @@
+/* =========================================================
+   PUBLIC NAVBAR
+========================================================= */
+
+.public-navbar {
+  position: relative;
+  z-index: 1000;
+  width: 100%;
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+  box-shadow: 0 2px 12px rgba(15, 23, 42, 0.05);
+}
+
+/* =========================================================
+   NAVBAR CONTAINER
+========================================================= */
+
+.public-navbar-container {
+  width: 100%;
+  max-width: 1280px;
+  min-height: 82px;
+  margin: 0 auto;
+  padding: 0 24px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+/* =========================================================
+   LOGO
+========================================================= */
+
+.public-navbar-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+
+  flex-shrink: 0;
+  color: #0f172a;
+}
+
+.public-navbar-logo:hover {
+  color: #0f172a;
+}
+
+.public-navbar-logo-icon {
+  width: 48px;
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 14px;
+
+  background: linear-gradient(
+    135deg,
+    #f97316,
+    #f59e0b
+  );
+
+  box-shadow:
+    0 6px 16px rgba(245, 158, 11, 0.25);
+}
+
+.public-navbar-logo-icon span {
+  color: #ffffff;
+  font-size: 25px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.public-navbar-brand {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.public-navbar-brand h1 {
+  margin: 0;
+
+  color: #0f172a;
+
+  font-size: 23px;
+  line-height: 1.15;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+}
+
+.public-navbar-brand p {
+  margin: 4px 0 0;
+
+  color: #64748b;
+
+  font-size: 11px;
+  line-height: 1.2;
+  font-weight: 500;
+}
+
+/* =========================================================
+   DESKTOP NAVIGATION
+========================================================= */
+
+.public-navbar-menu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 34px;
+
+  margin-left: auto;
+}
+
+.public-navbar-link {
+  position: relative;
+
+  display: inline-flex;
+  align-items: center;
+
+  padding: 29px 0;
+
+  color: #475569;
+
+  font-size: 15px;
+  font-weight: 700;
+
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.public-navbar-link::after {
+  content: "";
+
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 19px;
+
+  height: 3px;
+
+  border-radius: 999px;
+
+  background: #f59e0b;
+
+  transform: scaleX(0);
+  transform-origin: center;
+
+  transition: transform 0.2s ease;
+}
+
+.public-navbar-link:hover {
+  color: #f59e0b;
+}
+
+.public-navbar-link:hover::after,
+.public-navbar-link.active::after {
+  transform: scaleX(1);
+}
+
+.public-navbar-link.active {
+  color: #f59e0b;
+}
+
+/* =========================================================
+   RIGHT ACTIONS
+========================================================= */
+
+.public-navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+
+  flex-shrink: 0;
+}
+
+.public-navbar-login {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 11px 8px;
+
+  color: #334155;
+
+  font-size: 15px;
+  font-weight: 700;
+
+  transition: color 0.2s ease;
+}
+
+.public-navbar-login:hover {
+  color: #f59e0b;
+}
+
+.public-navbar-register {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 105px;
+
+  padding: 11px 20px;
+
+  border-radius: 10px;
+
+  background: #f59e0b;
+  color: #ffffff;
+
+  font-size: 15px;
+  font-weight: 700;
+
+  box-shadow:
+    0 5px 14px rgba(245, 158, 11, 0.2);
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.public-navbar-register:hover {
+  background: #d97706;
+  color: #ffffff;
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 8px 18px rgba(245, 158, 11, 0.3);
+}
+
+/* =========================================================
+   LOGGED-IN USER
+========================================================= */
+
+.public-navbar-user {
+  max-width: 180px;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  color: #334155;
+
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.public-navbar-logout {
+  padding: 11px 18px;
+
+  border: none;
+  border-radius: 10px;
+
+  background: #ef4444;
+  color: #ffffff;
+
+  font-size: 15px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.public-navbar-logout:hover {
+  background: #dc2626;
+  transform: translateY(-2px);
+}
+
+/* =========================================================
+   MOBILE BUTTON
+========================================================= */
+
+.public-navbar-mobile-button {
+  display: none;
+
+  width: 44px;
+  height: 44px;
+
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+
+  background: #ffffff;
+  color: #334155;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.public-navbar-mobile-button:hover {
+  background: #f8fafc;
+  color: #f59e0b;
+}
+
+/* =========================================================
+   MOBILE MENU
+========================================================= */
+
+.public-navbar-mobile-menu {
+  display: none;
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+  .public-navbar-container {
+    gap: 20px;
+  }
+
+  .public-navbar-menu {
+    gap: 20px;
+  }
+
+  .public-navbar-actions {
+    gap: 10px;
+  }
+
+  .public-navbar-brand h1 {
+    font-size: 21px;
+  }
+
+  .public-navbar-brand p {
+    font-size: 10px;
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 768px) {
+  .public-navbar-container {
+    min-height: 72px;
+    padding: 0 18px;
+  }
+
+  .public-navbar-logo-icon {
+    width: 43px;
+    height: 43px;
+    border-radius: 12px;
+  }
+
+  .public-navbar-logo-icon span {
+    font-size: 22px;
+  }
+
+  .public-navbar-brand h1 {
+    font-size: 20px;
+  }
+
+  .public-navbar-brand p {
+    font-size: 9px;
+  }
+
+  .public-navbar-menu,
+  .public-navbar-actions {
+    display: none;
+  }
+
+  .public-navbar-mobile-button {
+    display: inline-flex;
+  }
+
+  .public-navbar-mobile-menu {
+    display: flex;
+    flex-direction: column;
+
+    padding: 10px 18px 20px;
+
+    border-top: 1px solid #f1f5f9;
+
+    background: #ffffff;
+
+    box-shadow:
+      0 8px 20px rgba(15, 23, 42, 0.08);
+  }
+
+  .public-navbar-mobile-link {
+    display: block;
+
+    padding: 14px 12px;
+
+    border-radius: 8px;
+
+    color: #475569;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    transition:
+      background 0.2s ease,
+      color 0.2s ease;
+  }
+
+  .public-navbar-mobile-link:hover {
+    background: #fff7ed;
+    color: #f59e0b;
+  }
+
+  .public-navbar-mobile-link.active {
+    background: #fff7ed;
+    color: #f59e0b;
+  }
+
+  .public-navbar-mobile-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    margin-top: 10px;
+    padding-top: 15px;
+
+    border-top: 1px solid #e2e8f0;
+  }
+
+  .public-navbar-mobile-login,
+  .public-navbar-mobile-register,
+  .public-navbar-mobile-logout {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 12px 16px;
+
+    border-radius: 9px;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    text-align: center;
+  }
+
+  .public-navbar-mobile-login {
+    background: #f8fafc;
+    color: #334155;
+    border: 1px solid #e2e8f0;
+  }
+
+  .public-navbar-mobile-register {
+    background: #f59e0b;
+    color: #ffffff;
+  }
+
+  .public-navbar-mobile-user {
+    padding: 10px 12px;
+
+    color: #334155;
+
+    font-size: 15px;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  .public-navbar-mobile-logout {
+    border: none;
+
+    background: #ef4444;
+    color: #ffffff;
+
+    cursor: pointer;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+  .public-navbar-container {
+    padding: 0 14px;
+  }
+
+  .public-navbar-brand h1 {
+    font-size: 18px;
+  }
+
+  .public-navbar-brand p {
+    display: none;
+  }
+
+  .public-navbar-logo {
+    gap: 9px;
+  }
+}

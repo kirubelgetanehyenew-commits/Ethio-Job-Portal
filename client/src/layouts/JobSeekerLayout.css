@@ -1,0 +1,94 @@
+/* =========================================================
+   JOB SEEKER LAYOUT
+========================================================= */
+
+.jobseeker-layout {
+  min-height: 100vh;
+
+  background: #f8fafc;
+}
+
+
+/* =========================================================
+   MAIN CONTENT
+========================================================= */
+
+.jobseeker-main {
+  min-height: 100vh;
+
+  margin-left: 260px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.jobseeker-content {
+  flex: 1;
+
+  min-width: 0;
+}
+
+
+/* =========================================================
+   MOBILE HEADER
+========================================================= */
+
+.jobseeker-mobile-header {
+  display: none;
+
+  height: 64px;
+
+  padding: 0 18px;
+
+  background: #ffffff;
+
+  border-bottom: 1px solid #e5e7eb;
+
+  align-items: center;
+
+  gap: 14px;
+}
+
+.jobseeker-mobile-menu {
+  width: 40px;
+  height: 40px;
+
+  border: none;
+
+  border-radius: 10px;
+
+  background: #eff6ff;
+
+  color: #2563eb;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+}
+
+.jobseeker-mobile-title {
+  font-size: 18px;
+
+  font-weight: 800;
+
+  color: #0f172a;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .jobseeker-main {
+    margin-left: 0;
+  }
+
+  .jobseeker-mobile-header {
+    display: flex;
+  }
+
+}

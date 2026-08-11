@@ -1,0 +1,259 @@
+/* =========================================
+   ETHIO JOB PORTAL FOOTER
+   ========================================= */
+
+.ethio-footer {
+  width: 100%;
+  background: #07111f;
+  color: #ffffff;
+  border-top: 1px solid #1e293b;
+}
+
+/* Main container */
+
+.ethio-footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 70px 30px;
+
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  gap: 60px;
+}
+
+/* =========================================
+   BRAND
+   ========================================= */
+
+.footer-brand-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.footer-logo {
+  width: 52px;
+  height: 52px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 15px;
+
+  background: linear-gradient(
+    135deg,
+    #f97316,
+    #f59e0b
+  );
+
+  color: white;
+  font-size: 22px;
+  font-weight: 900;
+
+  box-shadow:
+    0 8px 25px rgba(249, 115, 22, 0.25);
+}
+
+.footer-brand-header h2 {
+  margin: 0;
+
+  font-size: 21px;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.footer-brand-header p {
+  margin: 4px 0 0;
+
+  font-size: 13px;
+  color: #94a3b8;
+}
+
+.footer-description {
+  max-width: 380px;
+
+  margin: 0;
+
+  color: #94a3b8;
+
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+/* =========================================
+   COLUMNS
+   ========================================= */
+
+.footer-column h3 {
+  margin: 0 0 22px;
+
+  font-size: 17px;
+  font-weight: 700;
+
+  color: #ffffff;
+}
+
+/* =========================================
+   LINKS
+   ========================================= */
+
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.footer-links a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  color: #94a3b8;
+
+  text-decoration: none;
+
+  font-size: 14px;
+
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.footer-links a:hover {
+  color: #f97316;
+  transform: translateX(4px);
+}
+
+.footer-links svg {
+  width: 17px;
+  height: 17px;
+}
+
+/* =========================================
+   CONTACT
+   ========================================= */
+
+.footer-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.footer-contact div {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+
+  color: #94a3b8;
+
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.footer-contact svg {
+  width: 18px;
+  height: 18px;
+
+  flex-shrink: 0;
+
+  color: #f97316;
+
+  margin-top: 2px;
+}
+
+/* =========================================
+   BOTTOM FOOTER
+   ========================================= */
+
+.footer-bottom {
+  max-width: 1200px;
+
+  margin: 0 auto;
+
+  padding: 25px 30px;
+
+  border-top: 1px solid #1e293b;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+}
+
+.footer-bottom p {
+  margin: 0;
+
+  color: #64748b;
+
+  font-size: 13px;
+}
+
+.footer-bottom-links {
+  display: flex;
+  align-items: center;
+
+  gap: 28px;
+}
+
+.footer-bottom-links a {
+  color: #64748b;
+
+  text-decoration: none;
+
+  font-size: 13px;
+
+  transition: color 0.2s ease;
+}
+
+.footer-bottom-links a:hover {
+  color: #f97316;
+}
+
+/* =========================================
+   TABLET
+   ========================================= */
+
+@media (max-width: 900px) {
+
+  .ethio-footer-container {
+    grid-template-columns: 1fr 1fr;
+
+    gap: 45px;
+  }
+
+}
+
+/* =========================================
+   MOBILE
+   ========================================= */
+
+@media (max-width: 600px) {
+
+  .ethio-footer-container {
+    grid-template-columns: 1fr;
+
+    padding: 50px 22px;
+
+    gap: 40px;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+
+    text-align: center;
+
+    padding: 22px;
+  }
+
+  .footer-bottom-links {
+    flex-wrap: wrap;
+
+    justify-content: center;
+
+    gap: 20px;
+  }
+
+}
