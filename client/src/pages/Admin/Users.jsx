@@ -1,9 +1,11 @@
 import DashboardHeader from "../../components/dashboard/admin/DashboardHeader";
 import UsersTable from "../../components/dashboard/admin/UsersTable";
 
+import "./Users.css";
+
 function Users() {
   return (
-    <div className="space-y-8">
+    <div className="admin-users-page">
 
       <DashboardHeader
         title="Manage Users"

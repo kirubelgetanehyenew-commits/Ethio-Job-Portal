@@ -45,19 +45,18 @@ import Profile from "./pages/JobSeeker/Profile";
 import AdminDashboard from "./pages/Admin/Dashboard";
 import Users from "./pages/Admin/Users";
 import Analytics from "./pages/Admin/Analytics";
+import Applications from "./pages/Admin/Applications";
 
 // =========================
 // Admin Components
 // =========================
 import JobsTable from "./components/dashboard/admin/JobsTable";
 import CompaniesTable from "./components/dashboard/admin/CompaniesTable";
-import Applications from "./pages/Admin/Applications";
 
 // =========================
 // Protected Route
 // =========================
 import ProtectedRoute from "./routes/ProtectedRoute";
-
 
 function App() {
   return (
@@ -69,31 +68,37 @@ function App() {
 
       <Route element={<PublicLayout />}>
 
+        {/* Home */}
         <Route
           path="/"
           element={<Home />}
         />
 
+        {/* Public Jobs */}
         <Route
           path="/jobs"
           element={<Jobs />}
         />
 
+        {/* Public Job Details */}
         <Route
           path="/jobs/:id"
           element={<JobDetails />}
         />
 
+        {/* Public Companies */}
         <Route
           path="/companies"
           element={<Companies />}
         />
 
+        {/* Login */}
         <Route
           path="/login"
           element={<Login />}
         />
 
+        {/* Register */}
         <Route
           path="/register"
           element={<Register />}
@@ -114,50 +119,61 @@ function App() {
         }
       >
 
-
+        {/* Employer Dashboard */}
         <Route
           path="/employer/dashboard"
           element={<EmployerDashboard />}
         />
 
+        {/* Create Company */}
         <Route
           path="/employer/create-company"
           element={<CreateCompany />}
         />
 
+        {/* My Companies */}
         <Route
           path="/employer/my-companies"
           element={<MyCompanies />}
         />
 
+        {/* Edit Company */}
         <Route
           path="/employer/edit-company/:id"
           element={<EditCompany />}
         />
 
+        {/* Company Jobs */}
         <Route
           path="/employer/company-jobs/:companyId"
           element={<CompanyJobs />}
         />
-        <Route
-  path="/employer/my-jobs"
-  element={<MyJobs />}
-/>
-<Route
-  path="/employer/jobs/:id"
-  element={<EmployerJobDetails />}
-/>
 
+        {/* My Jobs */}
+        <Route
+          path="/employer/my-jobs"
+          element={<MyJobs />}
+        />
+
+        {/* Employer Job Details */}
+        <Route
+          path="/employer/jobs/:id"
+          element={<EmployerJobDetails />}
+        />
+
+        {/* Create Job */}
         <Route
           path="/employer/create-job"
           element={<CreateJob />}
         />
 
+        {/* Edit Job */}
         <Route
           path="/employer/edit-job/:id"
           element={<EditJob />}
         />
 
+        {/* Applicants */}
         <Route
           path="/employer/applicants/:jobId"
           element={<Applicants />}
@@ -178,26 +194,37 @@ function App() {
         }
       >
 
+        {/* Job Seeker Dashboard */}
         <Route
           path="/jobseeker/dashboard"
           element={<Dashboard />}
         />
 
+        {/* Job Seeker Profile */}
         <Route
           path="/jobseeker/profile"
           element={<Profile />}
         />
 
+        {/* Job Seeker Jobs */}
         <Route
           path="/jobseeker/jobs"
           element={<Jobs />}
         />
 
+        {/* Job Seeker Job Details */}
         <Route
           path="/jobseeker/jobs/:id"
           element={<JobDetails />}
         />
 
+        {/* Job Seeker Companies */}
+        <Route
+          path="/jobseeker/companies"
+          element={<Companies />}
+        />
+
+        {/* Job Seeker Applications */}
         <Route
           path="/my-applications"
           element={<MyApplications />}
@@ -245,7 +272,7 @@ function App() {
         {/* Admin Applications */}
         <Route
           path="/admin/applications"
-          element={<Applications  />}
+          element={<Applications />}
         />
 
         {/* Admin Analytics */}

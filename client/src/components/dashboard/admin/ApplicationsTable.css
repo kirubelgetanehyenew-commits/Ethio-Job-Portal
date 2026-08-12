@@ -1,0 +1,503 @@
+/* =========================================================
+   APPLICATIONS TABLE
+========================================================= */
+
+.applications-table-container {
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 8px 30px rgba(15, 23, 42, 0.06);
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.applications-table-header {
+  padding: 24px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  border-bottom: 1px solid #eef2f7;
+}
+
+.applications-table-title {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.applications-table-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #fff7ed;
+  color: #ea580c;
+
+  flex-shrink: 0;
+}
+
+.applications-table-title h2 {
+  margin: 0;
+
+  font-size: 21px;
+  font-weight: 800;
+
+  color: #0f172a;
+}
+
+.applications-table-title p {
+  margin: 5px 0 0;
+
+  font-size: 13px;
+
+  color: #64748b;
+}
+
+.applications-count {
+  padding: 9px 14px;
+
+  border-radius: 10px;
+
+  background: #f8fafc;
+
+  color: #475569;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   CONTROLS
+========================================================= */
+
+.applications-controls {
+  padding: 20px 28px;
+
+  border-bottom: 1px solid #eef2f7;
+
+  background: #ffffff;
+}
+
+.applications-search {
+  width: 100%;
+  max-width: 430px;
+
+  height: 44px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 0 14px;
+
+  border: 1px solid #dbe2ea;
+
+  border-radius: 12px;
+
+  background: #ffffff;
+
+  color: #94a3b8;
+
+  transition: border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.applications-search:focus-within {
+  border-color: #f97316;
+
+  box-shadow:
+    0 0 0 3px rgba(249, 115, 22, 0.12);
+}
+
+.applications-search input {
+  width: 100%;
+
+  border: none;
+  outline: none;
+
+  background: transparent;
+
+  font-size: 14px;
+
+  color: #0f172a;
+}
+
+.applications-search input::placeholder {
+  color: #94a3b8;
+}
+
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+.applications-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.applications-table {
+  width: 100%;
+  min-width: 950px;
+
+  border-collapse: collapse;
+}
+
+.applications-table thead {
+  background: #f8fafc;
+}
+
+.applications-table th {
+  padding: 15px 22px;
+
+  text-align: left;
+
+  font-size: 11px;
+
+  font-weight: 800;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.06em;
+
+  color: #64748b;
+
+  white-space: nowrap;
+}
+
+.applications-table td {
+  padding: 18px 22px;
+
+  border-top: 1px solid #eef2f7;
+
+  vertical-align: middle;
+}
+
+.applications-table tbody tr {
+  transition:
+    background 0.2s ease;
+}
+
+.applications-table tbody tr:hover {
+  background: #fffaf5;
+}
+
+
+/* =========================================================
+   APPLICANT
+========================================================= */
+
+.application-applicant {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  min-width: 220px;
+}
+
+.application-avatar {
+  width: 42px;
+  height: 42px;
+
+  border-radius: 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #fff7ed;
+
+  color: #ea580c;
+
+  flex-shrink: 0;
+}
+
+.application-applicant-info {
+  display: flex;
+  flex-direction: column;
+
+  gap: 5px;
+
+  min-width: 0;
+}
+
+.application-applicant-info strong {
+  color: #0f172a;
+
+  font-size: 14px;
+  font-weight: 750;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.application-applicant-info span {
+  display: flex;
+  align-items: center;
+
+  gap: 5px;
+
+  color: #64748b;
+
+  font-size: 12px;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   JOB
+========================================================= */
+
+.application-job {
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+
+  min-width: 180px;
+
+  color: #2563eb;
+}
+
+.application-job strong {
+  color: #334155;
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   LOCATION
+========================================================= */
+
+.application-location {
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
+  color: #64748b;
+
+  font-size: 13px;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.application-status {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 7px 11px;
+
+  border-radius: 999px;
+
+  font-size: 11px;
+
+  font-weight: 800;
+
+  text-transform: capitalize;
+
+  white-space: nowrap;
+}
+
+.application-status.accepted {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.application-status.rejected {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.application-status.reviewing {
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+.application-status.pending {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.application-status.default {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+
+/* =========================================================
+   DATE
+========================================================= */
+
+.application-date {
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
+  color: #64748b;
+
+  font-size: 13px;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   DELETE BUTTON
+========================================================= */
+
+.application-delete-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  padding: 9px 13px;
+
+  border: 1px solid #fecaca;
+
+  border-radius: 10px;
+
+  background: #fff1f2;
+
+  color: #dc2626;
+
+  font-size: 12px;
+  font-weight: 750;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.application-delete-button:hover {
+  background: #dc2626;
+
+  color: #ffffff;
+
+  border-color: #dc2626;
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   LOADING / EMPTY STATES
+========================================================= */
+
+.applications-state {
+  padding: 70px 24px;
+
+  text-align: center;
+
+  color: #64748b;
+}
+
+.applications-loader,
+.applications-empty-icon {
+  width: 64px;
+  height: 64px;
+
+  margin: 0 auto 18px;
+
+  border-radius: 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #fff7ed;
+
+  color: #f97316;
+}
+
+.applications-state h3 {
+  margin: 0;
+
+  font-size: 18px;
+  font-weight: 800;
+
+  color: #0f172a;
+}
+
+.applications-state p {
+  margin: 7px 0 0;
+
+  font-size: 14px;
+
+  color: #64748b;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 900px) {
+  .applications-table-header {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+  .applications-count {
+    align-self: flex-start;
+  }
+
+  .applications-controls {
+    padding: 18px;
+  }
+
+  .applications-table th,
+  .applications-table td {
+    padding: 15px 16px;
+  }
+}
+
+@media (max-width: 600px) {
+  .applications-table-title h2 {
+    font-size: 18px;
+  }
+
+  .applications-table-title p {
+    font-size: 12px;
+  }
+
+  .applications-table-header {
+    padding: 20px;
+  }
+
+  .applications-search {
+    max-width: none;
+  }
+}

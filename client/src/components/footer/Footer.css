@@ -1,0 +1,201 @@
+.jobseeker-footer {
+  width: 100%;
+  margin-top: 60px;
+  background: linear-gradient(
+    135deg,
+    #071a16,
+    #0b2a23,
+    #06352b
+  );
+  color: #d8eee8;
+}
+
+.jobseeker-footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 65px 30px;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 70px;
+}
+
+/* =========================
+   BRAND
+========================= */
+
+.jobseeker-footer-brand-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.jobseeker-footer-logo {
+  width: 55px;
+  height: 55px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: linear-gradient(
+    135deg,
+    #10b981,
+    #059669
+  );
+
+  color: white;
+  font-size: 25px;
+  font-weight: 800;
+
+  box-shadow: 0 10px 25px rgba(16, 185, 129, 0.25);
+}
+
+.jobseeker-footer-brand h2 {
+  margin: 0;
+  color: white;
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.jobseeker-footer-brand-header p {
+  margin: 3px 0 0;
+  color: #91b8ad;
+  font-size: 14px;
+}
+
+.jobseeker-footer-description {
+  max-width: 430px;
+  margin-top: 25px;
+  line-height: 1.8;
+  color: #9fc0b7;
+}
+
+
+/* =========================
+   NAVIGATION
+========================= */
+
+.jobseeker-footer-navigation h3,
+.jobseeker-footer-information h3 {
+  margin: 0 0 22px;
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.jobseeker-footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+
+.jobseeker-footer-links a {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+
+  width: fit-content;
+
+  color: #a9c8c0;
+  text-decoration: none;
+
+  font-size: 15px;
+  font-weight: 500;
+
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.jobseeker-footer-links a:hover {
+  color: #34d399;
+  transform: translateX(5px);
+}
+
+.jobseeker-footer-links svg {
+  color: #10b981;
+}
+
+
+/* =========================
+   INFORMATION
+========================= */
+
+.jobseeker-footer-information p {
+  max-width: 300px;
+  margin: 0;
+
+  color: #9fc0b7;
+  line-height: 1.8;
+  font-size: 15px;
+}
+
+
+/* =========================
+   BOTTOM
+========================= */
+
+.jobseeker-footer-bottom {
+  max-width: 1200px;
+  margin: 0 auto;
+
+  padding: 22px 30px;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+}
+
+.jobseeker-footer-bottom p {
+  margin: 0;
+  color: #789b91;
+  font-size: 14px;
+}
+
+.jobseeker-footer-bottom span {
+  color: #34d399;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 900px) {
+
+  .jobseeker-footer-container {
+    grid-template-columns: 1fr 1fr;
+    gap: 45px;
+  }
+
+  .jobseeker-footer-brand {
+    grid-column: 1 / -1;
+  }
+}
+
+
+@media (max-width: 600px) {
+
+  .jobseeker-footer-container {
+    grid-template-columns: 1fr;
+    padding: 45px 22px;
+    gap: 40px;
+  }
+
+  .jobseeker-footer-brand {
+    grid-column: auto;
+  }
+
+  .jobseeker-footer-bottom {
+    padding: 20px 22px;
+
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

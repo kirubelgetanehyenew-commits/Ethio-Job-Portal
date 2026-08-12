@@ -1,0 +1,25 @@
+/* =========================================================
+   ADMIN USERS PAGE
+========================================================= */
+
+.admin-users-page {
+  width: 100%;
+  min-height: 100%;
+  padding: 4px 0 30px;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 900px) {
+  .admin-users-page {
+    padding-bottom: 24px;
+  }
+}
+
+@media (max-width: 600px) {
+  .admin-users-page {
+    padding-bottom: 18px;
+  }
+}

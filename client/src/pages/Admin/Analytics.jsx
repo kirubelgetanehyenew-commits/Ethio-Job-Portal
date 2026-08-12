@@ -8,9 +8,12 @@ import {
   Clock,
   CheckCircle,
   XCircle,
+  TrendingUp,
+  Activity,
 } from "lucide-react";
 
 import adminService from "../../services/adminService";
+import "./Analytics.css";
 
 function Analytics() {
   const [stats, setStats] = useState({
@@ -24,6 +27,7 @@ function Analytics() {
 
   const [applications, setApplications] = useState([]);
   const [jobs, setJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     loadAnalytics();
@@ -31,20 +35,28 @@ function Analytics() {
 
   const loadAnalytics = async () => {
     try {
+      setLoading(true);
+
       const statsData = await adminService.getDashboardStats();
       const applicationsData =
         await adminService.getAllApplications();
-      const jobsData = await adminService.getAllJobs();
+      const jobsData =
+        await adminService.getAllJobs();
 
-      setStats(statsData.statistics);
+      setStats(statsData.statistics || {});
       setApplications(applicationsData.applications || []);
       setJobs(jobsData.jobs || []);
     } catch (error) {
       console.error("Failed to load analytics:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
-  // Application status counts
+  /* =====================================================
+     APPLICATION STATUS
+  ===================================================== */
+
   const pendingApplications = applications.filter(
     (application) =>
       application.status?.toLowerCase() === "pending"
@@ -60,7 +72,24 @@ function Analytics() {
       application.status?.toLowerCase() === "rejected"
   ).length;
 
-  // Job type counts
+  const totalApplications = stats.totalApplications || 0;
+
+  const pendingPercentage = totalApplications
+    ? (pendingApplications / totalApplications) * 100
+    : 0;
+
+  const acceptedPercentage = totalApplications
+    ? (acceptedApplications / totalApplications) * 100
+    : 0;
+
+  const rejectedPercentage = totalApplications
+    ? (rejectedApplications / totalApplications) * 100
+    : 0;
+
+  /* =====================================================
+     JOB TYPES
+  ===================================================== */
+
   const fullTimeJobs = jobs.filter(
     (job) => job.jobType === "Full-time"
   ).length;
@@ -77,282 +106,443 @@ function Analytics() {
     (job) => job.jobType === "Internship"
   ).length;
 
+  const jobTypes = [
+    {
+      name: "Full-time",
+      value: fullTimeJobs,
+      className: "full-time",
+    },
+    {
+      name: "Part-time",
+      value: partTimeJobs,
+      className: "part-time",
+    },
+    {
+      name: "Contract",
+      value: contractJobs,
+      className: "contract",
+    },
+    {
+      name: "Internship",
+      value: internshipJobs,
+      className: "internship",
+    },
+  ];
+
+  /* =====================================================
+     STAT CARDS
+  ===================================================== */
+
+  const statisticCards = [
+    {
+      title: "Total Users",
+      value: stats.totalUsers,
+      description: "Registered accounts",
+      icon: Users,
+      className: "analytics-blue",
+    },
+    {
+      title: "Employers",
+      value: stats.totalEmployers,
+      description: "Active employers",
+      icon: Briefcase,
+      className: "analytics-green",
+    },
+    {
+      title: "Job Seekers",
+      value: stats.totalJobSeekers,
+      description: "Looking for opportunities",
+      icon: UserCheck,
+      className: "analytics-purple",
+    },
+    {
+      title: "Companies",
+      value: stats.totalCompanies,
+      description: "Registered companies",
+      icon: Building2,
+      className: "analytics-orange",
+    },
+    {
+      title: "Jobs",
+      value: stats.totalJobs,
+      description: "Published positions",
+      icon: Briefcase,
+      className: "analytics-cyan",
+    },
+    {
+      title: "Applications",
+      value: stats.totalApplications,
+      description: "Submitted applications",
+      icon: FileText,
+      className: "analytics-red",
+    },
+  ];
+
   return (
-    <div className="space-y-8">
+    <div className="analytics-page">
 
-      {/* Page Header */}
-      <div>
-        <h1 className="text-4xl font-bold text-slate-800">
-          Analytics Dashboard
-        </h1>
+      {/* =================================================
+          HEADER
+      ================================================= */}
 
-        <p className="text-slate-500 mt-2">
-          Monitor users, jobs, companies and application activity.
-        </p>
-      </div>
+      <section className="analytics-hero">
 
-      {/* Main Statistics */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="analytics-hero-content">
 
-        {/* Users */}
-        <div className="bg-blue-100 rounded-2xl p-6 flex items-center justify-between">
+          <div className="analytics-hero-icon">
+            <TrendingUp size={30} />
+          </div>
+
           <div>
-            <p className="text-slate-600 text-lg">
-              Users
+            <p className="analytics-label">
+              ADMINISTRATION
             </p>
 
-            <p className="text-4xl font-bold text-slate-800 mt-2">
-              {stats.totalUsers}
+            <h1>
+              Analytics Overview
+            </h1>
+
+            <p className="analytics-subtitle">
+              Monitor the performance and activity of
+              your Ethio Job Portal.
             </p>
           </div>
 
-          <Users
-            size={42}
-            className="text-blue-600"
-          />
         </div>
 
-        {/* Employers */}
-        <div className="bg-green-100 rounded-2xl p-6 flex items-center justify-between">
-          <div>
-            <p className="text-slate-600 text-lg">
-              Employers
-            </p>
+        <div className="analytics-live">
 
-            <p className="text-4xl font-bold text-slate-800 mt-2">
-              {stats.totalEmployers}
-            </p>
+          <span className="live-dot"></span>
+
+          <span>
+            System Active
+          </span>
+
+        </div>
+
+      </section>
+
+
+      {/* =================================================
+          STATISTICS
+      ================================================= */}
+
+      <section className="analytics-stat-grid">
+
+        {statisticCards.map((card) => {
+          const Icon = card.icon;
+
+          return (
+            <div
+              key={card.title}
+              className={`analytics-stat-card ${card.className}`}
+            >
+
+              <div className="analytics-stat-top">
+
+                <div className="analytics-stat-icon">
+                  <Icon size={25} />
+                </div>
+
+                <Activity size={18} className="activity-icon" />
+
+              </div>
+
+              <div className="analytics-stat-value">
+
+                {loading ? (
+                  <span className="analytics-loading">
+                    ...
+                  </span>
+                ) : (
+                  card.value
+                )}
+
+              </div>
+
+              <h3>
+                {card.title}
+              </h3>
+
+              <p>
+                {card.description}
+              </p>
+
+            </div>
+          );
+        })}
+
+      </section>
+
+
+      {/* =================================================
+          ANALYTICS GRID
+      ================================================= */}
+
+      <section className="analytics-main-grid">
+
+        {/* APPLICATION STATUS */}
+
+        <div className="analytics-panel">
+
+          <div className="analytics-panel-header">
+
+            <div>
+              <h2>
+                Application Status
+              </h2>
+
+              <p>
+                Current application distribution
+              </p>
+            </div>
+
+            <div className="panel-icon">
+              <FileText size={20} />
+            </div>
+
           </div>
 
-          <Briefcase
-            size={42}
-            className="text-green-600"
-          />
-        </div>
 
-        {/* Job Seekers */}
-        <div className="bg-purple-100 rounded-2xl p-6 flex items-center justify-between">
-          <div>
-            <p className="text-slate-600 text-lg">
-              Job Seekers
-            </p>
-
-            <p className="text-4xl font-bold text-slate-800 mt-2">
-              {stats.totalJobSeekers}
-            </p>
-          </div>
-
-          <UserCheck
-            size={42}
-            className="text-purple-600"
-          />
-        </div>
-
-        {/* Companies */}
-        <div className="bg-orange-100 rounded-2xl p-6 flex items-center justify-between">
-          <div>
-            <p className="text-slate-600 text-lg">
-              Companies
-            </p>
-
-            <p className="text-4xl font-bold text-slate-800 mt-2">
-              {stats.totalCompanies}
-            </p>
-          </div>
-
-          <Building2
-            size={42}
-            className="text-orange-600"
-          />
-        </div>
-
-        {/* Jobs */}
-        <div className="bg-cyan-100 rounded-2xl p-6 flex items-center justify-between">
-          <div>
-            <p className="text-slate-600 text-lg">
-              Jobs
-            </p>
-
-            <p className="text-4xl font-bold text-slate-800 mt-2">
-              {stats.totalJobs}
-            </p>
-          </div>
-
-          <Briefcase
-            size={42}
-            className="text-cyan-600"
-          />
-        </div>
-
-        {/* Applications */}
-        <div className="bg-red-100 rounded-2xl p-6 flex items-center justify-between">
-          <div>
-            <p className="text-slate-600 text-lg">
-              Applications
-            </p>
-
-            <p className="text-4xl font-bold text-slate-800 mt-2">
-              {stats.totalApplications}
-            </p>
-          </div>
-
-          <FileText
-            size={42}
-            className="text-red-600"
-          />
-        </div>
-
-      </div>
-
-      {/* Application Analytics */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-
-        {/* Application Status */}
-        <div className="bg-white rounded-2xl shadow-lg p-6">
-
-          <h2 className="text-2xl font-bold text-slate-800 mb-6">
-            Application Status
-          </h2>
-
-          <div className="space-y-5">
+          <div className="status-list">
 
             {/* Pending */}
-            <div>
-              <div className="flex justify-between mb-2">
-                <span className="flex items-center gap-2">
-                  <Clock size={18} className="text-yellow-500" />
-                  Pending
-                </span>
 
-                <span className="font-bold">
+            <div className="status-item">
+
+              <div className="status-heading">
+
+                <div className="status-name">
+
+                  <span className="status-icon pending">
+                    <Clock size={17} />
+                  </span>
+
+                  <span>
+                    Pending
+                  </span>
+
+                </div>
+
+                <strong>
                   {pendingApplications}
-                </span>
+                </strong>
+
               </div>
 
-              <div className="h-3 bg-slate-100 rounded-full">
+              <div className="status-bar">
+
                 <div
-                  className="h-3 bg-yellow-500 rounded-full"
+                  className="status-progress pending-progress"
                   style={{
-                    width: `${
-                      stats.totalApplications
-                        ? (pendingApplications /
-                            stats.totalApplications) *
-                          100
-                        : 0
-                    }%`,
+                    width: `${pendingPercentage}%`,
                   }}
-                />
+                ></div>
+
               </div>
+
+              <span className="status-percentage">
+                {pendingPercentage.toFixed(1)}%
+              </span>
+
             </div>
+
 
             {/* Accepted */}
-            <div>
-              <div className="flex justify-between mb-2">
-                <span className="flex items-center gap-2">
-                  <CheckCircle
-                    size={18}
-                    className="text-green-500"
-                  />
-                  Accepted
-                </span>
 
-                <span className="font-bold">
+            <div className="status-item">
+
+              <div className="status-heading">
+
+                <div className="status-name">
+
+                  <span className="status-icon accepted">
+                    <CheckCircle size={17} />
+                  </span>
+
+                  <span>
+                    Accepted
+                  </span>
+
+                </div>
+
+                <strong>
                   {acceptedApplications}
-                </span>
+                </strong>
+
               </div>
 
-              <div className="h-3 bg-slate-100 rounded-full">
+              <div className="status-bar">
+
                 <div
-                  className="h-3 bg-green-500 rounded-full"
+                  className="status-progress accepted-progress"
                   style={{
-                    width: `${
-                      stats.totalApplications
-                        ? (acceptedApplications /
-                            stats.totalApplications) *
-                          100
-                        : 0
-                    }%`,
+                    width: `${acceptedPercentage}%`,
                   }}
-                />
+                ></div>
+
               </div>
+
+              <span className="status-percentage">
+                {acceptedPercentage.toFixed(1)}%
+              </span>
+
             </div>
+
 
             {/* Rejected */}
-            <div>
-              <div className="flex justify-between mb-2">
-                <span className="flex items-center gap-2">
-                  <XCircle
-                    size={18}
-                    className="text-red-500"
-                  />
-                  Rejected
-                </span>
 
-                <span className="font-bold">
+            <div className="status-item">
+
+              <div className="status-heading">
+
+                <div className="status-name">
+
+                  <span className="status-icon rejected">
+                    <XCircle size={17} />
+                  </span>
+
+                  <span>
+                    Rejected
+                  </span>
+
+                </div>
+
+                <strong>
                   {rejectedApplications}
-                </span>
+                </strong>
+
               </div>
 
-              <div className="h-3 bg-slate-100 rounded-full">
+              <div className="status-bar">
+
                 <div
-                  className="h-3 bg-red-500 rounded-full"
+                  className="status-progress rejected-progress"
                   style={{
-                    width: `${
-                      stats.totalApplications
-                        ? (rejectedApplications /
-                            stats.totalApplications) *
-                          100
-                        : 0
-                    }%`,
+                    width: `${rejectedPercentage}%`,
                   }}
-                />
+                ></div>
+
               </div>
+
+              <span className="status-percentage">
+                {rejectedPercentage.toFixed(1)}%
+              </span>
+
             </div>
 
           </div>
+
         </div>
 
-        {/* Job Types */}
-        <div className="bg-white rounded-2xl shadow-lg p-6">
 
-          <h2 className="text-2xl font-bold text-slate-800 mb-6">
-            Jobs by Type
+        {/* JOB TYPES */}
+
+        <div className="analytics-panel">
+
+          <div className="analytics-panel-header">
+
+            <div>
+              <h2>
+                Jobs by Type
+              </h2>
+
+              <p>
+                Distribution of published jobs
+              </p>
+            </div>
+
+            <div className="panel-icon">
+              <Briefcase size={20} />
+            </div>
+
+          </div>
+
+
+          <div className="job-type-list">
+
+            {jobTypes.map((job) => (
+
+              <div
+                key={job.name}
+                className="job-type-card"
+              >
+
+                <div className="job-type-info">
+
+                  <span
+                    className={`job-type-dot ${job.className}`}
+                  ></span>
+
+                  <span>
+                    {job.name}
+                  </span>
+
+                </div>
+
+                <strong>
+                  {job.value}
+                </strong>
+
+              </div>
+
+            ))}
+
+          </div>
+
+
+          <div className="job-total">
+
+            <span>
+              Total Published Jobs
+            </span>
+
+            <strong>
+              {stats.totalJobs}
+            </strong>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      {/* =================================================
+          BOTTOM SUMMARY
+      ================================================= */}
+
+      <section className="analytics-summary">
+
+        <div className="summary-icon">
+          <Activity size={26} />
+        </div>
+
+        <div>
+
+          <h2>
+            Platform Performance
           </h2>
 
-          <div className="space-y-5">
+          <p>
+            Your platform currently connects{" "}
+            <strong>
+              {stats.totalJobSeekers || 0}
+            </strong>{" "}
+            job seekers with{" "}
+            <strong>
+              {stats.totalEmployers || 0}
+            </strong>{" "}
+            employers across{" "}
+            <strong>
+              {stats.totalCompanies || 0}
+            </strong>{" "}
+            companies.
+          </p>
 
-            <div className="flex justify-between border-b pb-3">
-              <span>Full-time</span>
-              <span className="font-bold">
-                {fullTimeJobs}
-              </span>
-            </div>
-
-            <div className="flex justify-between border-b pb-3">
-              <span>Part-time</span>
-              <span className="font-bold">
-                {partTimeJobs}
-              </span>
-            </div>
-
-            <div className="flex justify-between border-b pb-3">
-              <span>Contract</span>
-              <span className="font-bold">
-                {contractJobs}
-              </span>
-            </div>
-
-            <div className="flex justify-between">
-              <span>Internship</span>
-              <span className="font-bold">
-                {internshipJobs}
-              </span>
-            </div>
-
-          </div>
         </div>
 
-      </div>
+      </section>
 
     </div>
   );

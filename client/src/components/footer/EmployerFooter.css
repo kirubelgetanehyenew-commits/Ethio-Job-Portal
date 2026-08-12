@@ -1,0 +1,335 @@
+/* =========================================================
+   EMPLOYER FOOTER
+========================================================= */
+
+.employer-footer {
+  width: 100%;
+
+  background:
+    linear-gradient(
+      135deg,
+      #07111f 0%,
+      #0b1728 55%,
+      #102a24 100%
+    );
+
+  color: #ffffff;
+
+  border-top: 1px solid #1e293b;
+
+  margin-top: auto;
+}
+
+
+/* =========================================================
+   MAIN CONTAINER
+========================================================= */
+
+.employer-footer-container {
+  max-width: 1200px;
+
+  margin: 0 auto;
+
+  padding: 70px 30px;
+
+  display: grid;
+
+  grid-template-columns:
+    1.4fr
+    1fr
+    1fr
+    1fr;
+
+  gap: 55px;
+}
+
+
+/* =========================================================
+   BRAND
+========================================================= */
+
+.employer-footer-brand-header {
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+
+  margin-bottom: 22px;
+}
+
+
+.employer-footer-logo {
+  width: 52px;
+
+  height: 52px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 15px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb,
+      #14b8a6
+    );
+
+  color: #ffffff;
+
+  font-size: 22px;
+
+  font-weight: 900;
+
+  box-shadow:
+    0 8px 25px rgba(37, 99, 235, 0.25);
+}
+
+
+.employer-footer-brand-header h2 {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size: 21px;
+
+  font-weight: 800;
+}
+
+
+.employer-footer-brand-header p {
+  margin: 4px 0 0;
+
+  color: #94a3b8;
+
+  font-size: 13px;
+}
+
+
+.employer-footer-description {
+  max-width: 380px;
+
+  margin: 0;
+
+  color: #94a3b8;
+
+  font-size: 15px;
+
+  line-height: 1.8;
+}
+
+
+/* =========================================================
+   COLUMN HEADINGS
+========================================================= */
+
+.employer-footer-column h3 {
+  margin: 0 0 22px;
+
+  color: #ffffff;
+
+  font-size: 17px;
+
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   LINKS
+========================================================= */
+
+.employer-footer-links {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 15px;
+}
+
+
+.employer-footer-links a {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  color: #94a3b8;
+
+  text-decoration: none;
+
+  font-size: 14px;
+
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+.employer-footer-links a:hover {
+  color: #38bdf8;
+
+  transform: translateX(5px);
+}
+
+
+.employer-footer-links svg {
+  width: 17px;
+
+  height: 17px;
+
+  flex-shrink: 0;
+}
+
+
+/* =========================================================
+   CONTACT
+========================================================= */
+
+.employer-footer-contact {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 18px;
+}
+
+
+.employer-footer-contact div {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 12px;
+
+  color: #94a3b8;
+
+  font-size: 14px;
+
+  line-height: 1.5;
+}
+
+
+.employer-footer-contact svg {
+  width: 18px;
+
+  height: 18px;
+
+  flex-shrink: 0;
+
+  color: #38bdf8;
+
+  margin-top: 2px;
+}
+
+
+/* =========================================================
+   BOTTOM FOOTER
+========================================================= */
+
+.employer-footer-bottom {
+  max-width: 1200px;
+
+  margin: 0 auto;
+
+  padding: 25px 30px;
+
+  border-top: 1px solid #1e293b;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 20px;
+}
+
+
+.employer-footer-bottom p {
+  margin: 0;
+
+  color: #64748b;
+
+  font-size: 13px;
+}
+
+
+.employer-footer-bottom-links {
+  display: flex;
+
+  align-items: center;
+
+  gap: 28px;
+}
+
+
+.employer-footer-bottom-links a {
+  color: #64748b;
+
+  text-decoration: none;
+
+  font-size: 13px;
+
+  transition:
+    color 0.2s ease;
+}
+
+
+.employer-footer-bottom-links a:hover {
+  color: #38bdf8;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .employer-footer-container {
+    grid-template-columns: 1fr 1fr;
+
+    gap: 45px;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+  .employer-footer-container {
+    grid-template-columns: 1fr;
+
+    padding: 50px 22px;
+
+    gap: 40px;
+  }
+
+
+  .employer-footer-bottom {
+    flex-direction: column;
+
+    text-align: center;
+
+    padding: 22px;
+  }
+
+
+  .employer-footer-bottom-links {
+    flex-wrap: wrap;
+
+    justify-content: center;
+
+    gap: 20px;
+  }
+
+}

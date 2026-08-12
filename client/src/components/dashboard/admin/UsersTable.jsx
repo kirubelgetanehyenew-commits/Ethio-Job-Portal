@@ -10,6 +10,8 @@ import {
 } from "lucide-react";
 import adminService from "../../../services/adminService";
 
+import "./UsersTable.css";
+
 function UsersTable() {
   const [users, setUsers] = useState([]);
   const [search, setSearch] = useState("");
@@ -91,27 +93,23 @@ function UsersTable() {
     });
 
   return (
-    <div className="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
+    <div className="admin-users-table-card">
 
       {/* Top Controls */}
-      <div className="p-6 border-b border-slate-100">
+      <div className="admin-users-controls">
 
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+        <div className="admin-users-control-row">
 
           {/* Search */}
-          <div className="relative w-full lg:w-96">
+          <div className="admin-users-search">
 
-            <Search
-              size={20}
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
-            />
+            <Search size={20} />
 
             <input
               type="text"
               placeholder="Search users..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full border border-slate-200 rounded-xl pl-11 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-400"
             />
 
           </div>
@@ -120,7 +118,7 @@ function UsersTable() {
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
-            className="border border-slate-200 rounded-xl px-4 py-3 bg-white focus:outline-none focus:ring-2 focus:ring-orange-400"
+            className="admin-users-sort"
           >
             <option value="name">Sort by Name</option>
             <option value="email">Sort by Email</option>
@@ -130,41 +128,42 @@ function UsersTable() {
         </div>
 
         {/* User Count */}
-        <div className="flex items-center gap-2 mt-5 text-gray-500">
-
+        <div className="admin-users-count">
           <Users size={18} />
 
           <span>
             {filteredUsers.length} user
             {filteredUsers.length !== 1 ? "s" : ""} found
           </span>
-
         </div>
 
       </div>
 
       {/* Loading */}
       {loading && (
-        <div className="p-10 text-center text-gray-500">
-          Loading users...
+        <div className="admin-users-loading">
+          <div className="admin-users-loading-icon">
+            <Users size={30} />
+          </div>
+
+          <h3>Loading Users...</h3>
+
+          <p>Please wait while we load registered users.</p>
         </div>
       )}
 
       {/* Empty */}
       {!loading && filteredUsers.length === 0 && (
-        <div className="p-12 text-center">
+        <div className="admin-users-empty">
 
-          <Users
-            size={48}
-            className="mx-auto text-gray-300"
-          />
+          <div className="admin-users-empty-icon">
+            <Users size={42} />
+          </div>
 
-          <h3 className="text-xl font-bold text-slate-900 mt-4">
-            No users found
-          </h3>
+          <h3>No Users Found</h3>
 
-          <p className="text-gray-500 mt-2">
-            Try changing your search.
+          <p>
+            Try changing your search or check again later.
           </p>
 
         </div>
@@ -172,66 +171,42 @@ function UsersTable() {
 
       {/* Users Table */}
       {!loading && filteredUsers.length > 0 && (
-        <div className="overflow-x-auto">
+        <div className="admin-users-table-wrapper">
 
-          <table className="min-w-full">
+          <table className="admin-users-table">
 
-            <thead className="bg-slate-50">
-
+            <thead>
               <tr>
-
-                <th className="text-left px-6 py-4 text-sm font-bold text-gray-500">
-                  User
-                </th>
-
-                <th className="text-left px-6 py-4 text-sm font-bold text-gray-500">
-                  Contact
-                </th>
-
-                <th className="text-left px-6 py-4 text-sm font-bold text-gray-500">
-                  Role
-                </th>
-
-                <th className="text-left px-6 py-4 text-sm font-bold text-gray-500">
-                  Location
-                </th>
-
-                <th className="text-left px-6 py-4 text-sm font-bold text-gray-500">
-                  Actions
-                </th>
-
+                <th>User</th>
+                <th>Contact</th>
+                <th>Role</th>
+                <th>Location</th>
+                <th>Actions</th>
               </tr>
-
             </thead>
 
             <tbody>
 
               {filteredUsers.map((user) => (
 
-                <tr
-                  key={user._id}
-                  className="border-t border-slate-100 hover:bg-slate-50 transition"
-                >
+                <tr key={user._id}>
 
                   {/* User */}
-                  <td className="px-6 py-5">
+                  <td>
 
-                    <div className="flex items-center gap-4">
+                    <div className="admin-user-cell">
 
-                      <div className="w-11 h-11 rounded-full bg-orange-100 flex items-center justify-center">
-                        <Users
-                          size={21}
-                          className="text-orange-600"
-                        />
+                      <div className="admin-user-avatar">
+                        <Users size={21} />
                       </div>
 
-                      <div>
+                      <div className="admin-user-info">
 
-                        <p className="font-bold text-slate-900">
+                        <p className="admin-user-name">
                           {user.fullName}
                         </p>
 
-                        <p className="text-sm text-gray-500">
+                        <p className="admin-user-id">
                           ID: {user._id.slice(-6)}
                         </p>
 
@@ -242,18 +217,20 @@ function UsersTable() {
                   </td>
 
                   {/* Contact */}
-                  <td className="px-6 py-5">
+                  <td>
 
-                    <div className="space-y-2">
+                    <div className="admin-contact-cell">
 
-                      <div className="flex items-center gap-2 text-sm text-gray-600">
+                      <div>
                         <Mail size={16} />
                         <span>{user.email}</span>
                       </div>
 
-                      <div className="flex items-center gap-2 text-sm text-gray-500">
+                      <div>
                         <Phone size={16} />
-                        <span>{user.phone || "Not provided"}</span>
+                        <span>
+                          {user.phone || "Not provided"}
+                        </span>
                       </div>
 
                     </div>
@@ -261,14 +238,11 @@ function UsersTable() {
                   </td>
 
                   {/* Role */}
-                  <td className="px-6 py-5">
+                  <td>
 
-                    <div className="flex items-center gap-2">
+                    <div className="admin-role-cell">
 
-                      <ShieldCheck
-                        size={18}
-                        className="text-orange-500"
-                      />
+                      <ShieldCheck size={18} />
 
                       <select
                         value={user.role}
@@ -278,7 +252,6 @@ function UsersTable() {
                             e.target.value
                           )
                         }
-                        className="border border-slate-200 rounded-lg px-3 py-2 bg-white font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-orange-400"
                       >
 
                         <option value="admin">
@@ -300,9 +273,9 @@ function UsersTable() {
                   </td>
 
                   {/* Location */}
-                  <td className="px-6 py-5">
+                  <td>
 
-                    <div className="flex items-center gap-2 text-gray-600">
+                    <div className="admin-location-cell">
 
                       <MapPin size={17} />
 
@@ -315,13 +288,13 @@ function UsersTable() {
                   </td>
 
                   {/* Actions */}
-                  <td className="px-6 py-5">
+                  <td>
 
                     <button
                       onClick={() =>
                         handleDelete(user._id)
                       }
-                      className="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2.5 rounded-xl font-semibold transition"
+                      className="admin-delete-user-button"
                     >
 
                       <Trash2 size={17} />

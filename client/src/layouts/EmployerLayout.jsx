@@ -1,18 +1,26 @@
 ﻿import { Outlet } from "react-router-dom";
+
 import EmployerNavbar from "../components/layout/EmployerNavbar";
-import Footer from "../components/layout/Footer";
+import EmployerFooter from "../components/footer/EmployerFooter";
+
+import "./EmployerLayout.css";
 
 function EmployerLayout() {
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50">
+    <div className="employer-layout">
 
+      {/* Employer Navbar */}
       <EmployerNavbar />
 
-      <main className="flex-1">
-        <Outlet />
+      {/* Employer Main Content */}
+      <main className="employer-main">
+        <div className="employer-content">
+          <Outlet />
+        </div>
       </main>
 
-      <Footer />
+      {/* Employer Footer */}
+      <EmployerFooter />
 
     </div>
   );
