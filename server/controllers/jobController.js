@@ -1,5 +1,6 @@
 const Job = require("../models/Job");
 const Company = require("../models/Company");
+const User = require("../models/User");
 
 // Create Job
 const createJob = async (req, res) => {
@@ -281,6 +282,103 @@ const getMyJobs = async (req, res) => {
     });
   }
 };
+
+// Get Saved Jobs
+const getSavedJobs = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id)
+      .populate({
+        path: "savedJobs",
+        populate: {
+          path: "company",
+          select: "companyName location industry",
+        },
+      })
+      .lean();
+
+    res.status(200).json({
+      success: true,
+      count: user?.savedJobs?.length || 0,
+      savedJobs: user?.savedJobs || [],
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+// Save a Job
+const saveJob = async (req, res) => {
+  try {
+    const { jobId } = req.params;
+
+    const job = await Job.findById(jobId);
+
+    if (!job) {
+      return res.status(404).json({
+        success: false,
+        message: "Job not found",
+      });
+    }
+
+    const user = await User.findById(req.user.id);
+
+    const alreadySaved = user.savedJobs.some(
+      (savedJobId) => savedJobId.toString() === jobId
+    );
+
+    if (alreadySaved) {
+      return res.status(200).json({
+        success: true,
+        message: "Job is already saved",
+        savedJobs: user.savedJobs,
+      });
+    }
+
+    user.savedJobs.push(jobId);
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Job saved successfully",
+      savedJobs: user.savedJobs,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+// Remove Saved Job
+const unsaveJob = async (req, res) => {
+  try {
+    const { jobId } = req.params;
+
+    const user = await User.findById(req.user.id);
+
+    user.savedJobs = user.savedJobs.filter(
+      (savedJobId) => savedJobId.toString() !== jobId
+    );
+
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Job removed from saved list",
+      savedJobs: user.savedJobs,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
 // Get Jobs By Company
 const getJobsByCompany = async (req, res) => {
   try {
@@ -328,5 +426,8 @@ module.exports = {
   updateJob,
   deleteJob,
   getMyJobs,
+  getSavedJobs,
+  saveJob,
+  unsaveJob,
   getJobsByCompany,
 };

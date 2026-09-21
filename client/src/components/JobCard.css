@@ -196,6 +196,33 @@
   border-top: 1px solid #e2e8f0;
 }
 
+.job-card-save-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 14px;
+  margin-bottom: 10px;
+  border: 1px solid #dbeafe;
+  border-radius: 12px;
+  background: #eff6ff;
+  color: #1d4ed8;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.job-card-save-button:hover {
+  background: #dbeafe;
+}
+
+.job-card-save-button-active {
+  background: #dcfce7;
+  border-color: #bbf7d0;
+  color: #15803d;
+}
+
 .job-card-button {
   display: flex;
   align-items: center;

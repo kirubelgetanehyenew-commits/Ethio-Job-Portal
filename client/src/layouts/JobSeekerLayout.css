@@ -4,92 +4,55 @@
 
 .jobseeker-layout {
   min-height: 100vh;
-
   background: #f8fafc;
 }
 
-
-/* =========================================================
-   MAIN AREA
-========================================================= */
-
 .jobseeker-main {
   min-height: 100vh;
-
   margin-left: 260px;
-
   display: flex;
   flex-direction: column;
 }
 
-
-/* =========================================================
-   PAGE CONTENT
-========================================================= */
-
 .jobseeker-content {
   flex: 1;
-
   min-width: 0;
 }
 
-
-/* =========================================================
-   MOBILE HEADER
-========================================================= */
-
 .jobseeker-mobile-header {
   display: none;
-
   height: 64px;
-
   padding: 0 18px;
-
   background: #ffffff;
-
   border-bottom: 1px solid #e5e7eb;
-
   align-items: center;
-
   gap: 14px;
 }
-
 
 .jobseeker-mobile-menu {
   width: 40px;
   height: 40px;
-
   border: none;
-
   border-radius: 10px;
-
   background: #eff6ff;
-
   color: #2563eb;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   cursor: pointer;
 }
 
-
 .jobseeker-mobile-title {
   font-size: 18px;
-
   font-weight: 800;
-
   color: #0f172a;
 }
 
-
-/* =========================================================
-   RESPONSIVE
-========================================================= */
+.jobseeker-sidebar-overlay {
+  display: none;
+}
 
 @media (max-width: 900px) {
-
   .jobseeker-main {
     margin-left: 0;
   }
@@ -98,4 +61,12 @@
     display: flex;
   }
 
+  .jobseeker-sidebar-overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    border: none;
+    background: rgba(15, 23, 42, 0.45);
+  }
 }

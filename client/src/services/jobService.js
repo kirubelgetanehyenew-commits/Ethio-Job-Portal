@@ -18,6 +18,24 @@ export const getMyJobs = async () => {
   return response.data;
 };
 
+// Get saved jobs for the current job seeker
+export const getSavedJobs = async () => {
+  const response = await api.get("/jobs/saved");
+  return response.data;
+};
+
+// Save a job for the current job seeker
+export const saveJob = async (jobId) => {
+  const response = await api.post(`/jobs/saved/${jobId}`);
+  return response.data;
+};
+
+// Remove a saved job
+export const unsaveJob = async (jobId) => {
+  const response = await api.delete(`/jobs/saved/${jobId}`);
+  return response.data;
+};
+
 // Get jobs belonging to a specific company
 export const getJobsByCompany = async (companyId) => {
   const token = localStorage.getItem("token");

@@ -7,6 +7,7 @@ import {
   XCircle,
   Search,
   FileText,
+  Bookmark,
   ArrowRight,
   Loader2,
 } from "lucide-react";
@@ -336,6 +337,25 @@ function Dashboard() {
               </Link>
 
               {/* My Applications */}
+
+              <Link
+                to="/jobseeker/saved-jobs"
+                className="jobseeker-quick-action green"
+              >
+                <div className="jobseeker-quick-icon">
+                  <Bookmark size={21} />
+                </div>
+
+                <div>
+                  <h3>Saved Jobs</h3>
+
+                  <p>
+                    Review bookmarked roles
+                  </p>
+                </div>
+
+                <ArrowRight size={18} />
+              </Link>
 
               <Link
                 to="/my-applications"

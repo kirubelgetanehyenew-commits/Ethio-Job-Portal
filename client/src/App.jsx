@@ -36,6 +36,7 @@ import EmployerJobDetails from "./pages/Employer/EmployerJobDetails";
 // Job Seeker Pages
 // =========================
 import Dashboard from "./pages/JobSeeker/Dashboard";
+import SavedJobs from "./pages/JobSeeker/SavedJobs";
 import MyApplications from "./pages/applications/MyApplications";
 import Profile from "./pages/JobSeeker/Profile";
 
@@ -222,6 +223,12 @@ function App() {
         <Route
           path="/jobseeker/companies"
           element={<Companies />}
+        />
+
+        {/* Job Seeker Saved Jobs */}
+        <Route
+          path="/jobseeker/saved-jobs"
+          element={<SavedJobs />}
         />
 
         {/* Job Seeker Applications */}

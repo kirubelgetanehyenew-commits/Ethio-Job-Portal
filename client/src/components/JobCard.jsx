@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   MapPin,
@@ -6,17 +7,50 @@ import {
   CalendarDays,
   Building2,
   ArrowRight,
+  Bookmark,
+  BookmarkCheck,
 } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
+import { saveJob, unsaveJob } from "../services/jobService";
 import "./JobCard.css";
 
 function JobCard({ job }) {
   const { user } = useAuth();
+  const [isSaved, setIsSaved] = useState(Boolean(job?.isSaved));
+
+  useEffect(() => {
+    setIsSaved(Boolean(job?.isSaved));
+  }, [job?.isSaved]);
 
   const jobDetailsPath =
     user?.role === "jobseeker"
       ? `/jobseeker/jobs/${job._id}`
       : `/jobs/${job._id}`;
+
+  const handleToggleSave = async (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (!user || user.role !== "jobseeker") {
+      return;
+    }
+
+    try {
+      if (isSaved) {
+        await unsaveJob(job._id);
+        setIsSaved(false);
+      } else {
+        await saveJob(job._id);
+        setIsSaved(true);
+      }
+    } catch (error) {
+      console.error("Failed to update saved jobs:", error);
+      alert(
+        error.response?.data?.message ||
+          "Unable to update saved jobs right now."
+      );
+    }
+  };
 
   return (
     <article className="job-card">
@@ -84,6 +118,18 @@ function JobCard({ job }) {
 
       {/* Footer */}
       <div className="job-card-footer">
+
+        {user?.role === "jobseeker" && (
+          <button
+            type="button"
+            className={`job-card-save-button ${isSaved ? "job-card-save-button-active" : ""}`}
+            onClick={handleToggleSave}
+            aria-label={isSaved ? "Remove job from saved jobs" : "Save job"}
+          >
+            {isSaved ? <BookmarkCheck size={18} /> : <Bookmark size={18} />}
+            <span>{isSaved ? "Saved" : "Save"}</span>
+          </button>
+        )}
 
         <Link
           to={jobDetailsPath}

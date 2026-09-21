@@ -4,8 +4,8 @@
 
 .jobseeker-dashboard-page {
   min-height: calc(100vh - 80px);
-  background: #f7f9fc;
-  padding: 45px 24px 70px;
+  background: #f3f6fb;
+  padding: 40px 24px 70px;
 }
 
 .jobseeker-dashboard-container {
@@ -32,26 +32,28 @@
   align-items: center;
   padding: 7px 14px;
   border-radius: 999px;
-  background: #fff1e6;
-  color: #ea580c;
-  font-size: 13px;
+  background: #e0f2fe;
+  color: #0369a1;
+  font-size: 12px;
   font-weight: 800;
+  letter-spacing: 0.04em;
   margin-bottom: 12px;
+  text-transform: uppercase;
 }
 
 .jobseeker-welcome h1 {
   margin: 0;
   color: #0f172a;
-  font-size: 42px;
+  font-size: clamp(2rem, 4vw, 2.8rem);
   line-height: 1.1;
-  font-weight: 900;
-  letter-spacing: -1px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
 }
 
 .jobseeker-welcome p {
   margin: 12px 0 0;
   color: #64748b;
-  font-size: 17px;
+  font-size: 1rem;
   line-height: 1.6;
 }
 
@@ -65,29 +67,22 @@
   align-items: center;
   justify-content: center;
   gap: 9px;
-  min-height: 50px;
-  padding: 0 22px;
-  border-radius: 14px;
-  background: linear-gradient(
-    135deg,
-    #f97316,
-    #f59e0b
-  );
+  min-height: 48px;
+  padding: 0 20px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
   color: #ffffff;
   text-decoration: none;
-  font-size: 15px;
-  font-weight: 800;
+  font-size: 0.95rem;
+  font-weight: 700;
   border: none;
-  box-shadow: 0 8px 22px rgba(249, 115, 22, 0.18);
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease,
-    background 0.2s ease;
+  box-shadow: 0 10px 20px rgba(37, 99, 235, 0.18);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 
 .jobseeker-primary-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 14px 30px rgba(249, 115, 22, 0.25);
+  transform: translateY(-1px);
+  box-shadow: 0 14px 26px rgba(37, 99, 235, 0.2);
 }
 
 
@@ -108,19 +103,17 @@
   align-items: center;
   justify-content: space-between;
   gap: 20px;
-  padding: 25px;
+  padding: 24px 22px;
   background: #ffffff;
-  border: 1px solid #e8edf3;
-  border-radius: 22px;
-  box-shadow: 0 7px 25px rgba(15, 23, 42, 0.05);
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.04);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .jobseeker-stat-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 14px 32px rgba(15, 23, 42, 0.09);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.07);
 }
 
 .jobseeker-stat-content p {
@@ -149,23 +142,23 @@
 }
 
 .jobseeker-stat-icon.total {
-  background: #fff1e6;
-  color: #f97316;
+  background: #dbeafe;
+  color: #1d4ed8;
 }
 
 .jobseeker-stat-icon.pending {
   background: #fef3c7;
-  color: #d97706;
+  color: #b45309;
 }
 
 .jobseeker-stat-icon.accepted {
   background: #dcfce7;
-  color: #16a34a;
+  color: #15803d;
 }
 
 .jobseeker-stat-icon.rejected {
   background: #fee2e2;
-  color: #dc2626;
+  color: #b91c1c;
 }
 
 
@@ -188,9 +181,9 @@
 .jobseeker-applications-card,
 .jobseeker-quick-card {
   background: #ffffff;
-  border: 1px solid #e8edf3;
-  border-radius: 24px;
-  box-shadow: 0 7px 25px rgba(15, 23, 42, 0.05);
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.04);
 }
 
 .jobseeker-card-header {
@@ -198,39 +191,39 @@
   align-items: center;
   justify-content: space-between;
   gap: 20px;
-  padding: 27px 30px;
-  border-bottom: 1px solid #edf1f5;
+  padding: 24px 26px;
+  border-bottom: 1px solid #edf2f7;
 }
 
 .jobseeker-card-header h2,
 .jobseeker-quick-header h2 {
   margin: 0;
   color: #0f172a;
-  font-size: 23px;
-  font-weight: 900;
+  font-size: 1.2rem;
+  font-weight: 800;
 }
 
 .jobseeker-card-header p,
 .jobseeker-quick-header p {
   margin: 6px 0 0;
   color: #64748b;
-  font-size: 14px;
+  font-size: 0.85rem;
 }
 
 .jobseeker-view-all {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  color: #f97316;
+  color: #2563eb;
   text-decoration: none;
-  font-size: 14px;
-  font-weight: 800;
+  font-size: 0.85rem;
+  font-weight: 700;
   white-space: nowrap;
   transition: color 0.2s ease;
 }
 
 .jobseeker-view-all:hover {
-  color: #ea580c;
+  color: #1d4ed8;
 }
 
 
@@ -274,9 +267,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 14px;
-  background: #fff1e6;
-  color: #f97316;
+  border-radius: 12px;
+  background: #e0f2fe;
+  color: #0369a1;
 }
 
 .jobseeker-application-info h3 {
@@ -350,18 +343,15 @@
   align-items: center;
   justify-content: center;
   border-radius: 12px;
-  background: #fff1e6;
-  color: #f97316;
+  background: #eff6ff;
+  color: #2563eb;
   text-decoration: none;
-  transition:
-    background 0.2s ease,
-    color 0.2s ease,
-    transform 0.2s ease;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
 
 .jobseeker-application-link:hover {
-  background: #f97316;
-  color: #ffffff;
+  background: #dbeafe;
+  color: #1d4ed8;
   transform: translateX(2px);
 }
 
@@ -443,7 +433,7 @@
 
 .jobseeker-quick-action.orange {
   background: #fff7ed;
-  color: #f97316;
+  color: #b45309;
 }
 
 .jobseeker-quick-action.orange:hover {
@@ -452,11 +442,20 @@
 
 .jobseeker-quick-action.blue {
   background: #eff6ff;
-  color: #2563eb;
+  color: #1d4ed8;
 }
 
 .jobseeker-quick-action.blue:hover {
   background: #dbeafe;
+}
+
+.jobseeker-quick-action.green {
+  background: #ecfdf5;
+  color: #047857;
+}
+
+.jobseeker-quick-action.green:hover {
+  background: #d1fae5;
 }
 
 .jobseeker-quick-icon {
@@ -475,6 +474,10 @@
 
 .jobseeker-quick-action.blue .jobseeker-quick-icon {
   background: #2563eb;
+}
+
+.jobseeker-quick-action.green .jobseeker-quick-icon {
+  background: #10b981;
 }
 
 .jobseeker-quick-action h3 {
@@ -691,11 +694,7 @@
 .jobseeker-profile-banner {
   padding: 42px 40px;
   color: #ffffff;
-  background: linear-gradient(
-    135deg,
-    #f97316 0%,
-    #f59e0b 100%
-  );
+  background: linear-gradient(135deg, #0f172a 0%, #1d4ed8 100%);
 }
 
 .jobseeker-profile-identity {
@@ -712,7 +711,7 @@
   align-items: center;
   justify-content: center;
   background: #ffffff;
-  color: #f97316;
+  color: #1d4ed8;
   border-radius: 50%;
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
 }

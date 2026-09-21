@@ -13,24 +13,25 @@ import { useAuth } from "../../context/AuthContext";
 
 import "./AdminSidebar.css";
 
-function AdminSidebar() {
+function AdminSidebar({ isOpen = false, onClose = () => {} }) {
   const { logout } = useAuth();
 
-  return (
-    <aside className="admin-sidebar">
+  const handleLogout = () => {
+    logout();
+    onClose();
+  };
 
-      {/* Header */}
+  return (
+    <aside className={`admin-sidebar ${isOpen ? "open" : ""}`}>
       <div className="admin-sidebar-header">
         <h1>Admin</h1>
-
         <p>Ethio Job Portal Dashboard</p>
       </div>
 
-      {/* Navigation */}
       <nav className="admin-sidebar-navigation">
-
         <NavLink
           to="/admin/dashboard"
+          onClick={onClose}
           className={({ isActive }) =>
             `admin-sidebar-link ${isActive ? "active" : ""}`
           }
@@ -41,6 +42,7 @@ function AdminSidebar() {
 
         <NavLink
           to="/admin/users"
+          onClick={onClose}
           className={({ isActive }) =>
             `admin-sidebar-link ${isActive ? "active" : ""}`
           }
@@ -51,6 +53,7 @@ function AdminSidebar() {
 
         <NavLink
           to="/admin/jobs"
+          onClick={onClose}
           className={({ isActive }) =>
             `admin-sidebar-link ${isActive ? "active" : ""}`
           }
@@ -61,6 +64,7 @@ function AdminSidebar() {
 
         <NavLink
           to="/admin/companies"
+          onClick={onClose}
           className={({ isActive }) =>
             `admin-sidebar-link ${isActive ? "active" : ""}`
           }
@@ -71,6 +75,7 @@ function AdminSidebar() {
 
         <NavLink
           to="/admin/applications"
+          onClick={onClose}
           className={({ isActive }) =>
             `admin-sidebar-link ${isActive ? "active" : ""}`
           }
@@ -81,6 +86,7 @@ function AdminSidebar() {
 
         <NavLink
           to="/admin/analytics"
+          onClick={onClose}
           className={({ isActive }) =>
             `admin-sidebar-link ${isActive ? "active" : ""}`
           }
@@ -88,18 +94,12 @@ function AdminSidebar() {
           <BarChart3 size={20} />
           <span>Analytics</span>
         </NavLink>
-
       </nav>
 
-      {/* Logout */}
-      <button
-        onClick={logout}
-        className="admin-sidebar-logout"
-      >
+      <button onClick={handleLogout} className="admin-sidebar-logout">
         <LogOut size={18} />
         <span>Logout</span>
       </button>
-
     </aside>
   );
 }

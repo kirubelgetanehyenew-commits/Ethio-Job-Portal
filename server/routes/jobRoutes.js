@@ -8,6 +8,9 @@ const {
   updateJob,
   deleteJob,
   getMyJobs,
+  getSavedJobs,
+  saveJob,
+  unsaveJob,
   getJobsByCompany,
 } = require("../controllers/jobController");
 
@@ -16,6 +19,11 @@ const authorize = require("../middleware/roleMiddleware");
 
 // Public Routes
 router.get("/", getAllJobs);
+
+// Job Seeker Saved Jobs Routes
+router.get("/saved", protect, authorize("jobseeker"), getSavedJobs);
+router.post("/saved/:jobId", protect, authorize("jobseeker"), saveJob);
+router.delete("/saved/:jobId", protect, authorize("jobseeker"), unsaveJob);
 
 // Employer Routes
 router.post("/", protect, authorize("employer"), createJob);
