@@ -24,6 +24,26 @@ const applicationSchema = new mongoose.Schema(
       default: "",
     },
 
+    experience: {
+      type: String,
+      default: "",
+    },
+
+    skills: {
+      type: String,
+      default: "",
+    },
+
+    education: {
+      type: String,
+      default: "",
+    },
+
+    summary: {
+      type: String,
+      default: "",
+    },
+
     status: {
       type: String,
       enum: ["pending", "reviewed", "accepted", "rejected"],
