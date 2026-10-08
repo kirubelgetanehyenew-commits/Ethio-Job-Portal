@@ -1,8 +1,8 @@
 function SearchSection() {
   return (
     <section className="max-w-7xl mx-auto px-6 py-12">
-      <div className="bg-white shadow-lg rounded-xl p-6">
-        <h2 className="text-2xl font-bold text-gray-800 mb-6">
+      <div className="card">
+        <h2 className="text-2xl font-bold text-slate-100 mb-6">
           Search Jobs
         </h2>
 
@@ -10,16 +10,16 @@ function SearchSection() {
           <input
             type="text"
             placeholder="Job title or keyword"
-            className="border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="form-input"
           />
 
           <input
             type="text"
             placeholder="Location"
-            className="border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="form-input"
           />
 
-          <select className="border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <select className="form-select">
             <option>All Categories</option>
             <option>Software Development</option>
             <option>Marketing</option>
@@ -27,7 +27,7 @@ function SearchSection() {
             <option>Engineering</option>
           </select>
 
-          <button className="bg-blue-600 text-white rounded-lg px-6 py-3 font-semibold hover:bg-blue-700">
+          <button className="btn btn-primary">
             Search Jobs
           </button>
         </div>

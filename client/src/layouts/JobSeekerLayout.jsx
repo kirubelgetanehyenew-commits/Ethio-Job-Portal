@@ -4,6 +4,7 @@ import { Menu, X } from "lucide-react";
 
 import JobSeekerNavbar from "../components/layout/JobSeekerNavbar";
 import JobSeekerFooter from "../components/footer/JobSeekerFooter";
+import ThemeToggle from "../components/common/ThemeToggle";
 
 import "./JobSeekerLayout.css";
 
@@ -34,6 +35,7 @@ function JobSeekerLayout() {
             {menuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
           <div className="jobseeker-mobile-title">Job Seeker</div>
+          <ThemeToggle />
         </header>
 
         <main className="jobseeker-content">

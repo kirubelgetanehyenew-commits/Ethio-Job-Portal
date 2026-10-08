@@ -1,7 +1,91 @@
 .my-jobs-page {
   min-height: calc(100vh - 80px);
-  background: #f8fafc;
+  background: #101e34;
   padding: 48px 24px 80px;
+}
+
+html[data-theme="light"] .my-jobs-page {
+  background: #ffffff;
+}
+
+html[data-theme="light"] .my-jobs-header h1,
+html[data-theme="light"] .my-jobs-header p,
+html[data-theme="light"] .my-jobs-loading h2,
+html[data-theme="light"] .my-jobs-empty h2,
+html[data-theme="light"] .job-card h3,
+html[data-theme="light"] .job-card p,
+html[data-theme="light"] .my-jobs-empty p {
+  color: #111827;
+}
+
+html[data-theme="light"] .job-card,
+html[data-theme="light"] .my-jobs-empty,
+html[data-theme="light"] .job-card-actions,
+html[data-theme="light"] .job-card-info,
+html[data-theme="light"] .job-card-tags,
+html[data-theme="light"] .job-tag {
+  background: #ffffff;
+  border-color: rgba(17, 24, 39, 0.08);
+  box-shadow: 0 12px 30px rgba(17, 24, 39, 0.06);
+}
+
+html[data-theme="light"] .my-jobs-page {
+  background: linear-gradient(135deg, #f8f5f0 0%, #ffffff 50%, #f2f7f7 100%);
+}
+
+html[data-theme="light"] .my-jobs-header h1,
+html[data-theme="light"] .my-jobs-header p,
+html[data-theme="light"] .my-jobs-loading h2,
+html[data-theme="light"] .my-jobs-empty h2,
+html[data-theme="light"] .job-card h3,
+html[data-theme="light"] .job-card p,
+html[data-theme="light"] .my-jobs-empty p,
+html[data-theme="light"] .job-company,
+html[data-theme="light"] .job-info-item,
+html[data-theme="light"] .job-card-title-area h2,
+html[data-theme="light"] .job-card-tags,
+html[data-theme="light"] .job-tag,
+html[data-theme="light"] .job-salary {
+  color: #111827;
+}
+
+html[data-theme="light"] .job-card-icon,
+html[data-theme="light"] .my-jobs-empty-icon {
+  background: rgba(16, 185, 129, 0.08);
+  color: #0f766e;
+}
+
+html[data-theme="light"] .job-view-btn {
+  background: #f3f4f6;
+  border-color: rgba(99, 102, 241, 0.18);
+  color: #4338ca;
+}
+
+html[data-theme="light"] .job-edit-btn {
+  background: rgba(16, 185, 129, 0.08);
+  border-color: rgba(16, 185, 129, 0.2);
+  color: #0f766e;
+}
+
+html[data-theme="light"] .job-delete-btn {
+  background: rgba(239, 68, 68, 0.08);
+  border-color: rgba(239, 68, 68, 0.18);
+  color: #b91c1c;
+}
+
+html[data-theme="light"] .job-active {
+  background: rgba(16, 185, 129, 0.08);
+  color: #0f766e;
+}
+
+html[data-theme="light"] .job-inactive {
+  background: rgba(239, 68, 68, 0.08);
+  color: #b91c1c;
+}
+
+html[data-theme="light"] .job-card,
+html[data-theme="light"] .my-jobs-empty {
+  border-color: rgba(17, 24, 39, 0.08);
 }
 
 .my-jobs-container {
@@ -22,7 +106,7 @@
 }
 
 .my-jobs-label {
-  color: #059669;
+  color: #34d399;
   font-size: 13px;
   font-weight: 800;
   text-transform: uppercase;
@@ -32,7 +116,7 @@
 
 .my-jobs-header h1 {
   margin: 0;
-  color: #0f172a;
+  color: #f1f5f9;
   font-size: 42px;
   line-height: 1.1;
   font-weight: 900;
@@ -41,7 +125,7 @@
 .my-jobs-header p {
   margin: 12px 0 0;
   max-width: 650px;
-  color: #64748b;
+  color: #94a3b8;
   font-size: 16px;
   line-height: 1.7;
 }
@@ -94,11 +178,11 @@
   padding: 18px 20px;
   margin-bottom: 28px;
 
-  border: 1px solid #fecaca;
+  border: 1px solid rgba(248, 113, 113, 0.35);
   border-radius: 16px;
 
-  background: #fef2f2;
-  color: #b91c1c;
+  background: rgba(248, 113, 113, 0.1);
+  color: #f87171;
 }
 
 .my-jobs-error strong {
@@ -108,7 +192,7 @@
 
 .my-jobs-error p {
   margin: 5px 0 0;
-  color: #dc2626;
+  color: #f87171;
   font-size: 14px;
 }
 
@@ -129,18 +213,18 @@
 
 .my-jobs-loading h2 {
   margin: 18px 0 0;
-  color: #0f172a;
+  color: #f1f5f9;
   font-size: 24px;
   font-weight: 800;
 }
 
 .my-jobs-loading p {
   margin-top: 8px;
-  color: #64748b;
+  color: #94a3b8;
 }
 
 .my-jobs-spinner {
-  color: #059669;
+  color: #34d399;
   animation: myJobsSpin 1s linear infinite;
 }
 
@@ -170,8 +254,8 @@
 
   padding: 50px;
 
-  background: white;
-  border: 1px solid #e2e8f0;
+  background: var(--color-surface);
+  border: 1px solid rgba(148, 163, 184, 0.18);
   border-radius: 24px;
 }
 
@@ -185,15 +269,15 @@
 
   border-radius: 24px;
 
-  background: #ecfdf5;
-  color: #059669;
+  background: rgba(52, 211, 153, 0.08);
+  color: #34d399;
 
   margin-bottom: 20px;
 }
 
 .my-jobs-empty h2 {
   margin: 0;
-  color: #0f172a;
+  color: #f1f5f9;
   font-size: 26px;
   font-weight: 900;
 }
@@ -201,7 +285,7 @@
 .my-jobs-empty p {
   max-width: 480px;
   margin: 10px 0 24px;
-  color: #64748b;
+  color: #94a3b8;
   line-height: 1.7;
 }
 
@@ -220,8 +304,8 @@
 ========================= */
 
 .job-card {
-  background: white;
-  border: 1px solid #e2e8f0;
+  background: var(--color-surface);
+  border: 1px solid rgba(148, 163, 184, 0.18);
   border-radius: 22px;
   padding: 24px;
 
@@ -259,8 +343,8 @@
 
   border-radius: 15px;
 
-  background: #ecfdf5;
-  color: #059669;
+  background: rgba(52, 211, 153, 0.08);
+  color: #34d399;
 }
 
 .job-card-title-area {
@@ -270,7 +354,7 @@
 .job-card-title-area h2 {
   margin: 0;
 
-  color: #0f172a;
+  color: #f1f5f9;
 
   font-size: 20px;
   line-height: 1.35;
@@ -284,7 +368,7 @@
 
   margin-top: 7px;
 
-  color: #64748b;
+  color: #94a3b8;
   font-size: 14px;
 }
 
@@ -299,7 +383,7 @@
   margin-top: 22px;
   padding-top: 18px;
 
-  border-top: 1px solid #f1f5f9;
+  border-top: 1px solid rgba(148, 163, 184, 0.12);
 }
 
 .job-info-item {
@@ -307,12 +391,12 @@
   align-items: center;
   gap: 9px;
 
-  color: #64748b;
+  color: #94a3b8;
   font-size: 14px;
 }
 
 .job-info-item svg {
-  color: #059669;
+  color: #34d399;
   flex-shrink: 0;
 }
 
@@ -333,21 +417,21 @@
 
   border-radius: 8px;
 
-  background: #f1f5f9;
-  color: #475569;
+  background: #14243e;
+  color: #cbd5e1;
 
   font-size: 12px;
   font-weight: 700;
 }
 
 .job-active {
-  background: #dcfce7;
-  color: #15803d;
+  background: rgba(52, 211, 153, 0.14);
+  color: #4ade80;
 }
 
 .job-inactive {
-  background: #fee2e2;
-  color: #b91c1c;
+  background: rgba(248, 113, 113, 0.18);
+  color: #f87171;
 }
 
 /* =========================
@@ -357,7 +441,7 @@
 .job-salary {
   margin-top: 18px;
 
-  color: #059669;
+  color: #34d399;
 
   font-size: 18px;
   font-weight: 900;
@@ -375,7 +459,7 @@
   margin-top: 22px;
   padding-top: 18px;
 
-  border-top: 1px solid #f1f5f9;
+  border-top: 1px solid rgba(148, 163, 184, 0.12);
 }
 
 .job-action-btn {
@@ -397,33 +481,33 @@
 }
 
 .job-view-btn {
-  border: 1px solid #dbeafe;
-  background: #eff6ff;
-  color: #2563eb;
+  border: 1px solid rgba(129, 140, 248, 0.25);
+  background: #101e34;
+  color: #818cf8;
 }
 
 .job-view-btn:hover {
-  background: #dbeafe;
+  background: rgba(129, 140, 248, 0.14);
 }
 
 .job-edit-btn {
-  border: 1px solid #d1fae5;
-  background: #ecfdf5;
-  color: #059669;
+  border: 1px solid rgba(52, 211, 153, 0.25);
+  background: rgba(52, 211, 153, 0.08);
+  color: #34d399;
 }
 
 .job-edit-btn:hover {
-  background: #d1fae5;
+  background: rgba(52, 211, 153, 0.14);
 }
 
 .job-delete-btn {
-  border: 1px solid #fee2e2;
-  background: #fef2f2;
-  color: #dc2626;
+  border: 1px solid rgba(248, 113, 113, 0.18);
+  background: rgba(248, 113, 113, 0.1);
+  color: #f87171;
 }
 
 .job-delete-btn:hover {
-  background: #fee2e2;
+  background: rgba(248, 113, 113, 0.18);
 }
 
 .job-action-btn:disabled {

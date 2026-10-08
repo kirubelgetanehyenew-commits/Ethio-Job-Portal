@@ -2,13 +2,84 @@
    ADMIN USERS TABLE
 ========================================================= */
 
+html[data-theme="light"] .admin-users-table-card,
+html[data-theme="light"] .admin-users-controls,
+html[data-theme="light"] .admin-users-search input,
+html[data-theme="light"] .admin-users-sort,
+html[data-theme="light"] .admin-users-count,
+html[data-theme="light"] .admin-users-loading,
+html[data-theme="light"] .admin-users-empty,
+html[data-theme="light"] .admin-users-table thead,
+html[data-theme="light"] .admin-users-table tbody tr:hover {
+  background: #ffffff;
+  border-color: rgba(17, 24, 39, 0.08);
+  color: #111827;
+}
+
+html[data-theme="light"] .admin-users-search input,
+html[data-theme="light"] .admin-users-sort,
+html[data-theme="light"] .admin-users-count,
+html[data-theme="light"] .admin-users-loading h3,
+html[data-theme="light"] .admin-users-loading p,
+html[data-theme="light"] .admin-users-empty h3,
+html[data-theme="light"] .admin-users-empty p,
+html[data-theme="light"] .admin-users-table th,
+html[data-theme="light"] .admin-users-table td,
+html[data-theme="light"] .admin-user-name,
+html[data-theme="light"] .admin-user-email,
+html[data-theme="light"] .admin-user-role,
+html[data-theme="light"] .admin-user-status,
+html[data-theme="light"] .admin-role-cell select,
+html[data-theme="light"] .admin-role-cell select option,
+html[data-theme="light"] .admin-contact-cell div,
+html[data-theme="light"] .admin-location-cell {
+  color: #111827;
+}
+
+html[data-theme="light"] .admin-role-cell select,
+html[data-theme="light"] .admin-users-search input,
+html[data-theme="light"] .admin-users-sort {
+  background: #ffffff;
+  border-color: rgba(17, 24, 39, 0.12);
+}
+
+html[data-theme="light"] .admin-users-loading-icon,
+html[data-theme="light"] .admin-users-empty-icon {
+  background: rgba(212, 167, 90, 0.12);
+  color: #8a6324;
+}
+
 .admin-users-table-card {
   width: 100%;
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
+  background: #0e1a2e;
+  border: 1px solid rgba(148, 163, 184, 0.18);
   border-radius: 24px;
   overflow: hidden;
   box-shadow: 0 8px 30px rgba(15, 23, 42, 0.05);
+}
+
+html[data-theme="light"] .admin-users-table-card,
+html[data-theme="light"] .admin-users-controls,
+html[data-theme="light"] .admin-users-search input,
+html[data-theme="light"] .admin-users-sort,
+html[data-theme="light"] .admin-users-empty,
+html[data-theme="light"] .admin-users-loading,
+html[data-theme="light"] .admin-users-table thead {
+  background: #ffffff;
+  border-color: rgba(17, 24, 39, 0.08);
+  color: #111827;
+}
+
+html[data-theme="light"] .admin-users-search input,
+html[data-theme="light"] .admin-users-sort,
+html[data-theme="light"] .admin-users-count,
+html[data-theme="light"] .admin-users-empty h3,
+html[data-theme="light"] .admin-users-empty p,
+html[data-theme="light"] .admin-users-loading h3,
+html[data-theme="light"] .admin-users-loading p,
+html[data-theme="light"] .admin-users-table th,
+html[data-theme="light"] .admin-users-table td {
+  color: #111827;
 }
 
 /* =========================================================
@@ -17,7 +88,7 @@
 
 .admin-users-controls {
   padding: 24px;
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.18);
 }
 
 .admin-users-control-row {
@@ -48,11 +119,11 @@
   height: 48px;
   padding: 0 16px 0 45px;
 
-  border: 1px solid #cbd5e1;
+  border: 1px solid rgba(148, 163, 184, 0.25);
   border-radius: 12px;
 
-  background: #ffffff;
-  color: #0f172a;
+  background: #0e1a2e;
+  color: #f1f5f9;
 
   font-size: 14px;
 
@@ -78,11 +149,11 @@
 
   padding: 0 14px;
 
-  border: 1px solid #cbd5e1;
+  border: 1px solid rgba(148, 163, 184, 0.25);
   border-radius: 12px;
 
-  background: #ffffff;
-  color: #334155;
+  background: #0e1a2e;
+  color: #e2e8f0;
 
   font-size: 14px;
   font-weight: 600;
@@ -107,7 +178,7 @@
 
   margin-top: 18px;
 
-  color: #64748b;
+  color: #94a3b8;
   font-size: 14px;
   font-weight: 500;
 }
@@ -119,7 +190,7 @@
 .admin-users-loading {
   padding: 70px 20px;
   text-align: center;
-  color: #64748b;
+  color: #94a3b8;
 }
 
 .admin-users-loading-icon {
@@ -134,14 +205,14 @@
 
   border-radius: 18px;
 
-  background: #fff7ed;
+  background: rgba(251, 146, 60, 0.12);
   color: #f97316;
 }
 
 .admin-users-loading h3 {
   margin: 0;
 
-  color: #0f172a;
+  color: #f1f5f9;
   font-size: 20px;
   font-weight: 800;
 }
@@ -173,14 +244,14 @@
 
   border-radius: 20px;
 
-  background: #f8fafc;
+  background: #101e34;
   color: #cbd5e1;
 }
 
 .admin-users-empty h3 {
   margin: 18px 0 0;
 
-  color: #0f172a;
+  color: #f1f5f9;
   font-size: 21px;
   font-weight: 800;
 }
@@ -188,7 +259,7 @@
 .admin-users-empty p {
   margin: 8px 0 0;
 
-  color: #64748b;
+  color: #94a3b8;
   font-size: 14px;
 }
 
@@ -209,7 +280,7 @@
 }
 
 .admin-users-table thead {
-  background: #f8fafc;
+  background: #101e34;
 }
 
 .admin-users-table th {
@@ -217,7 +288,7 @@
 
   text-align: left;
 
-  color: #64748b;
+  color: #94a3b8;
 
   font-size: 12px;
   font-weight: 800;
@@ -231,7 +302,7 @@
 .admin-users-table td {
   padding: 20px 24px;
 
-  border-top: 1px solid #f1f5f9;
+  border-top: 1px solid rgba(148, 163, 184, 0.12);
 
   vertical-align: middle;
 }
@@ -241,7 +312,7 @@
 }
 
 .admin-users-table tbody tr:hover {
-  background: #f8fafc;
+  background: #101e34;
 }
 
 /* =========================================================
@@ -266,8 +337,8 @@
 
   border-radius: 14px;
 
-  background: #fff7ed;
-  color: #ea580c;
+  background: rgba(251, 146, 60, 0.12);
+  color: #fb923c;
 }
 
 .admin-user-info {
@@ -277,7 +348,7 @@
 .admin-user-name {
   margin: 0;
 
-  color: #0f172a;
+  color: #f1f5f9;
 
   font-size: 14px;
   font-weight: 800;
@@ -306,7 +377,7 @@
   align-items: center;
   gap: 8px;
 
-  color: #64748b;
+  color: #94a3b8;
 
   font-size: 13px;
 }
@@ -336,12 +407,12 @@
 
   padding: 9px 12px;
 
-  border: 1px solid #cbd5e1;
+  border: 1px solid rgba(148, 163, 184, 0.25);
   border-radius: 9px;
 
-  background: #ffffff;
+  background: #0e1a2e;
 
-  color: #334155;
+  color: #e2e8f0;
 
   font-size: 13px;
   font-weight: 700;
@@ -364,7 +435,7 @@
   align-items: center;
   gap: 8px;
 
-  color: #64748b;
+  color: #94a3b8;
 
   font-size: 13px;
 }
@@ -386,11 +457,11 @@
 
   padding: 10px 15px;
 
-  border: 1px solid #fecaca;
+  border: 1px solid rgba(248, 113, 113, 0.35);
   border-radius: 10px;
 
-  background: #fff1f2;
-  color: #dc2626;
+  background: rgba(248, 113, 113, 0.12);
+  color: #f87171;
 
   font-size: 13px;
   font-weight: 700;

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
+import ThemeToggle from "../common/ThemeToggle";
 import "./PublicNavbar.css";
 
 function PublicNavbar() {
@@ -69,6 +70,8 @@ function PublicNavbar() {
 
         {/* Desktop Right Side */}
         <div className="public-navbar-actions">
+          <ThemeToggle />
+
           {!user ? (
             <>
               <Link
@@ -148,6 +151,8 @@ function PublicNavbar() {
           </Link>
 
           <div className="public-navbar-mobile-actions">
+            <ThemeToggle />
+
             {!user ? (
               <>
                 <Link

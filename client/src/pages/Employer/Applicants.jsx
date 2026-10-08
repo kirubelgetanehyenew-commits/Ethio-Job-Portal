@@ -419,17 +419,66 @@ function Applicants() {
                       COVER LETTER
                   ================================== */}
 
-                  {application.coverLetter && (
+                  {(application.resume ||
+                    application.experience ||
+                    application.skills ||
+                    application.education ||
+                    application.summary ||
+                    application.coverLetter) && (
                     <div className="applicant-cover-letter">
 
                       <div className="applicant-cover-title">
                         <FileText size={18} />
-                        Cover Letter
+                        Candidate Details
                       </div>
 
-                      <p>
-                        {application.coverLetter}
-                      </p>
+                      {application.resume && (
+                        <div className="applicant-profile-row">
+                          <span>CV / Resume</span>
+                          <a
+                            href={application.resume}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            Open CV / Resume
+                          </a>
+                        </div>
+                      )}
+
+                      {application.experience && (
+                        <div className="applicant-profile-row">
+                          <span>Experience</span>
+                          <p>{application.experience}</p>
+                        </div>
+                      )}
+
+                      {application.skills && (
+                        <div className="applicant-profile-row">
+                          <span>Skills</span>
+                          <p>{application.skills}</p>
+                        </div>
+                      )}
+
+                      {application.education && (
+                        <div className="applicant-profile-row">
+                          <span>Education</span>
+                          <p>{application.education}</p>
+                        </div>
+                      )}
+
+                      {application.summary && (
+                        <div className="applicant-profile-row">
+                          <span>Summary</span>
+                          <p>{application.summary}</p>
+                        </div>
+                      )}
+
+                      {application.coverLetter && (
+                        <div className="applicant-profile-row">
+                          <span>Cover Letter</span>
+                          <p>{application.coverLetter}</p>
+                        </div>
+                      )}
 
                     </div>
                   )}

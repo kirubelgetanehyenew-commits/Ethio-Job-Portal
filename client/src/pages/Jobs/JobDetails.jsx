@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import {
   MapPin,
   DollarSign,
@@ -27,12 +27,22 @@ import "./JobDetails.css";
 function JobDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [job, setJob] = useState(null);
   const [loading, setLoading] = useState(true);
   const [applying, setApplying] = useState(false);
   const [checkingApplication, setCheckingApplication] = useState(true);
   const [applied, setApplied] = useState(false);
+  const [showApplicationForm, setShowApplicationForm] = useState(false);
+  const [applicationForm, setApplicationForm] = useState({
+    resume: "",
+    experience: "",
+    skills: "",
+    education: "",
+    summary: "",
+    coverLetter: "",
+  });
   const [error, setError] = useState("");
 
   // =====================================================
@@ -100,15 +110,86 @@ function JobDetails() {
   // APPLY FOR JOB
   // =====================================================
 
-  const handleApply = async () => {
+  const handleBackToJobs = () => {
+    const targetPath = location.pathname.startsWith("/jobseeker/")
+      ? "/jobseeker/jobs"
+      : "/jobs";
+
+    navigate(targetPath);
+  };
+
+  const handleFormChange = (event) => {
+    const { name, value } = event.target;
+
+    setApplicationForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleFileChange = (event) => {
+    const file = event.target.files?.[0];
+
+    if (!file) {
+      setApplicationForm((prev) => ({
+        ...prev,
+        resume: "",
+      }));
+      return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      setApplicationForm((prev) => ({
+        ...prev,
+        resume: String(reader.result || ""),
+      }));
+    };
+
+    reader.readAsDataURL(file);
+  };
+
+  const handleApplyClick = () => {
+    if (!job || applied || checkingApplication) {
+      return;
+    }
+
+    setShowApplicationForm(true);
+  };
+
+  const handleSubmitApplication = async (event) => {
+    event.preventDefault();
+
     if (!job || applying || applied) {
+      return;
+    }
+
+    const payload = {
+      ...applicationForm,
+      resume: applicationForm.resume.trim(),
+      experience: applicationForm.experience.trim(),
+      skills: applicationForm.skills.trim(),
+      education: applicationForm.education.trim(),
+      summary: applicationForm.summary.trim(),
+      coverLetter: applicationForm.coverLetter.trim(),
+    };
+
+    const hasProfileInfo = Object.values(payload).some(
+      (value) => String(value || "").trim().length > 0
+    );
+
+    if (!hasProfileInfo) {
+      alert(
+        "Please upload your CV or provide some details about your experience, skills, or summary before applying."
+      );
       return;
     }
 
     try {
       setApplying(true);
 
-      const data = await applyForJob(job._id);
+      const data = await applyForJob(job._id, payload);
 
       alert(
         data.message ||
@@ -116,6 +197,15 @@ function JobDetails() {
       );
 
       setApplied(true);
+      setShowApplicationForm(false);
+      setApplicationForm({
+        resume: "",
+        experience: "",
+        skills: "",
+        education: "",
+        summary: "",
+        coverLetter: "",
+      });
     } catch (error) {
       console.error(error);
 
@@ -176,7 +266,7 @@ function JobDetails() {
           </p>
 
           <button
-            onClick={() => navigate("/jobs")}
+            onClick={handleBackToJobs}
             className="job-details-back-button"
           >
             <ArrowLeft size={18} />
@@ -202,7 +292,7 @@ function JobDetails() {
         ================================================= */}
 
         <button
-          onClick={() => navigate("/jobs")}
+          onClick={handleBackToJobs}
           className="job-details-back-link"
         >
           <ArrowLeft size={18} />
@@ -341,55 +431,156 @@ function JobDetails() {
               </h2>
 
               <p>
-                Submit your application and let the
-                employer know you're interested.
+                Share your CV, experience, and key
+                details so employers can review your
+                profile before deciding.
               </p>
 
-              <button
-                onClick={handleApply}
-                disabled={
-                  applying ||
-                  applied ||
-                  checkingApplication ||
-                  !job.isActive
-                }
-                className={`job-apply-button ${
-                  applied
-                    ? "job-apply-success"
-                    : !job.isActive
-                    ? "job-apply-disabled"
-                    : ""
-                }`}
-              >
-
-                {checkingApplication ? (
-                  <>
-                    <Loader2
-                      size={20}
-                      className="job-details-spinner"
+              {showApplicationForm && !applied ? (
+                <form
+                  className="job-application-form"
+                  onSubmit={handleSubmitApplication}
+                >
+                  <label>
+                    CV / Resume File
+                    <input
+                      type="file"
+                      name="resume"
+                      accept=".pdf,.doc,.docx"
+                      onChange={handleFileChange}
                     />
-                    Checking...
-                  </>
-                ) : applying ? (
-                  <>
-                    <Loader2
-                      size={20}
-                      className="job-details-spinner"
-                    />
-                    Applying...
-                  </>
-                ) : applied ? (
-                  <>
-                    <CheckCircle size={20} />
-                    Already Applied
-                  </>
-                ) : !job.isActive ? (
-                  "Job Closed"
-                ) : (
-                  "Apply Now"
-                )}
+                  </label>
 
-              </button>
+                  <label>
+                    Work Experience
+                    <textarea
+                      name="experience"
+                      rows="3"
+                      value={applicationForm.experience}
+                      onChange={handleFormChange}
+                      placeholder="Example: 3 years in frontend development..."
+                    />
+                  </label>
+
+                  <label>
+                    Skills
+                    <textarea
+                      name="skills"
+                      rows="3"
+                      value={applicationForm.skills}
+                      onChange={handleFormChange}
+                      placeholder="React, Node.js, SQL, communication..."
+                    />
+                  </label>
+
+                  <label>
+                    Education
+                    <textarea
+                      name="education"
+                      rows="2"
+                      value={applicationForm.education}
+                      onChange={handleFormChange}
+                      placeholder="BSc in Computer Science, Addis Ababa University"
+                    />
+                  </label>
+
+                  <label>
+                    Short Summary
+                    <textarea
+                      name="summary"
+                      rows="3"
+                      value={applicationForm.summary}
+                      onChange={handleFormChange}
+                      placeholder="Briefly describe your profile and why you're a good fit."
+                    />
+                  </label>
+
+                  <label>
+                    Cover Letter
+                    <textarea
+                      name="coverLetter"
+                      rows="4"
+                      value={applicationForm.coverLetter}
+                      onChange={handleFormChange}
+                      placeholder="Tell the employer why you are interested in this role."
+                    />
+                  </label>
+
+                  <div className="job-application-actions">
+                    <button
+                      type="button"
+                      className="job-application-cancel"
+                      onClick={() => setShowApplicationForm(false)}
+                    >
+                      Cancel
+                    </button>
+
+                    <button
+                      type="submit"
+                      className="job-apply-button"
+                      disabled={applying}
+                    >
+                      {applying ? (
+                        <>
+                          <Loader2
+                            size={20}
+                            className="job-details-spinner"
+                          />
+                          Submitting...
+                        </>
+                      ) : (
+                        "Submit Application"
+                      )}
+                    </button>
+                  </div>
+                </form>
+              ) : (
+                <button
+                  onClick={handleApplyClick}
+                  disabled={
+                    applying ||
+                    applied ||
+                    checkingApplication ||
+                    !job.isActive
+                  }
+                  className={`job-apply-button ${
+                    applied
+                      ? "job-apply-success"
+                      : !job.isActive
+                      ? "job-apply-disabled"
+                      : ""
+                  }`}
+                >
+
+                  {checkingApplication ? (
+                    <>
+                      <Loader2
+                        size={20}
+                        className="job-details-spinner"
+                      />
+                      Checking...
+                    </>
+                  ) : applying ? (
+                    <>
+                      <Loader2
+                        size={20}
+                        className="job-details-spinner"
+                      />
+                      Applying...
+                    </>
+                  ) : applied ? (
+                    <>
+                      <CheckCircle size={20} />
+                      Already Applied
+                    </>
+                  ) : !job.isActive ? (
+                    "Job Closed"
+                  ) : (
+                    "Apply Now"
+                  )}
+
+                </button>
+              )}
 
               {applied && (
                 <p className="job-applied-message">

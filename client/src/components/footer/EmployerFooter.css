@@ -20,6 +20,12 @@
   margin-top: auto;
 }
 
+html[data-theme="light"] .employer-footer {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f6f2 48%, #f2eee8 100%);
+  color: #111827;
+  border-top: 1px solid rgba(17, 24, 39, 0.08);
+}
+
 
 /* =========================================================
    MAIN CONTAINER
@@ -253,7 +259,7 @@
 .employer-footer-bottom p {
   margin: 0;
 
-  color: #64748b;
+  color: #94a3b8;
 
   font-size: 13px;
 }
@@ -269,7 +275,7 @@
 
 
 .employer-footer-bottom-links a {
-  color: #64748b;
+  color: #94a3b8;
 
   text-decoration: none;
 

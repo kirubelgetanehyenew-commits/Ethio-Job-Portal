@@ -6,11 +6,11 @@ function DashboardHeader({
   return (
     <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-10 gap-6">
       <div>
-        <h1 className="text-4xl lg:text-5xl font-black text-slate-900">
+        <h1 className="text-4xl lg:text-5xl font-black text-slate-100">
           {title}
         </h1>
 
-        <p className="text-gray-500 mt-2 text-lg">
+        <p className="text-slate-400 mt-2 text-lg">
           {subtitle}
         </p>
       </div>

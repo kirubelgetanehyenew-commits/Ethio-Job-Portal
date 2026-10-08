@@ -12,7 +12,7 @@ function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-lg border-b border-slate-200 shadow-sm">
+    <header className="sticky top-0 z-50 bg-[#0e1a2e]/90 backdrop-blur-lg border-b border-white/10 shadow-sm">
       <div className="max-w-7xl mx-auto flex items-center justify-between px-6 h-20">
 
         {/* Logo */}
@@ -20,18 +20,18 @@ function Navbar() {
           to="/"
           className="flex items-center gap-3 group"
         >
-          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-600 via-teal-600 to-emerald-700 flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform duration-300">
+          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-500 via-violet-500 to-cyan-400 flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform duration-300">
             <span className="text-white font-black text-2xl">
               E
             </span>
           </div>
 
           <div>
-            <h1 className="text-2xl font-black text-slate-900 tracking-tight">
+            <h1 className="text-2xl font-black text-slate-100 tracking-tight">
               Ethio Job
             </h1>
 
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-slate-400">
               Ethiopia's Career Platform
             </p>
           </div>
@@ -42,21 +42,21 @@ function Navbar() {
 
           <Link
             to="/"
-            className="font-semibold text-slate-700 hover:text-emerald-600 transition"
+            className="font-semibold text-slate-300 hover:text-indigo-300 transition"
           >
             Home
           </Link>
 
           <Link
             to="/jobs"
-            className="font-semibold text-slate-700 hover:text-emerald-600 transition"
+            className="font-semibold text-slate-300 hover:text-indigo-300 transition"
           >
             Jobs
           </Link>
 
           <Link
             to="/companies"
-            className="font-semibold text-slate-700 hover:text-emerald-600 transition"
+            className="font-semibold text-slate-300 hover:text-indigo-300 transition"
           >
             Companies
           </Link>
@@ -64,7 +64,7 @@ function Navbar() {
           {user?.role === "jobseeker" && (
             <Link
               to="/my-applications"
-              className="font-semibold text-slate-700 hover:text-emerald-600 transition"
+              className="font-semibold text-slate-300 hover:text-indigo-300 transition"
             >
               Applications
             </Link>
@@ -79,21 +79,21 @@ function Navbar() {
             <>
               <Link
                 to="/login"
-                className="font-semibold text-slate-700 hover:text-emerald-600 transition"
+                className="font-semibold text-slate-300 hover:text-indigo-300 transition"
               >
                 Login
               </Link>
 
               <Link
                 to="/register"
-                className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+                className="bg-indigo-500 hover:bg-indigo-400 text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
               >
                 Register
               </Link>
             </>
           ) : (
             <>
-              <span className="font-semibold text-slate-700">
+              <span className="font-semibold text-slate-300">
                 {user.fullName}
               </span>
 

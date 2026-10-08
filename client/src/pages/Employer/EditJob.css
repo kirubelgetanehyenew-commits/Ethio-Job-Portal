@@ -5,13 +5,36 @@
 .edit-job-page {
   min-height: 100vh;
   padding: 40px 20px 70px;
-  background:
-    radial-gradient(
+  background: radial-gradient(
       circle at top left,
       rgba(255, 237, 213, 0.45),
       transparent 35%
     ),
-    #f8fafc;
+    #101e34;
+}
+
+html[data-theme="light"] .edit-job-page {
+  background: linear-gradient(135deg, #faf5ee 0%, #ffffff 44%, #f3f8f9 100%);
+}
+
+html[data-theme="light"] .edit-job-header h2,
+html[data-theme="light"] .edit-job-header p,
+html[data-theme="light"] .edit-job-form label,
+html[data-theme="light"] .edit-job-form input,
+html[data-theme="light"] .edit-job-form textarea,
+html[data-theme="light"] .edit-job-form select,
+html[data-theme="light"] .edit-job-loading h2,
+html[data-theme="light"] .edit-job-loading p {
+  color: #111827;
+}
+
+html[data-theme="light"] .edit-job-card,
+html[data-theme="light"] .edit-job-form input,
+html[data-theme="light"] .edit-job-form textarea,
+html[data-theme="light"] .edit-job-form select,
+html[data-theme="light"] .edit-job-loading {
+  background: #ffffff;
+  border-color: rgba(17, 24, 39, 0.08);
 }
 
 .edit-job-container {
@@ -37,7 +60,7 @@
   width: 68px;
   height: 68px;
   border-radius: 18px;
-  background: #fff7ed;
+  background: rgba(251, 146, 60, 0.12);
   color: #f97316;
   display: flex;
   align-items: center;
@@ -48,12 +71,12 @@
   margin: 20px 0 6px;
   font-size: 22px;
   font-weight: 800;
-  color: #0f172a;
+  color: #f1f5f9;
 }
 
 .edit-job-loading p {
   margin: 0;
-  color: #64748b;
+  color: #94a3b8;
 }
 
 .edit-job-spin {
@@ -84,7 +107,7 @@
   align-items: center;
   gap: 8px;
 
-  color: #475569;
+  color: #cbd5e1;
   font-size: 15px;
   font-weight: 700;
 
@@ -93,7 +116,7 @@
 }
 
 .edit-job-back-button:hover {
-  color: #ea580c;
+  color: #fb923c;
 }
 
 /* =========================================
@@ -136,7 +159,7 @@
 .edit-job-header-label {
   margin: 0;
 
-  color: #ea580c;
+  color: #fb923c;
 
   font-size: 13px;
   font-weight: 800;
@@ -147,7 +170,7 @@
 .edit-job-header h1 {
   margin: 4px 0 0;
 
-  color: #0f172a;
+  color: #f1f5f9;
 
   font-size: clamp(34px, 5vw, 48px);
   line-height: 1.05;
@@ -157,7 +180,7 @@
 .edit-job-header-description {
   margin: 10px 0 0;
 
-  color: #64748b;
+  color: #94a3b8;
 
   font-size: 17px;
   line-height: 1.6;
@@ -176,11 +199,11 @@
   align-items: flex-start;
   gap: 10px;
 
-  border: 1px solid #fecaca;
+  border: 1px solid rgba(248, 113, 113, 0.35);
   border-radius: 16px;
 
-  background: #fef2f2;
-  color: #b91c1c;
+  background: rgba(248, 113, 113, 0.1);
+  color: #f87171;
 
   font-size: 15px;
   line-height: 1.5;
@@ -197,9 +220,8 @@
 .edit-job-form {
   overflow: hidden;
 
-  background: white;
-
-  border: 1px solid #fed7aa;
+  background: var(--color-surface);
+  border: 1px solid rgba(251, 146, 60, 0.35);
   border-radius: 30px;
 
   box-shadow:
@@ -267,19 +289,19 @@
 }
 
 .edit-job-section-icon.orange {
-  background: #ffedd5;
-  color: #ea580c;
+  background: rgba(251, 146, 60, 0.2);
+  color: #fb923c;
 }
 
 .edit-job-section-icon.amber {
-  background: #fef3c7;
-  color: #d97706;
+  background: rgba(251, 191, 36, 0.12);
+  color: #fbbf24;
 }
 
 .edit-job-section-heading h3 {
   margin: 0;
 
-  color: #0f172a;
+  color: #f1f5f9;
 
   font-size: 20px;
   font-weight: 800;
@@ -288,7 +310,7 @@
 .edit-job-section-heading p {
   margin: 3px 0 0;
 
-  color: #64748b;
+  color: #94a3b8;
 
   font-size: 14px;
 }
@@ -320,7 +342,7 @@
 
   margin-bottom: 8px;
 
-  color: #334155;
+  color: #e2e8f0;
 
   font-size: 14px;
   font-weight: 800;
@@ -328,7 +350,7 @@
 
 .edit-job-field label span {
   margin-left: 4px;
-  color: #ef4444;
+  color: #f87171;
 }
 
 /* =========================================
@@ -347,12 +369,12 @@
 
   padding: 0 16px;
 
-  border: 1px solid #cbd5e1;
+  border: 1px solid rgba(148, 163, 184, 0.25);
   border-radius: 12px;
 
-  background: #f8fafc;
+  background: #101e34;
 
-  color: #0f172a;
+  color: #f1f5f9;
 
   font-family: inherit;
   font-size: 15px;
@@ -386,7 +408,7 @@
 .edit-job-input-wrapper input:focus,
 .edit-job-input-wrapper select:focus,
 .edit-job-field > select:focus {
-  background: white;
+  background: var(--color-surface);
   border-color: #f97316;
 
   box-shadow:
@@ -421,12 +443,12 @@
 
   padding: 16px 16px 16px 48px;
 
-  border: 1px solid #cbd5e1;
+  border: 1px solid rgba(148, 163, 184, 0.25);
   border-radius: 12px;
 
-  background: #f8fafc;
+  background: #101e34;
 
-  color: #0f172a;
+  color: #f1f5f9;
 
   font-family: inherit;
   font-size: 15px;
@@ -447,7 +469,7 @@
 }
 
 .edit-job-textarea-wrapper textarea:focus {
-  background: white;
+  background: var(--color-surface);
   border-color: #f97316;
 
   box-shadow:
@@ -485,7 +507,7 @@
 .edit-job-description-section {
   padding-top: 38px;
 
-  border-top: 1px solid #e2e8f0;
+  border-top: 1px solid rgba(148, 163, 184, 0.18);
 }
 
 /* =========================================
@@ -500,7 +522,7 @@
   justify-content: flex-end;
   gap: 12px;
 
-  border-top: 1px solid #e2e8f0;
+  border-top: 1px solid rgba(148, 163, 184, 0.18);
 }
 
 .edit-job-cancel-button,
@@ -526,15 +548,14 @@
 }
 
 .edit-job-cancel-button {
-  border: 1px solid #cbd5e1;
+  border: 1px solid rgba(148, 163, 184, 0.25);
 
-  background: white;
-
-  color: #475569;
+  background: var(--color-surface);
+  color: #cbd5e1;
 }
 
 .edit-job-cancel-button:hover:not(:disabled) {
-  background: #f8fafc;
+  background: #101e34;
 }
 
 .edit-job-save-button {
@@ -585,7 +606,7 @@
 }
 
 .edit-job-footer-note span {
-  color: #ef4444;
+  color: #f87171;
 }
 
 /* =========================================

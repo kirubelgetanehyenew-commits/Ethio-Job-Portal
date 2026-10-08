@@ -7,23 +7,20 @@ function StatisticsSection() {
   ];
 
   return (
-    <section className="bg-gray-100 py-16">
+    <section className="py-16" style={{ background: "var(--color-bg-alt)" }}>
       <div className="max-w-7xl mx-auto px-6">
-        <h2 className="text-3xl font-bold text-center mb-10">
+        <h2 className="text-3xl font-bold text-center mb-10 text-slate-100">
           Platform Statistics
         </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {stats.map((stat) => (
-            <div
-              key={stat.title}
-              className="bg-white rounded-xl shadow-md p-6 text-center"
-            >
-              <h3 className="text-4xl font-bold text-blue-600">
+            <div key={stat.title} className="stat-card text-center">
+              <h3 className="stat-card-value" style={{ marginTop: 0 }}>
                 {stat.value}
               </h3>
 
-              <p className="mt-3 text-gray-600">
+              <p className="stat-card-title">
                 {stat.title}
               </p>
             </div>

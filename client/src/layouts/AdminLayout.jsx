@@ -3,6 +3,8 @@ import { Outlet } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 
 import AdminSidebar from "../components/sidebar/AdminSidebar";
+import ThemeToggle from "../components/common/ThemeToggle";
+import Footer from "../components/layout/Footer";
 
 import "./AdminLayout.css";
 
@@ -36,11 +38,17 @@ function AdminLayout() {
           <h1 className="admin-top-title">
             Admin Dashboard
           </h1>
+
+          <div className="admin-mobile-theme-toggle">
+            <ThemeToggle />
+          </div>
         </header>
 
         <main className="admin-content">
           <Outlet />
         </main>
+
+        <Footer />
       </div>
     </div>
   );

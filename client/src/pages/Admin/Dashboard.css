@@ -5,9 +5,116 @@
 .admin-dashboard {
   min-height: 100%;
   padding: 10px 4px 40px;
-  color: #0f172a;
+  color: #f1f5f9;
 }
 
+html[data-theme="light"] .admin-dashboard {
+  color: #111827;
+}
+
+html[data-theme="light"] .admin-welcome-card {
+  background: linear-gradient(135deg, #f3ebdf 0%, #ffffff 42%, #edf5f7 100%);
+  color: #111827;
+  box-shadow: 0 18px 40px rgba(17, 24, 39, 0.08);
+  border: 1px solid rgba(17, 24, 39, 0.06);
+}
+
+html[data-theme="light"] .admin-welcome-card::after {
+  background: rgba(212, 167, 90, 0.08);
+}
+
+html[data-theme="light"] .admin-welcome-icon {
+  background: rgba(212, 167, 90, 0.12);
+  border-color: rgba(167, 125, 50, 0.14);
+  color: #8a6324;
+}
+
+html[data-theme="light"] .admin-welcome-label,
+html[data-theme="light"] .admin-welcome-content h1,
+html[data-theme="light"] .admin-welcome-content p,
+html[data-theme="light"] .admin-summary-card strong,
+html[data-theme="light"] .admin-summary-card span,
+html[data-theme="light"] .admin-summary-card small,
+html[data-theme="light"] .admin-section-heading span,
+html[data-theme="light"] .admin-section-heading h2,
+html[data-theme="light"] .admin-live-indicator,
+html[data-theme="light"] .admin-stat-card-body span,
+html[data-theme="light"] .admin-stat-card-body h3,
+html[data-theme="light"] .admin-stat-card-body p,
+html[data-theme="light"] .admin-overview-card,
+html[data-theme="light"] .admin-overview-header span,
+html[data-theme="light"] .admin-overview-header h2,
+html[data-theme="light"] .admin-overview-content p,
+html[data-theme="light"] .admin-overview-content strong,
+html[data-theme="light"] .admin-overview-footer span,
+html[data-theme="light"] .admin-overview-footer strong,
+html[data-theme="light"] .admin-activity-item,
+html[data-theme="light"] .admin-activity-item p,
+html[data-theme="light"] .admin-activity-item time {
+  color: #111827;
+}
+
+html[data-theme="light"] .admin-summary-card {
+  background: #ffffff;
+  border-color: rgba(17, 24, 39, 0.08);
+  box-shadow: 0 12px 28px rgba(17, 24, 39, 0.06);
+}
+
+html[data-theme="light"] .admin-summary-icon,
+html[data-theme="light"] .admin-summary-icon.jobs,
+html[data-theme="light"] .admin-summary-icon.users {
+  background: rgba(212, 167, 90, 0.12);
+  color: #8a6324;
+}
+
+html[data-theme="light"] .admin-section-heading {
+  color: #111827;
+}
+
+html[data-theme="light"] .admin-live-indicator {
+  background: rgba(34, 197, 94, 0.08);
+  border: 1px solid rgba(34, 197, 94, 0.14);
+  color: #166534;
+}
+
+html[data-theme="light"] .admin-live-indicator span {
+  background: #16a34a;
+}
+
+html[data-theme="light"] .admin-stat-card,
+html[data-theme="light"] .admin-overview-card {
+  background: #ffffff;
+  border-color: rgba(17, 24, 39, 0.08);
+  box-shadow: 0 12px 28px rgba(17, 24, 39, 0.06);
+}
+
+html[data-theme="light"] .admin-stat-card.blue .admin-stat-icon,
+html[data-theme="light"] .admin-stat-card.indigo .admin-stat-icon,
+html[data-theme="light"] .admin-stat-card.green .admin-stat-icon,
+html[data-theme="light"] .admin-stat-card.purple .admin-stat-icon,
+html[data-theme="light"] .admin-stat-card.orange .admin-stat-icon,
+html[data-theme="light"] .admin-stat-card.red .admin-stat-icon {
+  background: rgba(212, 167, 90, 0.12);
+  color: #8a6324;
+}
+
+html[data-theme="light"] .admin-stat-arrow {
+  color: #6b7280;
+}
+
+html[data-theme="light"] .admin-overview-header,
+html[data-theme="light"] .admin-overview-footer {
+  border-color: rgba(17, 24, 39, 0.08);
+}
+
+html[data-theme="light"] .admin-overview-footer div {
+  border-right-color: rgba(17, 24, 39, 0.08);
+}
+
+html[data-theme="light"] .admin-overview-icon {
+  background: rgba(212, 167, 90, 0.12);
+  color: #8a6324;
+}
 
 /* =========================================================
    WELCOME CARD
@@ -166,9 +273,9 @@
 
   padding: 20px;
 
-  background: #ffffff;
+  background: #0e1a2e;
 
-  border: 1px solid #e2e8f0;
+  border: 1px solid rgba(148, 163, 184, 0.18);
 
   border-radius: 18px;
 
@@ -199,19 +306,19 @@
 
   border-radius: 14px;
 
-  background: #fff7ed;
+  background: rgba(251, 146, 60, 0.12);
 
-  color: #ea580c;
+  color: #fb923c;
 }
 
 .admin-summary-icon.jobs {
-  background: #eff6ff;
-  color: #2563eb;
+  background: #101e34;
+  color: #818cf8;
 }
 
 .admin-summary-icon.users {
-  background: #f5f3ff;
-  color: #7c3aed;
+  background: rgba(167, 139, 250, 0.12);
+  color: #a78bfa;
 }
 
 .admin-summary-card span {
@@ -220,7 +327,7 @@
   font-size: 12px;
   font-weight: 700;
 
-  color: #64748b;
+  color: #94a3b8;
 }
 
 .admin-summary-card strong {
@@ -231,7 +338,7 @@
   font-size: 25px;
   font-weight: 900;
 
-  color: #0f172a;
+  color: #f1f5f9;
 }
 
 .admin-summary-card small {
@@ -272,7 +379,7 @@
   font-size: 24px;
   font-weight: 900;
 
-  color: #0f172a;
+  color: #f1f5f9;
 }
 
 .admin-live-indicator {
@@ -284,9 +391,9 @@
 
   border-radius: 999px;
 
-  background: #f0fdf4;
+  background: rgba(52, 211, 153, 0.08);
 
-  color: #15803d;
+  color: #4ade80;
 
   font-size: 12px;
   font-weight: 700;
@@ -329,9 +436,9 @@
 
   padding: 22px;
 
-  background: #ffffff;
+  background: #0e1a2e;
 
-  border: 1px solid #e2e8f0;
+  border: 1px solid rgba(148, 163, 184, 0.18);
 
   border-radius: 20px;
 
@@ -418,33 +525,33 @@
 }
 
 .admin-stat-card.blue .admin-stat-icon {
-  background: #eff6ff;
-  color: #2563eb;
+  background: #101e34;
+  color: #818cf8;
 }
 
 .admin-stat-card.green .admin-stat-icon {
-  background: #f0fdf4;
-  color: #16a34a;
+  background: rgba(52, 211, 153, 0.08);
+  color: #4ade80;
 }
 
 .admin-stat-card.purple .admin-stat-icon {
-  background: #faf5ff;
-  color: #9333ea;
+  background: rgba(167, 139, 250, 0.12);
+  color: #c084fc;
 }
 
 .admin-stat-card.orange .admin-stat-icon {
-  background: #fff7ed;
-  color: #ea580c;
+  background: rgba(251, 146, 60, 0.12);
+  color: #fb923c;
 }
 
 .admin-stat-card.indigo .admin-stat-icon {
-  background: #eef2ff;
-  color: #4f46e5;
+  background: #101e34;
+  color: #818cf8;
 }
 
 .admin-stat-card.red .admin-stat-icon {
-  background: #fef2f2;
-  color: #dc2626;
+  background: rgba(248, 113, 113, 0.1);
+  color: #f87171;
 }
 
 .admin-stat-arrow {
@@ -456,7 +563,7 @@
 }
 
 .admin-stat-card:hover .admin-stat-arrow {
-  color: #2563eb;
+  color: #818cf8;
 
   transform: translate(2px, -2px);
 }
@@ -474,7 +581,7 @@
   font-size: 13px;
   font-weight: 700;
 
-  color: #64748b;
+  color: #94a3b8;
 }
 
 .admin-stat-card-body h3 {
@@ -483,7 +590,7 @@
   font-size: 32px;
   font-weight: 900;
 
-  color: #0f172a;
+  color: #f1f5f9;
 
   letter-spacing: -0.04em;
 }
@@ -504,9 +611,9 @@
 .admin-overview-card {
   padding: 26px;
 
-  background: #ffffff;
+  background: #0e1a2e;
 
-  border: 1px solid #e2e8f0;
+  border: 1px solid rgba(148, 163, 184, 0.18);
 
   border-radius: 22px;
 
@@ -521,7 +628,7 @@
 
   padding-bottom: 20px;
 
-  border-bottom: 1px solid #f1f5f9;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.12);
 }
 
 .admin-overview-header span {
@@ -539,7 +646,7 @@
   font-size: 22px;
   font-weight: 900;
 
-  color: #0f172a;
+  color: #f1f5f9;
 }
 
 .admin-overview-icon {
@@ -552,9 +659,9 @@
 
   border-radius: 15px;
 
-  background: #fff7ed;
+  background: rgba(251, 146, 60, 0.12);
 
-  color: #ea580c;
+  color: #fb923c;
 }
 
 .admin-overview-content {
@@ -564,7 +671,7 @@
 .admin-overview-content p {
   margin: 0 0 10px;
 
-  color: #64748b;
+  color: #94a3b8;
 
   font-size: 14px;
 
@@ -572,7 +679,7 @@
 }
 
 .admin-overview-content strong {
-  color: #0f172a;
+  color: #f1f5f9;
 }
 
 
@@ -586,7 +693,7 @@
   grid-template-columns:
     repeat(4, 1fr);
 
-  border-top: 1px solid #f1f5f9;
+  border-top: 1px solid rgba(148, 163, 184, 0.12);
 
   padding-top: 20px;
 }
@@ -594,7 +701,7 @@
 .admin-overview-footer div {
   padding: 0 20px;
 
-  border-right: 1px solid #e2e8f0;
+  border-right: 1px solid rgba(148, 163, 184, 0.18);
 }
 
 .admin-overview-footer div:first-child {
@@ -622,7 +729,7 @@
   font-size: 21px;
   font-weight: 900;
 
-  color: #0f172a;
+  color: #f1f5f9;
 }
 
 

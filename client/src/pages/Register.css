@@ -4,7 +4,7 @@
 
 .register-page {
   min-height: calc(100vh - 80px);
-  background: #f8fafc;
+  background: var(--gradient-hero);
 
   display: flex;
   align-items: center;
@@ -25,14 +25,15 @@
   display: grid;
   grid-template-columns: 0.95fr 1.05fr;
 
-  background: #ffffff;
+  background: var(--color-surface);
 
   border-radius: 28px;
 
   overflow: hidden;
 
-  box-shadow:
-    0 25px 60px rgba(15, 23, 42, 0.12);
+  border: 1px solid var(--glass-border);
+
+  box-shadow: var(--shadow-lg);
 }
 
 
@@ -51,13 +52,7 @@
 
   color: #ffffff;
 
-  background:
-    linear-gradient(
-      135deg,
-      #f97316 0%,
-      #f59e0b 50%,
-      #eab308 100%
-    );
+  background: var(--gradient-brand);
 
   overflow: hidden;
 }
@@ -140,7 +135,7 @@
 
   border-radius: 10px;
 
-  background: rgba(255, 255, 255, 0.75);
+  background: rgba(14, 26, 46, 0.75);
 }
 
 .register-hero-decoration div:nth-child(2) {
@@ -176,7 +171,7 @@
 .register-heading h2 {
   margin: 0;
 
-  color: #0f172a;
+  color: var(--color-text);
 
   font-size: 38px;
 
@@ -190,7 +185,7 @@
 .register-heading p {
   margin: 10px 0 0;
 
-  color: #64748b;
+  color: var(--color-text-muted);
 
   font-size: 16px;
 }
@@ -229,7 +224,7 @@
 
   left: 18px;
 
-  color: #94a3b8;
+  color: var(--color-text-muted);
 
   pointer-events: none;
 
@@ -244,15 +239,15 @@
 
   padding: 0 18px 0 52px;
 
-  border: 1px solid #cbd5e1;
+  border: 1px solid rgba(148, 163, 184, 0.25);
 
   border-radius: 15px;
 
   outline: none;
 
-  background: #ffffff;
+  background: var(--color-bg);
 
-  color: #0f172a;
+  color: var(--color-text);
 
   font-size: 15px;
 
@@ -264,27 +259,27 @@
 
 
 .register-input-group input::placeholder {
-  color: #94a3b8;
+  color: var(--color-text-muted);
 }
 
 
 .register-input-group input:hover {
-  border-color: #94a3b8;
+  border-color: rgba(148, 163, 184, 0.3);
 }
 
 
 .register-input-group input:focus {
-  border-color: #f97316;
+  border-color: var(--color-primary);
 
-  background: #ffffff;
+  background: var(--color-background-soft);
 
   box-shadow:
-    0 0 0 4px rgba(249, 115, 22, 0.12);
+    0 0 0 4px rgba(91, 108, 255, 0.12);
 }
 
 
 .register-input-group:focus-within svg {
-  color: #f97316;
+  color: var(--color-primary);
 }
 
 
@@ -307,19 +302,13 @@
 
   color: #ffffff;
 
-  background:
-    linear-gradient(
-      135deg,
-      #f97316,
-      #f59e0b
-    );
+  background: var(--gradient-brand);
 
   font-size: 17px;
 
   font-weight: 800;
 
-  box-shadow:
-    0 10px 25px rgba(249, 115, 22, 0.25);
+  box-shadow: var(--shadow-glow);
 
   transition:
     transform 0.25s ease,
@@ -331,8 +320,8 @@
 .register-button:hover {
   transform: translateY(-2px);
 
-  box-shadow:
-    0 15px 30px rgba(249, 115, 22, 0.32);
+  box-shadow: 0 16px 32px rgba(91, 108, 255, 0.28);
+  filter: brightness(1.04);
 }
 
 
@@ -350,14 +339,14 @@
 
   text-align: center;
 
-  color: #64748b;
+  color: var(--color-text-muted);
 
   font-size: 15px;
 }
 
 
 .register-login-text a {
-  color: #ea580c;
+  color: var(--color-primary);
 
   font-weight: 800;
 
@@ -368,7 +357,7 @@
 
 
 .register-login-text a:hover {
-  color: #c2410c;
+  color: var(--color-primary);
 
   text-decoration: underline;
 }
