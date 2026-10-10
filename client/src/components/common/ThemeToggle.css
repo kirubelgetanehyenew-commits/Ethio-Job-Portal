@@ -20,7 +20,10 @@
   box-shadow: 0 12px 24px rgba(167, 125, 50, 0.18);
 }
 
-.theme-toggle svg {
+.theme-toggle svg,
+.theme-toggle svg path,
+.theme-toggle svg line,
+.theme-toggle svg polyline {
   display: block;
   flex-shrink: 0;
   color: var(--theme-toggle-icon, var(--color-text));
