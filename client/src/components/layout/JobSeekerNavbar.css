@@ -75,6 +75,17 @@
   gap: 12px;
 }
 
+.jobseeker-user-theme {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+
+.jobseeker-user-theme .theme-toggle {
+  padding: 8px 10px;
+  font-size: 11px;
+}
+
 .jobseeker-user-avatar {
   width: 42px;
   height: 42px;
