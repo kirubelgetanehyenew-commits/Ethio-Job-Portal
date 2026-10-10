@@ -3,6 +3,7 @@
 ========================================================= */
 
 .employer-footer {
+  position: static;
   width: 100%;
 
   background:

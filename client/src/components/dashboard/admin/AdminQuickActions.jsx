@@ -4,6 +4,8 @@ import {
   Building2,
   Briefcase,
   FileText,
+  BarChart3,
+  Database,
 } from "lucide-react";
 
 function AdminQuickActions() {
@@ -32,6 +34,18 @@ function AdminQuickActions() {
       icon: FileText,
       link: "/admin/applications",
     },
+    {
+      title: "Analytics",
+      description: "Track platform performance and trends.",
+      icon: BarChart3,
+      link: "/admin/analytics",
+    },
+    {
+      title: "All Records",
+      description: "Monitor users, employers, companies, and jobs together.",
+      icon: Database,
+      link: "/admin/records",
+    },
   ];
 
   return (
@@ -40,7 +54,7 @@ function AdminQuickActions() {
         Quick Actions
       </h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-6">
         {actions.map((action) => {
           const Icon = action.icon;
 

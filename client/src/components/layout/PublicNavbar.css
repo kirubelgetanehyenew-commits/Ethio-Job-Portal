@@ -226,12 +226,22 @@ html[data-theme="light"] .public-navbar-register {
   background: #0e1a2e;
   color: #e2e8f0;
   cursor: pointer;
-  transition: background 0.2s ease, color 0.2s ease;
+  transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.public-navbar-mobile-button:hover {
-  background: rgba(91, 108, 255, 0.16);
-  color: #a5b4fc;
+.public-navbar-mobile-button:hover,
+.public-navbar-mobile-button:focus-visible,
+.public-navbar-mobile-button:active {
+  background: rgba(91, 108, 255, 0.18);
+  color: #f8fafc;
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.18);
+  outline: none;
+}
+
+html[data-theme="light"] .public-navbar-mobile-button,
+html[data-theme="light"] .public-navbar-mobile-button svg {
+  color: #f8fafc !important;
+  stroke: currentColor !important;
 }
 
 .public-navbar-mobile-menu {

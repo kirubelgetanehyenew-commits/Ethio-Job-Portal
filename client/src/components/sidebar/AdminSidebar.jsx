@@ -6,6 +6,7 @@ import {
   Building2,
   FileText,
   BarChart3,
+  Database,
   LogOut,
 } from "lucide-react";
 
@@ -49,6 +50,17 @@ function AdminSidebar({ isOpen = false, onClose = () => {} }) {
         >
           <Users size={20} />
           <span>Users</span>
+        </NavLink>
+
+        <NavLink
+          to="/admin/records"
+          onClick={onClose}
+          className={({ isActive }) =>
+            `admin-sidebar-link ${isActive ? "active" : ""}`
+          }
+        >
+          <Database size={20} />
+          <span>All Records</span>
         </NavLink>
 
         <NavLink
