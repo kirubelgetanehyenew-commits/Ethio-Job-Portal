@@ -10,8 +10,83 @@
       rgba(16, 185, 129, 0.07),
       transparent 30%
     ),
-    #f5f7fa;
+    #0a1526;
   color: #172033;
+}
+
+html[data-theme="light"] .my-companies-page {
+  background: linear-gradient(135deg, #f7f5f0 0%, #ffffff 50%, #f4f7f8 100%);
+  color: #111827;
+}
+
+html[data-theme="light"] .my-companies-title,
+html[data-theme="light"] .my-companies-description,
+html[data-theme="light"] .my-companies-count-number,
+html[data-theme="light"] .my-companies-empty h3,
+html[data-theme="light"] .my-companies-empty p,
+html[data-theme="light"] .company-card h3,
+html[data-theme="light"] .company-card p,
+html[data-theme="light"] .company-card .company-meta {
+  color: #111827;
+}
+
+html[data-theme="light"] .my-companies-count,
+html[data-theme="light"] .my-companies-empty,
+html[data-theme="light"] .company-card,
+html[data-theme="light"] .company-info-item,
+html[data-theme="light"] .company-card-actions,
+html[data-theme="light"] .company-card-body {
+  background: #ffffff;
+  border-color: rgba(17, 24, 39, 0.08);
+}
+
+html[data-theme="light"] .company-card-header {
+  background: linear-gradient(135deg, #f4efe7 0%, #ffffff 42%, #edf7f3 100%);
+  color: #111827;
+}
+
+html[data-theme="light"] .company-card-name,
+html[data-theme="light"] .company-card-industry,
+html[data-theme="light"] .company-info-label,
+html[data-theme="light"] .company-info-value,
+html[data-theme="light"] .company-card-description p,
+html[data-theme="light"] .company-manage-jobs {
+  color: #111827;
+}
+
+html[data-theme="light"] .company-card-badge {
+  background: rgba(16, 185, 129, 0.08);
+  border-color: rgba(16, 185, 129, 0.18);
+  color: #0f766e;
+}
+
+html[data-theme="light"] .company-info-icon {
+  background: #f3f4f6;
+  color: #4b5563;
+}
+
+html[data-theme="light"] .company-action-edit {
+  background: #f3f4f6;
+  color: #111827;
+}
+
+html[data-theme="light"] .company-action-delete {
+  background: rgba(239, 68, 68, 0.08);
+  color: #b91c1c;
+}
+
+html[data-theme="light"] .company-action-jobs,
+html[data-theme="light"] .my-companies-empty-button {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #ffffff;
+}
+
+html[data-theme="light"] .company-card-description {
+  border-color: rgba(17, 24, 39, 0.08);
+}
+
+html[data-theme="light"] .company-card-actions {
+  border-color: rgba(17, 24, 39, 0.08);
 }
 
 .my-companies-container {
@@ -39,7 +114,7 @@
 
 .my-companies-eyebrow {
   margin: 0 0 8px;
-  color: #059669;
+  color: #34d399;
   font-size: 13px;
   font-weight: 900;
   letter-spacing: 1.5px;
@@ -48,7 +123,7 @@
 
 .my-companies-title {
   margin: 0;
-  color: #0f172a;
+  color: #f1f5f9;
   font-size: clamp(38px, 5vw, 58px);
   line-height: 1.05;
   font-weight: 900;
@@ -57,7 +132,7 @@
 
 .my-companies-description {
   margin: 15px 0 0;
-  color: #64748b;
+  color: #94a3b8;
   font-size: 17px;
   line-height: 1.7;
 }
@@ -130,9 +205,8 @@
   margin-bottom: 24px;
   padding: 10px 17px 10px 10px;
 
-  background: white;
-
-  border: 1px solid #e2e8f0;
+  background: var(--color-surface);
+  border: 1px solid rgba(148, 163, 184, 0.18);
   border-radius: 15px;
 
   box-shadow:
@@ -149,14 +223,14 @@
 
   border-radius: 11px;
 
-  background: #ecfdf5;
-  color: #059669;
+  background: rgba(52, 211, 153, 0.08);
+  color: #34d399;
 }
 
 .my-companies-count-number {
   margin: 0;
 
-  color: #0f172a;
+  color: #f1f5f9;
 
   font-size: 14px;
   font-weight: 900;
@@ -183,9 +257,8 @@
 
   text-align: center;
 
-  background: white;
-
-  border: 1px solid #e2e8f0;
+  background: var(--color-surface);
+  border: 1px solid rgba(148, 163, 184, 0.18);
   border-radius: 28px;
 
   box-shadow:
@@ -226,14 +299,14 @@
 
   border-radius: 23px;
 
-  background: #ecfdf5;
-  color: #059669;
+  background: rgba(52, 211, 153, 0.08);
+  color: #34d399;
 }
 
 .my-companies-empty-title {
   margin: 25px 0 0;
 
-  color: #0f172a;
+  color: #f1f5f9;
 
   font-size: 29px;
   font-weight: 900;
@@ -244,7 +317,7 @@
 
   margin: 12px auto 0;
 
-  color: #64748b;
+  color: #94a3b8;
 
   font-size: 15px;
   line-height: 1.75;
@@ -307,9 +380,8 @@
 
   min-width: 0;
 
-  background: white;
-
-  border: 1px solid #e2e8f0;
+  background: var(--color-surface);
+  border: 1px solid rgba(148, 163, 184, 0.18);
   border-radius: 23px;
 
   box-shadow:
@@ -324,7 +396,7 @@
 .company-card:hover {
   transform: translateY(-4px);
 
-  border-color: #d1fae5;
+  border-color: rgba(52, 211, 153, 0.25);
 
   box-shadow:
     0 18px 40px rgba(15, 23, 42, 0.09);
@@ -490,8 +562,8 @@
 
   border-radius: 10px;
 
-  background: #f1f5f9;
-  color: #64748b;
+  background: #14243e;
+  color: #94a3b8;
 }
 
 .company-info-content {
@@ -513,7 +585,7 @@
 .company-info-value {
   margin: 0;
 
-  color: #334155;
+  color: #e2e8f0;
 
   font-size: 13px;
   font-weight: 700;
@@ -536,7 +608,7 @@
   margin-top: 21px;
   padding-top: 19px;
 
-  border-top: 1px solid #f1f5f9;
+  border-top: 1px solid rgba(148, 163, 184, 0.12);
 }
 
 .company-card-description p {
@@ -546,13 +618,14 @@
 
   overflow: hidden;
 
-  color: #64748b;
+  color: #94a3b8;
 
   font-size: 13px;
   line-height: 1.7;
 
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
 }
 
 /* =========================================================
@@ -563,7 +636,7 @@
   margin-top: auto;
   padding-top: 21px;
 
-  border-top: 1px solid #f1f5f9;
+  border-top: 1px solid rgba(148, 163, 184, 0.12);
 }
 
 .company-action-grid {
@@ -610,21 +683,21 @@
 }
 
 .company-action-edit {
-  background: #f1f5f9;
-  color: #334155;
+  background: #14243e;
+  color: #e2e8f0;
 }
 
 .company-action-edit:hover {
-  background: #e2e8f0;
+  background: #1b2c4a;
 }
 
 .company-action-delete {
-  background: #fef2f2;
-  color: #dc2626;
+  background: rgba(248, 113, 113, 0.1);
+  color: #f87171;
 }
 
 .company-action-delete:hover:not(:disabled) {
-  background: #fee2e2;
+  background: rgba(248, 113, 113, 0.18);
 }
 
 .company-action-jobs {
@@ -651,7 +724,7 @@
   border: none;
   background: transparent;
 
-  color: #059669;
+  color: #34d399;
 
   font-size: 12px;
   font-weight: 800;
@@ -664,7 +737,7 @@
 }
 
 .company-manage-jobs:hover {
-  color: #047857;
+  color: #34d399;
   gap: 10px;
 }
 

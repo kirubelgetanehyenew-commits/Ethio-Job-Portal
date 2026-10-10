@@ -7,19 +7,16 @@ function QuickActionCard({
   to,
 }) {
   return (
-    <Link
-      to={to}
-      className="bg-white rounded-2xl shadow-md p-6 hover:shadow-xl transition block"
-    >
-      <div className="mb-4">
+    <Link to={to} className="card card-hover block">
+      <div className="mb-4 stat-card-icon">
         {icon}
       </div>
 
-      <h2 className="text-xl font-bold">
+      <h2 className="text-xl font-bold text-slate-100">
         {title}
       </h2>
 
-      <p className="text-gray-500 mt-2">
+      <p className="text-slate-400 mt-2">
         {description}
       </p>
     </Link>

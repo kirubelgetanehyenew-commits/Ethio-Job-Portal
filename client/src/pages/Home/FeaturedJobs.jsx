@@ -10,8 +10,6 @@ function FeaturedJobs() {
       try {
         const data = await getAllJobs();
 
-        console.log("API Response:", data);
-
         if (data.success) {
           setJobs(data.jobs);
         }
@@ -24,45 +22,42 @@ function FeaturedJobs() {
   }, []);
 
   return (
-    <section className="py-16 bg-gray-50">
+    <section className="py-16" style={{ background: "var(--color-bg)" }}>
       <div className="max-w-7xl mx-auto px-6">
-        <h2 className="text-3xl font-bold text-center mb-10">
+        <h2 className="text-3xl font-bold text-center mb-10 text-slate-100">
           Featured Jobs
         </h2>
 
         {jobs.length === 0 ? (
-          <p className="text-center text-gray-500">
+          <p className="text-center text-slate-400">
             No jobs available.
           </p>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {jobs.map((job) => (
-              <div
-                key={job._id}
-                className="bg-white rounded-xl shadow-lg p-6 border hover:shadow-xl transition"
-              >
-                <h3 className="text-xl font-bold text-gray-800">
+              <div key={job._id} className="card card-hover">
+                <h3 className="text-xl font-bold text-slate-100">
                   {job.title}
                 </h3>
 
-                <p className="text-gray-600 mt-3">
-                  📍 {job.location}
+                <p className="text-slate-300 mt-3">
+                  {job.location}
                 </p>
 
-                <p className="text-blue-600 font-semibold mt-2">
-                  💰 ETB {job.salary}
+                <p className="text-indigo-300 font-semibold mt-2">
+                  ETB {job.salary}
                 </p>
 
-                <p className="mt-2 text-gray-700">
-                  💼 {job.jobType}
+                <p className="mt-2 text-slate-300">
+                  {job.jobType}
                 </p>
 
                 <Link
-  to={`/jobs/${job._id}`}
-  className="block w-full text-center bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700"
->
-  View Details
-</Link>
+                  to={`/jobs/${job._id}`}
+                  className="btn btn-primary mt-4 w-full"
+                >
+                  View Details
+                </Link>
               </div>
             ))}
           </div>

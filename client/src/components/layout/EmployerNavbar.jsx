@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 
 import { useAuth } from "../../context/AuthContext";
+import ThemeToggle from "../common/ThemeToggle";
 import "../../styles/dashboard/employer.css";
 
 function EmployerNavbar() {
@@ -90,6 +91,8 @@ function EmployerNavbar() {
         </nav>
 
         <div className="employer-navbar-user">
+          <ThemeToggle />
+
           <div className="employer-navbar-user-info">
             <h3 className="employer-navbar-user-name">
               {user?.fullName || "Employer"}
@@ -108,6 +111,10 @@ function EmployerNavbar() {
             <LogOut size={17} />
             <span>Logout</span>
           </button>
+        </div>
+
+        <div className="employer-mobile-theme-toggle">
+          <ThemeToggle />
         </div>
 
         <button
@@ -135,6 +142,10 @@ function EmployerNavbar() {
               {label}
             </NavLink>
           ))}
+
+          <div className="employer-mobile-menu-theme">
+            <ThemeToggle />
+          </div>
 
           <button
             type="button"

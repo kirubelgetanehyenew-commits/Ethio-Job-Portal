@@ -1,3 +1,4 @@
+@import "tailwindcss";
 @import "./styles/theme.css";
 @import "./styles/layout.css";
 @import "./styles/components.css";
@@ -15,15 +16,160 @@
 
 html {
   scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+html[data-theme="light"] {
+  color-scheme: light;
 }
 
 body {
   font-family: var(--font-family);
   font-size: var(--font-size-md);
-  background: var(--color-bg);
+  background: var(--gradient-hero);
   color: var(--color-text);
   line-height: 1.6;
   min-width: 320px;
+  transition: background var(--transition-normal), color var(--transition-normal);
+}
+
+html[data-theme="light"] body,
+html[data-theme="light"] #root,
+html[data-theme="light"] .page,
+html[data-theme="light"] main,
+html[data-theme="light"] .jobseeker-content,
+html[data-theme="light"] .employer-main,
+html[data-theme="light"] .admin-content,
+html[data-theme="light"] .jobseeker-layout,
+html[data-theme="light"] .employer-layout,
+html[data-theme="light"] .admin-layout,
+html[data-theme="light"] .home-page,
+html[data-theme="light"] .jobs-page,
+html[data-theme="light"] .jobs-search-wrapper,
+html[data-theme="light"] .jobs-search-field,
+html[data-theme="light"] .admin-top-navbar,
+html[data-theme="light"] .jobseeker-mobile-header,
+html[data-theme="light"] .admin-sidebar,
+html[data-theme="light"] .jobseeker-sidebar,
+html[data-theme="light"] .jobseeker-user-box,
+html[data-theme="light"] .jobseeker-nav-link,
+html[data-theme="light"] .jobseeker-logout-btn,
+html[data-theme="light"] .admin-sidebar-link,
+html[data-theme="light"] .admin-sidebar-logout,
+html[data-theme="light"] .public-navbar,
+html[data-theme="light"] .public-navbar-container,
+html[data-theme="light"] header {
+  background: #ffffff !important;
+}
+
+html[data-theme="light"] body,
+html[data-theme="light"] body *,
+html[data-theme="light"] p,
+html[data-theme="light"] h1,
+html[data-theme="light"] h2,
+html[data-theme="light"] h3,
+html[data-theme="light"] h4,
+html[data-theme="light"] h5,
+html[data-theme="light"] h6,
+html[data-theme="light"] span,
+html[data-theme="light"] a,
+html[data-theme="light"] li,
+html[data-theme="light"] label,
+html[data-theme="light"] div,
+html[data-theme="light"] .admin-top-title,
+html[data-theme="light"] .jobseeker-mobile-title,
+html[data-theme="light"] .jobseeker-logo-text h1,
+html[data-theme="light"] .jobseeker-logo-text p,
+html[data-theme="light"] .jobseeker-user-info h3,
+html[data-theme="light"] .jobseeker-user-info p,
+html[data-theme="light"] .jobseeker-menu-label,
+html[data-theme="light"] .jobseeker-nav-link,
+html[data-theme="light"] .admin-sidebar-header h1,
+html[data-theme="light"] .admin-sidebar-header p,
+html[data-theme="light"] .admin-sidebar-link {
+  color: var(--color-text);
+}
+
+html[data-theme="light"] .admin-top-navbar,
+html[data-theme="light"] .jobseeker-mobile-header,
+html[data-theme="light"] .jobseeker-sidebar,
+html[data-theme="light"] .admin-sidebar,
+html[data-theme="light"] .jobs-search-wrapper,
+html[data-theme="light"] .jobs-search-field {
+  border-color: rgba(17, 24, 39, 0.1) !important;
+}
+
+html[data-theme="light"] .public-navbar {
+  box-shadow: 0 10px 28px rgba(28, 36, 48, 0.08);
+}
+
+html[data-theme="light"] header a,
+html[data-theme="light"] header button,
+html[data-theme="light"] header span,
+html[data-theme="light"] header .text-slate-100,
+html[data-theme="light"] header .text-slate-300,
+html[data-theme="light"] header .text-slate-400,
+html[data-theme="light"] header .text-slate-500,
+html[data-theme="light"] .text-slate-100,
+html[data-theme="light"] .text-slate-300,
+html[data-theme="light"] .text-slate-400,
+html[data-theme="light"] .text-slate-500,
+html[data-theme="light"] .text-slate-600,
+html[data-theme="light"] .text-slate-700,
+html[data-theme="light"] .text-slate-800,
+html[data-theme="light"] .text-slate-900 {
+  color: #111827 !important;
+}
+
+html[data-theme="light"] header,
+html[data-theme="light"] .bg-slate-900,
+html[data-theme="light"] .bg-slate-800,
+html[data-theme="light"] .bg-slate-700,
+html[data-theme="light"] .bg-slate-950 {
+  background-color: #ffffff !important;
+  background: #ffffff !important;
+}
+
+html[data-theme="light"] .border-slate-700,
+html[data-theme="light"] .border-slate-800,
+html[data-theme="light"] .border-white\/10 {
+  border-color: rgba(17, 24, 39, 0.1) !important;
+}
+
+html[data-theme="light"] .hover\:bg-slate-800:hover,
+html[data-theme="light"] .hover\:bg-slate-900:hover {
+  background: rgba(212, 167, 90, 0.08) !important;
+}
+
+html[data-theme="light"] header .bg-indigo-500,
+html[data-theme="light"] header .bg-indigo-600,
+html[data-theme="light"] header .bg-red-600 {
+  filter: saturate(0.8) brightness(1.08);
+}
+
+html[data-theme="light"] .jobseeker-nav-link:hover,
+html[data-theme="light"] .admin-sidebar-link:hover {
+  background: rgba(212, 167, 90, 0.08) !important;
+}
+
+html[data-theme="light"] .jobseeker-nav-link-active,
+html[data-theme="light"] .admin-sidebar-link.active {
+  background: rgba(212, 167, 90, 0.18) !important;
+  color: #111827 !important;
+}
+
+html[data-theme="light"] .jobseeker-user-box,
+html[data-theme="light"] .admin-sidebar-header,
+html[data-theme="light"] .jobseeker-sidebar-header,
+html[data-theme="light"] .jobseeker-sidebar-bottom {
+  background: #f8f8f6 !important;
+  border-color: rgba(17, 24, 39, 0.08) !important;
+}
+
+html[data-theme="light"] * {
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  text-shadow: none !important;
 }
 
 a {
@@ -74,12 +220,12 @@ img {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-border);
+  background: rgba(148, 163, 184, 0.28);
   border-radius: 999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-text-muted);
+  background: rgba(148, 163, 184, 0.45);
 }
 
 /* =========================================================
@@ -87,6 +233,25 @@ img {
    ========================================================= */
 
 ::selection {
-  background: var(--color-primary);
+  background: var(--color-primary-dark);
   color: white;
+}
+
+/* Canonical form controls — used across login, register, and dashboards */
+input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]):not([type="range"]):not([type="color"]),
+textarea,
+select {
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border-medium);
+  border-radius: var(--radius-md);
+}
+
+input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]):not([type="range"]):not([type="color"]):focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: rgba(91, 108, 255, 0.7);
+  box-shadow: 0 0 0 4px rgba(91, 108, 255, 0.12);
+  background-color: var(--color-background-soft);
 }

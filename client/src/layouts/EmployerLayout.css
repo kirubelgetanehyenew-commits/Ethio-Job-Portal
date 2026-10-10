@@ -4,29 +4,42 @@
 
 .employer-layout {
   min-height: 100vh;
-
   display: flex;
-
   flex-direction: column;
-
-  background: #f8fafc;
+  background: #101e34;
 }
 
+html[data-theme="light"] .employer-layout {
+  background: linear-gradient(135deg, #f8f5f0 0%, #ffffff 48%, #f2f5f6 100%);
+}
+
+html[data-theme="light"] .employer-main,
+html[data-theme="light"] .employer-content {
+  background: transparent;
+}
 
 /* =========================================================
    MAIN CONTENT
 ========================================================= */
 
 .employer-main {
-  flex: 1;
+  flex: 1 1 auto;
   width: 100%;
   min-width: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 
 .employer-content {
   width: 100%;
   min-width: 0;
+  flex: 1 1 auto;
+}
+
+.employer-footer {
+  position: static;
+  margin-top: 0;
 }
 
 

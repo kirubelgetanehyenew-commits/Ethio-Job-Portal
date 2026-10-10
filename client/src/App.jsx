@@ -45,6 +45,7 @@ import Profile from "./pages/JobSeeker/Profile";
 // =========================
 import AdminDashboard from "./pages/Admin/Dashboard";
 import Users from "./pages/Admin/Users";
+import Records from "./pages/Admin/Records";
 import Analytics from "./pages/Admin/Analytics";
 import Applications from "./pages/Admin/Applications";
 
@@ -262,6 +263,12 @@ function App() {
         <Route
           path="/admin/users"
           element={<Users />}
+        />
+
+        {/* Admin All Records */}
+        <Route
+          path="/admin/records"
+          element={<Records />}
         />
 
         {/* Admin Jobs */}

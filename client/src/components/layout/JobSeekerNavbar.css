@@ -8,8 +8,8 @@
   left: 0;
   width: 260px;
   height: 100vh;
-  background: #ffffff;
-  border-right: 1px solid #e5e7eb;
+  background: #0e1a2e;
+  border-right: 1px solid rgba(148, 163, 184, 0.18);
   display: flex;
   flex-direction: column;
   z-index: 1000;
@@ -21,7 +21,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 24px 20px;
-  border-bottom: 1px solid #f1f5f9;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.12);
 }
 
 .jobseeker-logo {
@@ -48,20 +48,20 @@
   margin: 0;
   font-size: 19px;
   font-weight: 800;
-  color: #0f172a;
+  color: #f1f5f9;
 }
 
 .jobseeker-logo-text p {
   margin: 3px 0 0;
   font-size: 11px;
-  color: #64748b;
+  color: #94a3b8;
 }
 
 .jobseeker-close-btn {
   display: none;
   border: none;
   background: transparent;
-  color: #64748b;
+  color: #94a3b8;
   cursor: pointer;
 }
 
@@ -69,18 +69,29 @@
   margin: 20px 16px;
   padding: 14px;
   border-radius: 14px;
-  background: #f8fafc;
+  background: #101e34;
   display: flex;
   align-items: center;
   gap: 12px;
+}
+
+.jobseeker-user-theme {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+
+.jobseeker-user-theme .theme-toggle {
+  padding: 8px 10px;
+  font-size: 11px;
 }
 
 .jobseeker-user-avatar {
   width: 42px;
   height: 42px;
   border-radius: 12px;
-  background: #dbeafe;
-  color: #2563eb;
+  background: rgba(129, 140, 248, 0.14);
+  color: #818cf8;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -95,7 +106,7 @@
   margin: 0;
   font-size: 14px;
   font-weight: 700;
-  color: #0f172a;
+  color: #f1f5f9;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -104,7 +115,7 @@
 .jobseeker-user-info p {
   margin: 3px 0 0;
   font-size: 12px;
-  color: #64748b;
+  color: #94a3b8;
 }
 
 .jobseeker-navigation {
@@ -129,7 +140,7 @@
   padding: 12px 14px;
   border-radius: 11px;
   text-decoration: none;
-  color: #475569;
+  color: #cbd5e1;
   font-size: 14px;
   font-weight: 600;
   transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
@@ -140,8 +151,8 @@
 }
 
 .jobseeker-nav-link:hover {
-  background: #eff6ff;
-  color: #2563eb;
+  background: #101e34;
+  color: #818cf8;
   transform: translateX(2px);
 }
 
@@ -160,7 +171,7 @@
 .jobseeker-sidebar-bottom {
   margin-top: auto;
   padding: 18px 16px;
-  border-top: 1px solid #f1f5f9;
+  border-top: 1px solid rgba(148, 163, 184, 0.12);
 }
 
 .jobseeker-logout-btn {
@@ -170,10 +181,10 @@
   justify-content: center;
   gap: 10px;
   padding: 12px 16px;
-  border: 1px solid #fecaca;
+  border: 1px solid rgba(248, 113, 113, 0.35);
   border-radius: 11px;
-  background: #fff1f2;
-  color: #dc2626;
+  background: rgba(248, 113, 113, 0.12);
+  color: #f87171;
   font-size: 14px;
   font-weight: 700;
   cursor: pointer;
@@ -210,7 +221,7 @@
   }
 
   .jobseeker-close-btn:hover {
-    background: #f1f5f9;
+    background: #14243e;
   }
 
   .jobseeker-sidebar-overlay {

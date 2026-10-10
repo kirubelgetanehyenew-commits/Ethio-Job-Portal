@@ -34,7 +34,7 @@ function JobSeekerSidebar() {
         </NavLink>
 
         <NavLink
-          to="/jobs"
+          to="/jobseeker/jobs"
           className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-800"
         >
           <Briefcase size={20} />

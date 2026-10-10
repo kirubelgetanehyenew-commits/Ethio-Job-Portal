@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 
 import { useAuth } from "../../context/AuthContext";
+import ThemeToggle from "../common/ThemeToggle";
 import "./JobSeekerNavbar.css";
 
 function JobSeekerNavbar({ isOpen = false, onClose = () => {} }) {
@@ -54,6 +55,10 @@ function JobSeekerNavbar({ isOpen = false, onClose = () => {} }) {
         <div className="jobseeker-user-info">
           <h3>{user?.fullName || "Job Seeker"}</h3>
           <p>Job Seeker</p>
+        </div>
+
+        <div className="jobseeker-user-theme">
+          <ThemeToggle />
         </div>
       </div>
 

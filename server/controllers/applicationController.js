@@ -4,7 +4,14 @@ const Job = require("../models/Job");
 // Apply for a Job
 const applyForJob = async (req, res) => {
   try {
-    const { coverLetter = "" } = req.body || {};
+    const {
+      coverLetter = "",
+      resume = "",
+      experience = "",
+      skills = "",
+      education = "",
+      summary = "",
+    } = req.body || {};
     const { jobId } = req.params;
 
     // Check if job exists
@@ -38,10 +45,31 @@ const applyForJob = async (req, res) => {
       });
     }
 
+    const normalizedProfile = [
+      coverLetter,
+      resume,
+      experience,
+      skills,
+      education,
+      summary,
+    ].some((value) => String(value || "").trim().length > 0);
+
+    if (!normalizedProfile) {
+      return res.status(400).json({
+        success: false,
+        message: "Please provide at least your CV/resume link or a short profile summary before applying.",
+      });
+    }
+
     const application = await Application.create({
       job: jobId,
       applicant: req.user.id,
-      coverLetter,
+      coverLetter: String(coverLetter || "").trim(),
+      resume: String(resume || "").trim(),
+      experience: String(experience || "").trim(),
+      skills: String(skills || "").trim(),
+      education: String(education || "").trim(),
+      summary: String(summary || "").trim(),
     });
 
     res.status(201).json({

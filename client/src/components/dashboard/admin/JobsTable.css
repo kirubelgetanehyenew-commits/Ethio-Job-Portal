@@ -2,15 +2,86 @@
    ADMIN JOBS TABLE
 ========================================================= */
 
+html[data-theme="light"] .admin-jobs-container,
+html[data-theme="light"] .admin-jobs-header,
+html[data-theme="light"] .admin-jobs-controls,
+html[data-theme="light"] .admin-jobs-count,
+html[data-theme="light"] .admin-jobs-search input,
+html[data-theme="light"] .admin-jobs-table thead,
+html[data-theme="light"] .admin-jobs-footer,
+html[data-theme="light"] .admin-jobs-table tbody tr:hover {
+  background: #ffffff;
+  border-color: rgba(17, 24, 39, 0.08);
+  color: #111827;
+}
+
+html[data-theme="light"] .admin-jobs-title-row h2,
+html[data-theme="light"] .admin-jobs-title-row p,
+html[data-theme="light"] .admin-jobs-count,
+html[data-theme="light"] .admin-jobs-search input,
+html[data-theme="light"] .admin-jobs-table th,
+html[data-theme="light"] .admin-jobs-table td,
+html[data-theme="light"] .admin-job-title strong,
+html[data-theme="light"] .admin-job-title span,
+html[data-theme="light"] .admin-job-company,
+html[data-theme="light"] .admin-job-location,
+html[data-theme="light"] .admin-job-salary,
+html[data-theme="light"] .admin-job-type,
+html[data-theme="light"] .admin-jobs-state h3,
+html[data-theme="light"] .admin-jobs-state p,
+html[data-theme="light"] .admin-jobs-footer {
+  color: #111827;
+}
+
+html[data-theme="light"] .admin-jobs-search input,
+html[data-theme="light"] .admin-job-type {
+  background: #ffffff;
+  border-color: rgba(17, 24, 39, 0.12);
+}
+
+html[data-theme="light"] .admin-jobs-title-icon,
+html[data-theme="light"] .admin-job-icon,
+html[data-theme="light"] .admin-jobs-loading-spinner,
+html[data-theme="light"] .admin-jobs-empty-icon {
+  background: rgba(212, 167, 90, 0.12);
+  color: #8a6324;
+}
+
 .admin-jobs-container {
   width: 100%;
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
+  background: #0e1a2e;
+  border: 1px solid rgba(148, 163, 184, 0.18);
   border-radius: 24px;
   overflow: hidden;
   box-shadow: 0 8px 30px rgba(15, 23, 42, 0.06);
 }
 
+html[data-theme="light"] .admin-jobs-container,
+html[data-theme="light"] .admin-jobs-header,
+html[data-theme="light"] .admin-jobs-controls,
+html[data-theme="light"] .admin-jobs-count,
+html[data-theme="light"] .admin-jobs-search input,
+html[data-theme="light"] .admin-jobs-table thead,
+html[data-theme="light"] .admin-jobs-table tbody tr:hover {
+  background: #ffffff;
+  border-color: rgba(17, 24, 39, 0.08);
+  color: #111827;
+}
+
+html[data-theme="light"] .admin-jobs-title-row h2,
+html[data-theme="light"] .admin-jobs-title-row p,
+html[data-theme="light"] .admin-jobs-count,
+html[data-theme="light"] .admin-jobs-search input,
+html[data-theme="light"] .admin-jobs-table th,
+html[data-theme="light"] .admin-jobs-table td,
+html[data-theme="light"] .admin-job-title,
+html[data-theme="light"] .admin-job-company,
+html[data-theme="light"] .admin-job-status,
+html[data-theme="light"] .admin-job-location,
+html[data-theme="light"] .admin-job-category,
+html[data-theme="light"] .admin-job-date {
+  color: #111827;
+}
 
 /* =========================================================
    HEADER
@@ -23,9 +94,9 @@
 
   padding: 26px 30px;
 
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.18);
 
-  background: #ffffff;
+  background: #0e1a2e;
 }
 
 .admin-jobs-title-row {
@@ -44,14 +115,14 @@
   align-items: center;
   justify-content: center;
 
-  background: #fff7ed;
-  color: #ea580c;
+  background: rgba(251, 146, 60, 0.12);
+  color: #fb923c;
 }
 
 .admin-jobs-title-row h2 {
   margin: 0;
 
-  color: #0f172a;
+  color: #f1f5f9;
 
   font-size: 22px;
   font-weight: 800;
@@ -60,7 +131,7 @@
 .admin-jobs-title-row p {
   margin: 5px 0 0;
 
-  color: #64748b;
+  color: #94a3b8;
 
   font-size: 14px;
 }
@@ -79,9 +150,9 @@
 
   border-radius: 12px;
 
-  background: #f1f5f9;
+  background: #14243e;
 
-  color: #475569;
+  color: #cbd5e1;
 
   font-size: 14px;
   font-weight: 700;
@@ -95,9 +166,9 @@
 .admin-jobs-controls {
   padding: 20px 30px;
 
-  background: #f8fafc;
+  background: #101e34;
 
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.18);
 }
 
 .admin-jobs-search {
@@ -122,12 +193,12 @@
 
   padding: 13px 16px 13px 45px;
 
-  border: 1px solid #cbd5e1;
+  border: 1px solid rgba(148, 163, 184, 0.25);
   border-radius: 12px;
 
-  background: #ffffff;
+  background: #0e1a2e;
 
-  color: #0f172a;
+  color: #f1f5f9;
 
   font-size: 14px;
 
@@ -167,7 +238,7 @@
 }
 
 .admin-jobs-table thead {
-  background: #f8fafc;
+  background: #101e34;
 }
 
 .admin-jobs-table th {
@@ -175,7 +246,7 @@
 
   text-align: left;
 
-  color: #64748b;
+  color: #94a3b8;
 
   font-size: 12px;
   font-weight: 800;
@@ -184,13 +255,13 @@
 
   letter-spacing: 0.05em;
 
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.18);
 }
 
 .admin-jobs-table td {
   padding: 18px 22px;
 
-  border-bottom: 1px solid #f1f5f9;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.12);
 
   vertical-align: middle;
 }
@@ -200,7 +271,7 @@
 }
 
 .admin-jobs-table tbody tr:hover {
-  background: #f8fafc;
+  background: #101e34;
 }
 
 .admin-jobs-table tbody tr:last-child td {
@@ -230,9 +301,9 @@
   align-items: center;
   justify-content: center;
 
-  background: #fff7ed;
+  background: rgba(251, 146, 60, 0.12);
 
-  color: #ea580c;
+  color: #fb923c;
 
   flex-shrink: 0;
 }
@@ -242,7 +313,7 @@
 
   max-width: 240px;
 
-  color: #0f172a;
+  color: #f1f5f9;
 
   font-size: 14px;
   font-weight: 750;
@@ -270,7 +341,7 @@
   align-items: center;
   gap: 8px;
 
-  color: #475569;
+  color: #cbd5e1;
 
   font-size: 14px;
 }
@@ -284,7 +355,7 @@
 }
 
 .admin-job-salary svg {
-  color: #16a34a;
+  color: #4ade80;
 }
 
 
@@ -301,9 +372,9 @@
 
   border-radius: 999px;
 
-  background: #eff6ff;
+  background: #101e34;
 
-  color: #2563eb;
+  color: #818cf8;
 
   font-size: 12px;
   font-weight: 700;
@@ -325,13 +396,13 @@
 
   padding: 9px 13px;
 
-  border: 1px solid #fecaca;
+  border: 1px solid rgba(248, 113, 113, 0.35);
 
   border-radius: 10px;
 
-  background: #fff1f2;
+  background: rgba(248, 113, 113, 0.12);
 
-  color: #dc2626;
+  color: #f87171;
 
   font-size: 13px;
   font-weight: 700;
@@ -379,9 +450,9 @@
   align-items: center;
   justify-content: center;
 
-  background: #fff7ed;
+  background: rgba(251, 146, 60, 0.12);
 
-  color: #ea580c;
+  color: #fb923c;
 }
 
 .admin-jobs-loading-spinner svg {
@@ -391,7 +462,7 @@
 .admin-jobs-state h3 {
   margin: 0;
 
-  color: #0f172a;
+  color: #f1f5f9;
 
   font-size: 18px;
   font-weight: 800;
@@ -400,7 +471,7 @@
 .admin-jobs-state p {
   margin: 7px 0 0;
 
-  color: #64748b;
+  color: #94a3b8;
 
   font-size: 14px;
 }
@@ -433,11 +504,11 @@
 
   padding: 15px 22px;
 
-  border-top: 1px solid #e2e8f0;
+  border-top: 1px solid rgba(148, 163, 184, 0.18);
 
-  background: #f8fafc;
+  background: #101e34;
 
-  color: #64748b;
+  color: #94a3b8;
 
   font-size: 13px;
 }

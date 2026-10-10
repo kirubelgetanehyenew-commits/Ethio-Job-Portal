@@ -4,7 +4,9 @@
 
 .jobseeker-layout {
   min-height: 100vh;
-  background: #f8fafc;
+  display: flex;
+  flex-direction: column;
+  background: #101e34;
 }
 
 .jobseeker-main {
@@ -12,40 +14,71 @@
   margin-left: 260px;
   display: flex;
   flex-direction: column;
+  flex: 1;
 }
 
 .jobseeker-content {
-  flex: 1;
+  flex: 1 1 auto;
   min-width: 0;
+}
+
+.jobseeker-footer {
+  position: static;
+  margin-top: 0;
 }
 
 .jobseeker-mobile-header {
   display: none;
   height: 64px;
   padding: 0 18px;
-  background: #ffffff;
-  border-bottom: 1px solid #e5e7eb;
+  background: #0e1a2e;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.18);
   align-items: center;
+  justify-content: flex-start;
   gap: 14px;
 }
 
 .jobseeker-mobile-menu {
   width: 40px;
   height: 40px;
-  border: none;
+  flex-shrink: 0;
+  border: 1px solid rgba(148, 163, 184, 0.18);
   border-radius: 10px;
-  background: #eff6ff;
-  color: #2563eb;
+  background: #101e34;
+  color: #f8fafc;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  z-index: 2;
+  transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.jobseeker-mobile-menu svg,
+.jobseeker-mobile-menu path,
+.jobseeker-mobile-menu line,
+.jobseeker-mobile-menu polyline {
+  color: #f8fafc !important;
+  stroke: currentColor !important;
+}
+
+.jobseeker-mobile-menu:hover,
+.jobseeker-mobile-menu:focus-visible,
+.jobseeker-mobile-menu:active {
+  background: rgba(129, 140, 248, 0.14);
+  color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.15);
+  outline: none;
 }
 
 .jobseeker-mobile-title {
   font-size: 18px;
   font-weight: 800;
-  color: #0f172a;
+  color: #f1f5f9;
+}
+
+.jobseeker-mobile-header .theme-toggle {
+  margin-left: auto;
 }
 
 .jobseeker-sidebar-overlay {

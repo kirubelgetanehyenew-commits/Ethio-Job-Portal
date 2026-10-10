@@ -2,28 +2,23 @@ function StatCard({
   icon,
   title,
   value,
-  color = "orange",
 }) {
   return (
-    <div className="bg-white rounded-2xl shadow-md p-6 hover:shadow-xl transition">
+    <div className="stat-card">
       <div className="flex items-center justify-between">
-
         <div>
-          <p className="text-gray-500 text-sm">
+          <p className="stat-card-title" style={{ marginTop: 0 }}>
             {title}
           </p>
 
-          <h2 className="text-3xl font-black mt-2">
+          <h2 className="stat-card-value">
             {value}
           </h2>
         </div>
 
-        <div
-          className={`w-14 h-14 rounded-xl bg-${color}-100 flex items-center justify-center`}
-        >
+        <div className="stat-card-icon">
           {icon}
         </div>
-
       </div>
     </div>
   );

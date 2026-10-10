@@ -5,6 +5,7 @@ import {
   Building2,
   Briefcase,
   BarChart3,
+  Database,
   LogOut,
   ShieldCheck,
 } from "lucide-react";
@@ -60,6 +61,14 @@ function AdminNavbar() {
           >
             <Users size={18} />
             Users
+          </Link>
+
+          <Link
+            to="/admin/records"
+            className="admin-navbar-link"
+          >
+            <Database size={18} />
+            All Records
           </Link>
 
           <Link
